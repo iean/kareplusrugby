@@ -1,18 +1,24 @@
 "use client";
 
+import BrandLogo from "@components/BrandLogo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaPhoneAlt, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import config from "@config/config.json";
 import menu from "@config/menu.json";
+import social from "@config/social.json";
 
 const SimpleHeader = () => {
   const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
   const { main } = menu;
-  const { base_url, logo_text, title } = config.site;
-  const brandName = logo_text || title;
+  const { base_url } = config.site;
 
   const serviceName = pathname.startsWith("/domiciliary")
     ? "Domiciliary Care"
@@ -27,12 +33,15 @@ const SimpleHeader = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between py-4">
           {/* Left: Logo */}
-          <Link href={base_url} className="flex items-center">
-            <span className="max-w-[220px] text-lg font-bold leading-tight text-[#431c52] sm:text-xl">
-              {brandName}
-            </span>
+          <Link href={base_url} className="flex items-center gap-3">
+            <BrandLogo
+              linked={false}
+              className="shrink-0"
+              imageClassName="h-12 w-auto sm:h-14"
+              priority
+            />
             {serviceName && (
-              <span className="ml-3 text-base font-semibold text-[#5e3ea1]">
+              <span className="rounded-full bg-[#eef2ff] px-3 py-1 text-sm font-semibold text-[#5e3ea1] sm:text-base">
                 {serviceName}
               </span>
             )}
@@ -103,14 +112,21 @@ const SimpleHeader = () => {
             {/* Social Icons */}
             <div className="flex items-center space-x-3 text-[#218b61] text-base">
               <Link
-                href="https://facebook.com"
+                href={social.facebook}
                 target="_blank"
                 aria-label="Facebook"
               >
                 <FaFacebookF className="hover:text-[#5e3ea1] transition" />
               </Link>
               <Link
-                href="https://linkedin.com"
+                href={social.instagram}
+                target="_blank"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="hover:text-[#5e3ea1] transition" />
+              </Link>
+              <Link
+                href={social.linkedin}
                 target="_blank"
                 aria-label="LinkedIn"
               >

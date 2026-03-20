@@ -1,0 +1,53 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 760 210"
+  role="img"
+  aria-labelledby="kare-plus-horizontal-title kare-plus-horizontal-desc"
+>
+  <title id="kare-plus-horizontal-title">Kare Plus</title>
+  <desc id="kare-plus-horizontal-desc">
+    Kare Plus logo in blue with the tagline The Caring Company in green.
+  </desc>
+  <defs>
+    <linearGradient id="kare-plus-blue" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f3f92" />
+      <stop offset="55%" stop-color="#1d58af" />
+      <stop offset="100%" stop-color="#2ea2e6" />
+    </linearGradient>
+    <linearGradient id="kare-plus-green" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#a8e441" />
+      <stop offset="100%" stop-color="#69bf33" />
+    </linearGradient>
+    <filter id="kare-plus-shadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#163d7d" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <g
+    fill="url(#kare-plus-blue)"
+    filter="url(#kare-plus-shadow)"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-weight="900"
+    letter-spacing="-5"
+    stroke="#163d7d"
+    stroke-linejoin="round"
+    stroke-width="2.5"
+  >
+    <text x="20" y="98" font-size="104">KARE</text>
+    <text x="255" y="133" font-size="84" letter-spacing="-2">+</text>
+    <text x="318" y="138" font-size="92">PLUS</text>
+  </g>
+
+  <text
+    x="320"
+    y="182"
+    fill="url(#kare-plus-green)"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="31"
+    letter-spacing="3"
+    stroke="#67a92d"
+    stroke-width="0.6"
+  >
+    THE CARING COMPANY
+  </text>
+</svg>

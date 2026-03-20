@@ -1,6 +1,6 @@
 "use client";
+import BrandLogo from "@components/BrandLogo";
 import Link from "next/link";
-import config from "@config/config.json";
 
 import {
   MdAccessTime,
@@ -36,9 +36,11 @@ const DomiciliaryHomeServices = () => (
   <section className="py-16 bg-[#F9F7FB] bg-gradient-to-r from-[#f9f5ff] via-[#fdf6eb] to-[#fff9ec]">
     <div className="container">
       <div className="flex justify-center mb-4">
-        <span className="rounded-full border border-[#431c52]/15 bg-white px-5 py-3 text-lg font-bold text-[#431c52] shadow-sm sm:text-xl">
-          {config.site.logo_text || config.site.title}
-        </span>
+        <BrandLogo
+          linked={false}
+          className="rounded-[2rem] border border-[#431c52]/10 bg-white px-4 py-3 shadow-sm"
+          imageClassName="h-auto w-[180px] sm:w-[220px]"
+        />
       </div>
       <h2 className="text-center text-3xl font-bold text-primary mb-8">
         Premium Domiciliary Care Services
