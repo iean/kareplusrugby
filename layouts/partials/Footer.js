@@ -1,14 +1,12 @@
 "use client";
 
+import BrandLogo from "@components/BrandLogo";
 import Image from "next/image";
 import Link from "next/link";
 import Social from "@components/Social";
-import config from "@config/config.json";
 import social from "@config/social.json";
 
 const Footer = () => {
-  const brandName = config.site.logo_text || config.site.title;
-
   return (
     <footer className="bg-gradient-to-b from-[#431c63] via-[#6e296d] to-[#ec9e57] text-white pt-2">
       {/* Card Container */}
@@ -16,12 +14,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-10">
           {/* Logo & Contact */}
           <div className="space-y-3">
-            <Link
-              href={config.site.base_url}
-              className="inline-block text-2xl font-bold leading-tight text-[#431c63]"
-            >
-              {brandName}
-            </Link>
+            <BrandLogo
+              className="inline-flex"
+              imageClassName="h-14 w-auto sm:h-16"
+            />
             <div className="text-sm text-[#333]">
               <p>
                 <strong>T:</strong> 01788 422422
@@ -29,19 +25,19 @@ const Footer = () => {
               <p>
                 <strong>E:</strong>{" "}
                 <a
-                  href="mailto:info@heartandhavencare.co.uk"
+                  href="mailto:taimur.sadat@kareplus.co.uk"
                   className="text-[#5e3ea1] hover:underline"
                 >
-                  info@heartandhavencare.co.uk
+                  taimur.sadat@kareplus.co.uk
                 </a>
               </p>
               <p>
                 <strong>E:</strong>{" "}
                 <a
-                  href="mailto:support@heartandhavencare.co.uk"
+                  href="mailto:Rugby@kareplus.co.uk"
                   className="text-[#5e3ea1] hover:underline"
                 >
-                  support@heartandhavencare.co.uk
+                  Rugby@kareplus.co.uk
                 </a>
               </p>
             </div>

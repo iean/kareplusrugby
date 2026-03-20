@@ -1,24 +1,22 @@
 "use client";
 
+import BrandLogo from "@components/BrandLogo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   FaFacebookF,
   FaLinkedinIn,
-  FaTwitter,
+  FaInstagram,
   FaArrowLeft,
 } from "react-icons/fa";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import config from "@config/config.json";
 import menu from "@config/menu.json";
+import social from "@config/social.json";
 
 const Header = ({ menuItems }) => {
   const pathname = usePathname();
-  const { base_url, logo_text, title } = config.site;
   const main = menuItems || menu.main;
-  const { enable, label, link } = config.nav_button;
-  const brandName = logo_text || title;
 
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -60,17 +58,17 @@ const Header = ({ menuItems }) => {
         </div>
 
         {/* Center Logo */}
-        <Link href={base_url} className="flex items-center justify-center">
-          <span className="max-w-[220px] text-center text-lg font-bold leading-tight text-[#431c52] sm:text-xl lg:text-2xl">
-            {brandName}
-          </span>
-        </Link>
+        <BrandLogo
+          className="flex items-center justify-center"
+          imageClassName="h-12 w-auto sm:h-14 lg:h-16"
+          priority
+        />
 
         {/* Right: Social (hidden on mobile) */}
         <div className="hidden sm:flex items-center space-x-4">
           <div className="flex items-center space-x-2 text-white">
             <a
-              href="https://facebook.com"
+              href={social.facebook}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -79,16 +77,16 @@ const Header = ({ menuItems }) => {
               <FaFacebookF />
             </a>
             <a
-              href="https://twitter.com"
+              href={social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Twitter"
+              aria-label="Instagram"
               className="bg-[#3bb273] p-2 rounded-full"
             >
-              <FaTwitter />
+              <FaInstagram />
             </a>
             <a
-              href="https://linkedin.com"
+              href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -154,23 +152,29 @@ const Header = ({ menuItems }) => {
 
             <li className="pt-3 flex items-center justify-center space-x-3">
               <a
-                href="https://facebook.com"
+                href={social.facebook}
                 className="bg-[#3bb273] p-2 rounded-full text-white"
                 aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <FaFacebookF />
               </a>
               <a
-                href="https://twitter.com"
+                href={social.instagram}
                 className="bg-[#3bb273] p-2 rounded-full text-white"
-                aria-label="Twitter"
+                aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <FaTwitter />
+                <FaInstagram />
               </a>
               <a
-                href="https://linkedin.com"
+                href={social.linkedin}
                 className="bg-[#3bb273] p-2 rounded-full text-white"
                 aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <FaLinkedinIn />
               </a>
