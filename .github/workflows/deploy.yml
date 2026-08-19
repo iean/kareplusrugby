@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main # Or your deployment branch
+      - main-kare-plus
 
 jobs:
   deploy:
@@ -22,7 +22,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no adminroot@46.252.193.48 << 'EOF'
             cd /var/www/healthcare
-            git pull origin main
+            git pull origin main-kare-plus
             npm install
             npm run build
             pm2 restart heartandhaven || pm2 start npm --name "heartandhaven" -- start
