@@ -6,7 +6,7 @@ import {
   MdSupportAgent,
   MdMonetizationOn,
   MdSpeed,
-  MdCloud,
+  MdVerifiedUser,
 } from "react-icons/md";
 
 // Icon mapping
@@ -16,7 +16,7 @@ const iconMap = {
   "24h": <MdSupportAgent size={30} className="text-brand" />,
   value: <MdMonetizationOn size={30} className="text-brand" />,
   fast: <MdSpeed size={30} className="text-brand" />,
-  cloud: <MdCloud size={30} className="text-brand" />,
+  vetted: <MdVerifiedUser size={30} className="text-brand" />,
 };
 
 const HomeFeatures = ({ feature }) => {

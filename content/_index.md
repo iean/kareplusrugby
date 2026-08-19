@@ -31,9 +31,9 @@ feature:
       icon: "fast"
       content: "Swift support in emergencies or schedule changes — we’re here when you need us most."
 
-    - name: "Cloud Support"
-      icon: "cloud"
-      content: "Access care records, schedules, and updates securely online — anytime, anywhere."
+    - name: "Vetted Carers"
+      icon: "vetted"
+      content: "Every carer holds an enhanced DBS check appropriate to their role, with identity, right to work and references verified before they start."
 
 # services
 services:
