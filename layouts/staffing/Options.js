@@ -6,29 +6,29 @@ import Link from "next/link";
 
 const options = [
   {
-    icon: <MdSchedule size={32} className="text-[#431c52]" />,
+    icon: <MdSchedule size={32} className="text-primary-900" />,
     title: "Flexible Shifts",
     text: "Round-the-clock support with trained professionals, whenever you need them.",
   },
   {
-    icon: <MdPerson size={32} className="text-[#431c52]" />,
+    icon: <MdPerson size={32} className="text-primary-900" />,
     title: "Trusted Companions",
     text: "Dedicated caregivers who bring comfort, dignity, and consistency to care.",
   },
   {
-    icon: <MdGroup size={32} className="text-[#431c52]" />,
+    icon: <MdGroup size={32} className="text-primary-900" />,
     title: "Home & Residential Support",
     text: "Tailored in-home and care facility staffing that feels like family.",
   },
 ];
 
 const StaffingOptions = () => (
-  <section className="py-20 px-4 md:px-8 bg-gradient-to-br from-[#f5f0fa] via-[#f3e9f9] to-[#f8f4fc]">
+  <section className="py-20 px-4 md:px-8 bg-gradient-to-br from-primary-50 via-primary-50 to-primary-50">
     <div className="max-w-7xl mx-auto flex flex-col gap-12">
       {/* Centered Intro + CTAs */}
       <div className="flex flex-col items-center text-center">
         <div className="mb-4">
-          <FaUserNurse size={40} className="text-[#431c52]" />
+          <FaUserNurse size={40} className="text-primary-900" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
           Kare Plus Rugby Staffing Services
@@ -43,19 +43,19 @@ const StaffingOptions = () => (
         <div className="mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-4">
           <Link
             href="/work-for-us"
-            className="bg-[#431c52] hover:bg-[#5c2770] text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
+            className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             JOIN OUR CARE TEAM
           </Link>
           <Link
             href="/staff-request"
-            className="bg-[#431c52] hover:bg-[#5c2770] text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
+            className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             NEED COMPASSIONATE STAFF?
           </Link>
           <Link
             href="/about"
-            className="bg-[#431c52] hover:bg-[#5c2770] text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
+            className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             LEARN ABOUT OUR MISSION
           </Link>
@@ -74,7 +74,7 @@ const StaffingOptions = () => (
             }}
           >
             <div className="mb-4 flex justify-center">{item.icon}</div>
-            <h3 className="text-lg font-semibold text-[#431c52] mb-2">
+            <h3 className="text-lg font-semibold text-primary-900 mb-2">
               {item.title}
             </h3>
             <p className="text-sm text-gray-600">{item.text}</p>

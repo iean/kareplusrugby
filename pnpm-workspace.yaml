@@ -1,0 +1,8 @@
+# pnpm 11 will not run a dependency's install scripts unless it is listed here.
+# Without this, `pnpm build` and `pnpm dev` abort with ERR_PNPM_IGNORED_BUILDS.
+# All four are long-standing dependencies already pinned in pnpm-lock.yaml.
+allowBuilds:
+  '@parcel/watcher': true # file watching for next dev
+  sharp: true # image optimisation for next/image
+  swiper: true # carousel used across the marketing pages
+  unrs-resolver: true # module resolution for eslint

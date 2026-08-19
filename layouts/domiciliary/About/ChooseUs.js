@@ -22,7 +22,7 @@ const ChooseUs = () => (
       </div>
       <div className="order-1 md:order-2">
         <h2 className="text-3xl font-bold text-primary mb-4">
-          Why should I choose Millennium Staffing as my domiciliary care
+          Why should I choose Kare Plus Rugby as my domiciliary care
           provider?
         </h2>
         <p className="text-gray-700 mb-4">

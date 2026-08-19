@@ -5,7 +5,7 @@ const GetStartedPage = async () => {
     <>
       {/* Hero Section with Background Image and Steps */}
       <section
-        className="h-[70vh] bg-gradient-to-br from-[#431c52] via-[#6a2c70] to-[#f4b860] flex items-center relative"
+        className="h-[70vh] bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 flex items-center relative"
         style={{
           backgroundImage: `url('/images/services/social-companionship.PNG')`,
           backgroundSize: "cover",
@@ -52,7 +52,7 @@ const GetStartedPage = async () => {
             <div className="bg-white rounded-lg p-8 shadow-lg text-center">
               <div className="flex justify-center mb-4">
                 <svg
-                  className="w-12 h-12 text-accent"
+                  className="w-12 h-12 text-primary-800"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >

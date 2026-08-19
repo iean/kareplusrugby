@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const PageHero = ({ title, subtitle, image, small = false }) => (
   <section
-    className={`h-[70vh] bg-gradient-to-br from-[#431c52] via-[#6a2c70] to-[#f4b860] flex items-center`}
+    className={`h-[70vh] bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 flex items-center`}
   >
     <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
       <div>
@@ -11,7 +11,7 @@ const PageHero = ({ title, subtitle, image, small = false }) => (
           className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
           style={{
             backgroundImage:
-              "linear-gradient(to right, #9e3ea1, #d46f4d, #f4b860)",
+              "linear-gradient(to right, #12469B, #1D5BC0, #847432)",
           }}
         >
           {title}

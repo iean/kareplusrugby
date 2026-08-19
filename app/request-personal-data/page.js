@@ -79,10 +79,10 @@ const RequestPersonalDataPage = () => {
                   <p className="mb-6">
                     Under the UK General Data Protection Regulation (UK GDPR),
                     you have several rights regarding your personal information
-                    held by Kare Plus Rugby.
+                    held by Kare Plus Rugby Healthcare.
                   </p>
 
-                  <h3 className="text-xl font-semibold text-accent mb-4">
+                  <h3 className="text-xl font-semibold text-primary-800 mb-4">
                     Right of Access
                   </h3>
                   <p className="mb-4">
@@ -91,7 +91,7 @@ const RequestPersonalDataPage = () => {
                     &quot;Subject Access Request&quot; (SAR).
                   </p>
 
-                  <h3 className="text-xl font-semibold text-accent mb-4">
+                  <h3 className="text-xl font-semibold text-primary-800 mb-4">
                     Right to Rectification
                   </h3>
                   <p className="mb-4">
@@ -99,7 +99,7 @@ const RequestPersonalDataPage = () => {
                     personal information.
                   </p>
 
-                  <h3 className="text-xl font-semibold text-accent mb-4">
+                  <h3 className="text-xl font-semibold text-primary-800 mb-4">
                     Right to Erasure
                   </h3>
                   <p className="mb-4">
@@ -107,7 +107,7 @@ const RequestPersonalDataPage = () => {
                     certain circumstances.
                   </p>
 
-                  <h3 className="text-xl font-semibold text-accent mb-4">
+                  <h3 className="text-xl font-semibold text-primary-800 mb-4">
                     Right to Portability
                   </h3>
                   <p className="mb-4">
@@ -269,7 +269,7 @@ const RequestPersonalDataPage = () => {
                     <label className="text-sm text-gray-600">
                       I confirm that I am the data subject or have legal
                       authority to make this request on their behalf. I
-                      understand that Kare Plus Rugby may need to
+                      understand that Kare Plus Rugby Healthcare may need to
                       verify my identity before processing this request. *
                     </label>
                   </div>
@@ -286,7 +286,7 @@ const RequestPersonalDataPage = () => {
                   <p className="text-sm text-gray-600">
                     <strong>Contact:</strong> For urgent requests or questions,
                     please contact our Data Protection Officer at
-                    privacy@heartandhaven.com or call 01788 422422.
+                    kp.rugby@kareplus.co.uk or call 01788 422422.
                   </p>
                 </div>
               </div>

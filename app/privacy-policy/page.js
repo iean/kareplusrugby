@@ -29,7 +29,7 @@ const PrivacyPolicyPage = () => {
                   1. Introduction
                 </h2>
                 <p className="mb-6">
-                  Kare Plus Rugby (&quot;we&quot;, &quot;our&quot;, or
+                  Kare Plus Rugby Healthcare (&quot;we&quot;, &quot;our&quot;, or
                   &quot;us&quot;) is committed to protecting and respecting your
                   privacy. This Privacy Policy explains how we collect, use,
                   store, and protect your personal information when you visit
@@ -45,7 +45,7 @@ const PrivacyPolicyPage = () => {
                 <h2 className="text-2xl font-bold text-primary mb-6">
                   2. Information We Collect
                 </h2>
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   2.1 Personal Information
                 </h3>
                 <p className="mb-4">
@@ -64,7 +64,7 @@ const PrivacyPolicyPage = () => {
                   <li>Communication preferences</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   2.2 Technical Information
                 </h3>
                 <p className="mb-4">We automatically collect:</p>
@@ -195,8 +195,8 @@ const PrivacyPolicyPage = () => {
                   <p className="mb-2">
                     <strong>Data Protection Officer</strong>
                   </p>
-                  <p className="mb-2">Kare Plus Rugby</p>
-                  <p className="mb-2">Email: privacy@heartandhaven.com</p>
+                  <p className="mb-2">Kare Plus Rugby Healthcare</p>
+                  <p className="mb-2">Email: kp.rugby@kareplus.co.uk</p>
                   <p className="mb-2">Phone: 01788 422422</p>
                   <p className="mb-2">Address: [Your Business Address]</p>
                 </div>

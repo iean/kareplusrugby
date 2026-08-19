@@ -1,29 +1,66 @@
 {
+  "_comment": "Palette sampled programmatically from the official Kare Plus logo at public/images/kareplus-rugby-logo.jpeg. Navy #0E3F89 and green #A0C57F are the measured brand colours. NOTE: the brand green is only 1.95:1 on white, so it must NEVER carry text or convey meaning on its own - use accent-text (#657C50) for anything readable. Run scripts/check-contrast.mjs after any change; it exits non-zero on failure.",
   "colors": {
     "default": {
       "text_color": {
-        "default": "#5a2671",
-        "light": "#7a4b91",
-        "dark": "#2e1540"
+        "default": "#14203A",
+        "light": "#4A5773",
+        "dark": "#061B41"
       },
       "theme_color": {
-        "primary": "#b9892f",
-        "secondary": "#5a2671",
+        "primary": "#62784D",
+        "secondary": "#0E3F89",
         "body": "#ffffff",
-        "border": "#e0e0e0",
-        "theme_light": "#f9f7fc"
+        "border": "#DCE3ED",
+        "theme_light": "#F3F5F9"
       }
+    },
+    "blue": {
+      "50": "#F3F5F9",
+      "100": "#E2E8F1",
+      "200": "#C5D1E3",
+      "300": "#9FB2D0",
+      "400": "#7390BB",
+      "500": "#4369A3",
+      "600": "#265295",
+      "700": "#0E3F89",
+      "800": "#0B3472",
+      "900": "#09285B",
+      "950": "#061B41"
+    },
+    "neutral": {
+      "surface": "#F7F9FC",
+      "surface_alt": "#EEF3FA",
+      "text": "#14203A",
+      "text_muted": "#4A5773",
+      "border": "#DCE3ED",
+      "border_strong": "#8B95A2"
+    },
+    "state": {
+      "success": "#0F7A4A",
+      "success_bg": "#E7F5EE",
+      "warning": "#8A5A00",
+      "warning_bg": "#FDF3E2",
+      "danger": "#B3261E",
+      "danger_bg": "#FCEBEA"
+    },
+    "green": {
+      "brand": "#A0C57F",
+      "50": "#F4F8F0",
+      "100": "#E7F1DF",
+      "text": "#62784D",
+      "dark": "#597255"
     }
   },
   "fonts": {
     "font_size": {
-      "base": "16px",
-      "scale": "1.25"
+      "base": "17px",
+      "scale": "1.2"
     },
     "font_family": {
-      "primary": "Poppins:wght@400;500;600;700",
+      "primary": "Inter:wght@400;500;600;700",
       "primary_type": "sans-serif",
-      "secondary": "Open+Sans:wght@400;600",
+      "secondary": "Inter:wght@400;500;600;700",
       "secondary_type": "sans-serif"
     }
   },
@@ -42,20 +79,20 @@
   },
   "buttons": {
     "default": {
-      "padding": "12px 24px",
-      "border_radius": "9999px",
+      "padding": "14px 28px",
+      "border_radius": "10px",
       "font_weight": "600",
       "text_transform": "none"
     },
     "primary": {
-      "background_color": "#b9892f",
+      "background_color": "#0E3F89",
       "text_color": "#ffffff",
-      "hover_background": "#a87a28"
+      "hover_background": "#0B3472"
     },
     "secondary": {
-      "background_color": "#5a2671",
-      "text_color": "#ffffff",
-      "hover_background": "#4c1f5e"
+      "background_color": "#ffffff",
+      "text_color": "#0E3F89",
+      "hover_background": "#F3F5F9"
     }
   }
 }

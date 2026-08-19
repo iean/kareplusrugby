@@ -12,7 +12,11 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-primary font-bold leading-tight text-dark;
+  // Colour is INHERITED, not forced. This rule previously pinned every heading
+  // to the dark navy, which meant headings inside dark sections rendered navy
+  // on navy and were effectively invisible. Sections now set their own colour
+  // and headings follow it.
+  @apply font-primary font-bold leading-tight text-inherit;
 }
 
 h1,

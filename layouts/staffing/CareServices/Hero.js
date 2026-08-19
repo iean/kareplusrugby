@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => (
-  <section className="relative z-10 bg-gradient-to-br from-[#431c52] via-[#6a2c70] to-[#f4b860] overflow-hidden">
+  <section className="relative z-10 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 overflow-hidden">
     <div className="max-w-screen-xl mx-auto px-6 lg:px-8 py-24 flex flex-col lg:flex-row items-center gap-12 relative z-20">
       <div className="w-full lg:w-1/2 text-center lg:text-left animate-fadeLeftSlow">
         <h1 className="text-4xl md:text-5xl font-extrabold text-white">
@@ -16,7 +16,7 @@ const Hero = () => (
         </p>
         <Link
           href="/contact"
-          className="inline-block mt-6 border-2 border-white text-white px-6 py-3 rounded-full text-lg font-semibold shadow hover:bg-white hover:text-accent transition"
+          className="inline-block mt-6 border-2 border-white text-white px-6 py-3 rounded-full text-lg font-semibold shadow hover:bg-white hover:text-primary-800 transition"
         >
           Request Staff Today
         </Link>

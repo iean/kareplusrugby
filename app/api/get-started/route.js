@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import nodemailer from "nodemailer";
+import config from "@config/config.json";
 
 const getStartedFile = path.join(process.cwd(), "data", "get-started.json");
 
@@ -20,7 +21,7 @@ async function writeGetStarted(entries) {
 }
 
 async function sendEmail(formData) {
-  const transporter = nodemailer.createTransporter({
+  const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
@@ -41,7 +42,11 @@ async function sendEmail(formData) {
 
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
-    to: "info@haven&heartcare.com",
+    // Single source of truth is params.contact_email in config/config.json
+    // (kp.rugby@kareplus.co.uk). This previously pointed at a hardcoded
+    // address containing an "&", which is illegal in a domain and never
+    // delivered.
+    to: config.params.contact_email,
     subject: `New Get Started Request - ${formData.name}`,
     html,
   });

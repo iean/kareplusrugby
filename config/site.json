@@ -1,0 +1,247 @@
+{
+  "_comment": "Single source of truth for business details, navigation and SEO defaults. Contact details here are REAL and supplied by the client. Values still wrapped in [TODO: ...] are placeholders that must be replaced before launch. Never invent regulatory values.",
+  "business": {
+    "legal_name": "Divergent Healthcare Limited",
+    "trading_name": "Kare Plus Rugby",
+    "phone": "01788 422422",
+    "phone_href": "tel:+441788422422",
+    "email": "kp.rugby@kareplus.co.uk",
+    "careers_email": "kp.rugby@kareplus.co.uk",
+    "safeguarding_email": "kp.rugby@kareplus.co.uk",
+    "address": {
+      "street": "6a Davy Court, Castle Mound Way",
+      "locality": "Central Park, Rugby",
+      "region": "Warwickshire",
+      "postcode": "CV23 0UZ",
+      "country": "GB",
+      "full": "6a Davy Court, Castle Mound Way, Central Park, Rugby, Warwickshire, CV23 0UZ"
+    },
+    "companies_house_number": "14277673",
+    "cqc_provider_id": "1-18444576596",
+    "ico_registration": "[TODO: INSERT ICO DATA PROTECTION REGISTRATION NUMBER]",
+    "opening_hours": {
+      "office": "Monday to Friday, 9:00am – 5:00pm",
+      "on_call": "24 hours a day, 7 days a week"
+    },
+    "areas_served": "Rugby, Coventry, Leicestershire and Northamptonshire",
+    "whatsapp_href": "https://wa.me/447563247176",
+    "email_href": "mailto:kp.rugby@kareplus.co.uk",
+    "map_embed_query": "6a Davy Court, Castle Mound Way, Central Park, Rugby, CV23 0UZ",
+    "_note": "Company details verified against Companies House (no. 14277673, incorporated 4 August 2022) and the CQC public register (provider 1-18444576596). Treat these as ground truth over anything else in the codebase. Directors' names are published with the client's permission; their dates of birth, nationality and residential addresses are on the public register but MUST NOT be reproduced here.",
+    "incorporated": "4 August 2022",
+    "mobile": "07563 247176",
+    "mobile_href": "tel:+447563247176",
+    "cqc_provider_name": "Divergent Healthcare Limited",
+    "cqc_profile_url": "https://www.cqc.org.uk/provider/1-18444576596",
+    "cqc_status": "Registered — not yet inspected",
+    "sponsor_licence": "Licensed UK visa sponsor (A-rated)",
+    "registered_manager": "[TODO: ADD REGISTERED MANAGER NAME]",
+    "directors": [
+      {
+        "name": "Mimosha Alam",
+        "title": "Director",
+        "bio": "[TODO: ADD REAL BIO]",
+        "photo": "[TODO: ADD PHOTO]"
+      },
+      {
+        "name": "Choudhury Taimur Sadat",
+        "title": "Director",
+        "bio": "[TODO: ADD REAL BIO]",
+        "photo": "[TODO: ADD PHOTO]"
+      }
+    ],
+    "areas": [
+      {
+        "id": "rugby",
+        "name": "Rugby",
+        "county": "Warwickshire",
+        "home": true,
+        "summary": "Our home town, and where our office is based.",
+        "body": "Rugby is where we started and where our team is based, at Davy Court on Central Park. Being local means short travel times between calls, so carers arrive when they said they would and spend their time with you rather than in the car. We support people across the town and the surrounding villages, and our office team know the area well enough to plan rotas around it.",
+        "places": [
+          "Rugby town centre",
+          "Hillmorton",
+          "Bilton",
+          "Brownsover",
+          "Newbold-on-Avon",
+          "Dunchurch",
+          "Long Lawford",
+          "Clifton-upon-Dunsmore"
+        ]
+      },
+      {
+        "id": "coventry",
+        "name": "Coventry",
+        "county": "West Midlands",
+        "home": false,
+        "summary": "City-wide home care and staffing cover.",
+        "body": "Coventry is a short drive from our Rugby base, and we support both households and care providers across the city. As a large urban area with a mix of city-centre flats, suburban housing and a significant student and working-age population caring for older relatives at a distance, needs vary a great deal — so care plans here are built individually rather than to a template. We also supply nurses and care assistants to residential and nursing homes across the city.",
+        "places": [
+          "Coventry city centre",
+          "Earlsdon",
+          "Cheylesmore",
+          "Longford",
+          "Binley",
+          "Walsgrave",
+          "Tile Hill",
+          "Foleshill"
+        ]
+      },
+      {
+        "id": "leicestershire",
+        "name": "Leicestershire",
+        "county": "Leicestershire",
+        "home": false,
+        "summary": "Market towns and rural villages across the county.",
+        "body": "Leicestershire covers a wide area, from larger towns through to villages where the nearest shop or surgery is a drive away. That rural spread is exactly where home care matters most, because staying at home often means staying near family, neighbours and a community someone has known for decades. We plan visits here with realistic travel time built in, and we are honest with you about which parts of the county we can reliably cover before anything is agreed.",
+        "places": [
+          "Lutterworth",
+          "Hinckley",
+          "Market Harborough",
+          "Broughton Astley",
+          "Blaby",
+          "Wigston",
+          "Countesthorpe",
+          "surrounding villages"
+        ]
+      },
+      {
+        "id": "northamptonshire",
+        "name": "Northamptonshire",
+        "county": "Northamptonshire",
+        "home": false,
+        "summary": "Home care and care home staffing across the county.",
+        "body": "Northamptonshire sits just over the border from Rugby, and we support households and care providers across the northern and western parts of the county in particular. As with Leicestershire, distances can be significant, so we would rather tell you plainly whether we can staff a package properly than take it on and let you down. For care homes, we supply nurses and care staff for planned rotas as well as short-notice cover.",
+        "places": [
+          "Daventry",
+          "Northampton",
+          "Towcester",
+          "Brackley",
+          "Long Buckby",
+          "Weedon",
+          "surrounding villages"
+        ]
+      }
+    ],
+    "areas_note": "Coverage depends on the level of support needed and current staffing. We will always tell you honestly at the enquiry stage whether we can cover your address properly, rather than agreeing and then struggling to staff it."
+  },
+  "nav": {
+    "primary": [
+      {
+        "name": "Domiciliary Care",
+        "url": "/domiciliary-care"
+      },
+      {
+        "name": "Care Home Staffing",
+        "url": "/care-home-staffing"
+      },
+      {
+        "name": "Supported Living",
+        "url": "/supported-living"
+      },
+      {
+        "name": "About",
+        "url": "/about"
+      },
+      {
+        "name": "FAQs",
+        "url": "/faq"
+      },
+      {
+        "name": "Contact",
+        "url": "/contact"
+      }
+    ],
+    "intents": [
+      {
+        "id": "care",
+        "label": "I need care at home",
+        "description": "For individuals and families arranging support at home.",
+        "url": "/domiciliary-care",
+        "cta": "Explore home care"
+      },
+      {
+        "id": "staff",
+        "label": "I need staff for my care home",
+        "description": "For care homes and managers who need nurses and carers.",
+        "url": "/care-home-staffing",
+        "cta": "Request staff"
+      },
+      {
+        "id": "work",
+        "label": "I want to work in care",
+        "description": "For carers and nurses looking for their next role.",
+        "url": "/careers",
+        "cta": "See our vacancies"
+      }
+    ],
+    "footer": {
+      "services": [
+        {
+          "text": "Domiciliary Care",
+          "url": "/domiciliary-care"
+        },
+        {
+          "text": "Care Home Staffing",
+          "url": "/care-home-staffing"
+        },
+        {
+          "text": "Supported Living",
+          "url": "/supported-living"
+        }
+      ],
+      "company": [
+        {
+          "text": "About Us",
+          "url": "/about"
+        },
+        {
+          "text": "Careers",
+          "url": "/careers"
+        },
+        {
+          "text": "FAQs",
+          "url": "/faq"
+        },
+        {
+          "text": "Contact",
+          "url": "/contact"
+        }
+      ],
+      "legal": [
+        {
+          "text": "Privacy Policy",
+          "url": "/privacy-policy"
+        },
+        {
+          "text": "Cookie Policy",
+          "url": "/cookie-policy"
+        },
+        {
+          "text": "Complaints Procedure",
+          "url": "/complaints"
+        },
+        {
+          "text": "Safeguarding",
+          "url": "/safeguarding"
+        },
+        {
+          "text": "Terms & Conditions",
+          "url": "/terms-and-conditions"
+        },
+        {
+          "text": "Request Your Data",
+          "url": "/request-personal-data"
+        }
+      ]
+    }
+  },
+  "seo": {
+    "site_name": "Kare Plus Rugby",
+    "base_url": "https://www.kareplusrugby.co.uk",
+    "default_title": "Kare Plus Rugby | Home Care & Care Home Staffing in Rugby",
+    "default_description": "Kare Plus Rugby provides domiciliary care at home and supplies vetted nurses and carers to care homes across Rugby and Warwickshire. Call 01788 422422.",
+    "og_image": "/images/og-default.png",
+    "twitter_handle": ""
+  }
+}

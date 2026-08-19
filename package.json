@@ -1,6 +1,6 @@
 {
   "name": "kare-plus-rugby",
-  "description": "Kare Plus Rugby",
+  "description": "Kare Plus Rugby \u2014 home care and care home staffing",
   "version": "2.0.0",
   "private": true,
   "license": "MIT",
@@ -14,6 +14,7 @@
   "dependencies": {
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
+    "lucide-react": "^1.31.0",
     "marked": "^14.1.0",
     "next": "^14.2.7",
     "next-mdx-remote": "^6.0.0",

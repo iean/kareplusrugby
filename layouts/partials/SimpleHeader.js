@@ -1,24 +1,18 @@
 "use client";
 
-import BrandLogo from "@components/BrandLogo";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import {
-  FaPhoneAlt,
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
+import { FaPhoneAlt, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import config from "@config/config.json";
 import menu from "@config/menu.json";
-import social from "@config/social.json";
 
 const SimpleHeader = () => {
   const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
   const { main } = menu;
-  const { base_url } = config.site;
+  const { base_url, logo, title } = config.site;
 
   const serviceName = pathname.startsWith("/domiciliary")
     ? "Domiciliary Care"
@@ -29,19 +23,21 @@ const SimpleHeader = () => {
         : "";
 
   return (
-    <header className="bg-white shadow border-b border-[#e5e5f7]">
+    <header className="bg-white shadow border-b border-primary-100">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between py-4">
           {/* Left: Logo */}
-          <Link href={base_url} className="flex items-center gap-3">
-            <BrandLogo
-              linked={false}
-              className="shrink-0"
-              imageClassName="h-12 w-auto sm:h-14"
+          <Link href={base_url} className="flex items-center">
+            <Image
+              src={logo}
+              alt={title}
+              width={220}
+              height={130}
+              className="object-contain max-h-[110px] w-auto"
               priority
             />
             {serviceName && (
-              <span className="rounded-full bg-[#eef2ff] px-3 py-1 text-sm font-semibold text-[#5e3ea1] sm:text-base">
+              <span className="ml-3 text-base font-semibold text-primary-700">
                 {serviceName}
               </span>
             )}
@@ -49,7 +45,7 @@ const SimpleHeader = () => {
 
           {/* Center: Navigation */}
           <nav className="hidden md:flex flex-1 justify-center">
-            <ul className="flex space-x-6 font-semibold text-[#c69c6d] uppercase tracking-wide text-sm">
+            <ul className="flex space-x-6 font-semibold text-primary-800 uppercase tracking-wide text-sm">
               {main
                 .filter((item) => item.name !== "Home")
                 .map((item, i) => (
@@ -58,8 +54,8 @@ const SimpleHeader = () => {
                       href={item.url}
                       className={`px-4 py-2 rounded-full transition duration-200 ${
                         pathname === item.url
-                          ? "bg-[#5e3ea1] text-white"
-                          : "hover:text-[#5e3ea1]"
+                          ? "bg-primary-700 text-white"
+                          : "hover:text-primary-700"
                       }`}
                     >
                       {item.name}
@@ -71,7 +67,7 @@ const SimpleHeader = () => {
 
           {/* Mobile menu toggle */}
           <button
-            className="md:hidden text-[#5e3ea1]"
+            className="md:hidden text-primary-700"
             onClick={() => setNavOpen(!navOpen)}
             aria-label="Toggle menu"
           >
@@ -95,42 +91,35 @@ const SimpleHeader = () => {
           </button>
 
           {/* Right: Contact + Social */}
-          <div className="hidden md:flex items-center space-x-6 border-l pl-6 border-[#ccc]">
+          <div className="hidden md:flex items-center space-x-6 border-l pl-6 border-borderStrong">
             {/* Contact */}
             <div className="flex items-center space-x-2">
-              <FaPhoneAlt className="text-[#218b61]" />
+              <FaPhoneAlt className="text-success" />
               <div className="text-sm leading-tight">
-                <span className="text-xs font-semibold text-[#5e3ea1] uppercase block">
+                <span className="text-xs font-semibold text-primary-700 uppercase block">
                   Contact Us
                 </span>
-                <span className="font-bold text-[#333] whitespace-nowrap">
+                <span className="font-bold text-text whitespace-nowrap">
                   01788 422422
                 </span>
               </div>
             </div>
 
             {/* Social Icons */}
-            <div className="flex items-center space-x-3 text-[#218b61] text-base">
+            <div className="flex items-center space-x-3 text-success text-base">
               <Link
-                href={social.facebook}
+                href="https://facebook.com"
                 target="_blank"
                 aria-label="Facebook"
               >
-                <FaFacebookF className="hover:text-[#5e3ea1] transition" />
+                <FaFacebookF className="hover:text-primary-700 transition" />
               </Link>
               <Link
-                href={social.instagram}
-                target="_blank"
-                aria-label="Instagram"
-              >
-                <FaInstagram className="hover:text-[#5e3ea1] transition" />
-              </Link>
-              <Link
-                href={social.linkedin}
+                href="https://linkedin.com"
                 target="_blank"
                 aria-label="LinkedIn"
               >
-                <FaLinkedinIn className="hover:text-[#5e3ea1] transition" />
+                <FaLinkedinIn className="hover:text-primary-700 transition" />
               </Link>
             </div>
           </div>
@@ -147,8 +136,8 @@ const SimpleHeader = () => {
                       onClick={() => setNavOpen(false)}
                       className={`block px-3 py-2 rounded-md transition ${
                         pathname === item.url
-                          ? "bg-[#5e3ea1] text-white"
-                          : "hover:text-[#5e3ea1]"
+                          ? "bg-primary-700 text-white"
+                          : "hover:text-primary-700"
                       }`}
                     >
                       {item.name}

@@ -1,22 +1,24 @@
 "use client";
 
-import BrandLogo from "@components/BrandLogo";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   FaFacebookF,
   FaLinkedinIn,
-  FaInstagram,
+  FaTwitter,
   FaArrowLeft,
 } from "react-icons/fa";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
+import config from "@config/config.json";
 import menu from "@config/menu.json";
-import social from "@config/social.json";
 
 const Header = ({ menuItems }) => {
   const pathname = usePathname();
+  const { base_url, logo, title } = config.site;
   const main = menuItems || menu.main;
+  const { enable, label, link } = config.nav_button;
 
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -39,7 +41,7 @@ const Header = ({ menuItems }) => {
         <div className="hidden sm:flex">
           <Link
             href="/"
-            className="border border-[#431c52] text-[#431c52] text-xs font-bold px-5 py-2 rounded-full hover:bg-[#431c52] hover:text-white transition flex items-center space-x-2"
+            className="border border-primary-900 text-primary-900 text-xs font-bold px-5 py-2 rounded-full hover:bg-primary-900 hover:text-white transition flex items-center space-x-2"
           >
             <FaArrowLeft className="text-sm" />
             <span>OTHER SERVICES</span>
@@ -51,46 +53,51 @@ const Header = ({ menuItems }) => {
           <button
             onClick={() => setNavOpen(!navOpen)}
             aria-label="Toggle Menu"
-            className="text-[#431c52] text-2xl"
+            className="text-primary-900 text-2xl"
           >
             {navOpen ? <HiX /> : <HiMenuAlt3 />}
           </button>
         </div>
 
         {/* Center Logo */}
-        <BrandLogo
-          className="flex items-center justify-center"
-          imageClassName="h-12 w-auto sm:h-14 lg:h-16"
-          priority
-        />
+        <Link href={base_url} className="flex items-center justify-center">
+          <Image
+            src={logo}
+            alt={title}
+            width={220}
+            height={130}
+            className="object-contain max-h-[110px] w-auto"
+            priority
+          />
+        </Link>
 
         {/* Right: Social (hidden on mobile) */}
         <div className="hidden sm:flex items-center space-x-4">
           <div className="flex items-center space-x-2 text-white">
             <a
-              href={social.facebook}
+              href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="bg-[#3bb273] p-2 rounded-full"
+              className="bg-success p-2 rounded-full"
             >
               <FaFacebookF />
             </a>
             <a
-              href={social.instagram}
+              href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="bg-[#3bb273] p-2 rounded-full"
+              aria-label="Twitter"
+              className="bg-success p-2 rounded-full"
             >
-              <FaInstagram />
+              <FaTwitter />
             </a>
             <a
-              href={social.linkedin}
+              href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="bg-[#3bb273] p-2 rounded-full"
+              className="bg-success p-2 rounded-full"
             >
               <FaLinkedinIn />
             </a>
@@ -108,8 +115,8 @@ const Header = ({ menuItems }) => {
                   href={item.url}
                   className={`px-4 py-2 rounded-full transition ${
                     pathname === item.url
-                      ? "bg-[#431c52] text-white"
-                      : "hover:text-[#431c52]"
+                      ? "bg-primary-900 text-white"
+                      : "hover:text-primary-900"
                   }`}
                 >
                   {item.name}
@@ -118,13 +125,13 @@ const Header = ({ menuItems }) => {
             ))}
           </ul>
         </div>
-        <div className="h-1 bg-gradient-to-r from-[#a3d9c3] via-[#b2d0df] to-[#8b90b3]" />
+        <div className="h-1 bg-gradient-to-r from-successBg via-primary-200 to-textMuted" />
       </nav>
 
       {/* Mobile Dropdown Nav */}
       {navOpen && (
         <div className="lg:hidden px-4 pt-2 pb-4 border-t bg-white shadow-inner">
-          <ul className="flex flex-col space-y-3 text-base font-semibold text-[#431c52]">
+          <ul className="flex flex-col space-y-3 text-base font-semibold text-primary-900">
             {main.map((item, i) => (
               <li key={i}>
                 <Link
@@ -132,8 +139,8 @@ const Header = ({ menuItems }) => {
                   onClick={() => setNavOpen(false)}
                   className={`block px-3 py-2 rounded-full ${
                     pathname === item.url
-                      ? "bg-[#431c52] text-white"
-                      : "hover:bg-[#eee]"
+                      ? "bg-primary-900 text-white"
+                      : "hover:bg-border"
                   }`}
                 >
                   {item.name}
@@ -143,7 +150,7 @@ const Header = ({ menuItems }) => {
             <li className="pt-3">
               <Link
                 href="/"
-                className="block text-center border border-[#431c52] text-[#431c52] rounded-full px-4 py-2 text-sm hover:bg-[#431c52] hover:text-white flex items-center justify-center space-x-2"
+                className="block text-center border border-primary-900 text-primary-900 rounded-full px-4 py-2 text-sm hover:bg-primary-900 hover:text-white flex items-center justify-center space-x-2"
               >
                 <FaArrowLeft className="text-sm" />
                 <span>OTHER SERVICES</span>
@@ -152,29 +159,23 @@ const Header = ({ menuItems }) => {
 
             <li className="pt-3 flex items-center justify-center space-x-3">
               <a
-                href={social.facebook}
-                className="bg-[#3bb273] p-2 rounded-full text-white"
+                href="https://facebook.com"
+                className="bg-success p-2 rounded-full text-white"
                 aria-label="Facebook"
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <FaFacebookF />
               </a>
               <a
-                href={social.instagram}
-                className="bg-[#3bb273] p-2 rounded-full text-white"
-                aria-label="Instagram"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="https://twitter.com"
+                className="bg-success p-2 rounded-full text-white"
+                aria-label="Twitter"
               >
-                <FaInstagram />
+                <FaTwitter />
               </a>
               <a
-                href={social.linkedin}
-                className="bg-[#3bb273] p-2 rounded-full text-white"
+                href="https://linkedin.com"
+                className="bg-success p-2 rounded-full text-white"
                 aria-label="LinkedIn"
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <FaLinkedinIn />
               </a>

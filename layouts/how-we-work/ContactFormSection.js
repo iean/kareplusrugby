@@ -8,7 +8,7 @@ const ContactFormSection = ({ data }) => {
   const { contact_form_action } = config.params;
 
   return (
-    <section className="section bg-[#F9F7FB]">
+    <section className="section bg-primary-50">
       <div className="container">
         {markdownify(title, "h2", "text-center font-normal mb-8")}
         <div className="grid md:grid-cols-2 gap-10 items-center">
@@ -60,7 +60,7 @@ const ContactFormSection = ({ data }) => {
               className="rounded-xl border"
             />
             <div className="mt-6 text-left">
-              {markdownify(info.title, "h4", "text-[#2f2f85]")}
+              {markdownify(info.title, "h4", "text-primary-800")}
               {markdownify(info.description, "p", "mt-2 text-gray-700")}
               <ul className="mt-4 space-y-1">
                 {info.contacts.map((contact, index) => (

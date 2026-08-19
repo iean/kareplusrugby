@@ -3,35 +3,32 @@
     "title": "Kare Plus Rugby",
     "base_url": "/",
     "favicon": "/images/favicon.png",
-    "logo": "/images/logos/kare-plus-horizontal.svg",
-    "logo_width": "320",
-    "logo_height": "88",
-    "logo_text": "Kare Plus Rugby"
+    "logo": "/images/kareplus-logo.png",
+    "logo_width": "640",
+    "logo_height": "239",
+    "logo_text": "Kare Plus Rugby",
+    "logo_white": "/images/kareplus-logo-white.png"
   },
-
   "settings": {
     "pagination": 4,
     "summary_length": 200,
     "blog_folder": "blogs"
   },
-
   "nav_button": {
     "enable": true,
     "label": "Services",
     "link": "/"
   },
-
   "params": {
     "contact_form_action": "/api/messages",
-    "contact_email": "masud.official@gmail.com",
+    "contact_email": "kp.rugby@kareplus.co.uk",
     "tag_manager_id": "",
-    "footer_content": "Lorem ipsum dolor sit amet, consectetur elit. Consjat tristique eget amet, tempus eu at cttur.",
-    "copyright": "Designed and Developed By [Sofgent](https://sofgent.com/)"
+    "footer_content": "Kare Plus Rugby provides care at home and supplies trained nurses and carers to care homes across Rugby and Warwickshire.",
+    "copyright": "© Kare Plus Rugby"
   },
-
   "metadata": {
     "meta_author": "Kare Plus Rugby",
-    "meta_image": "",
-    "meta_description": "Caring from the heart"
+    "meta_image": "/images/og-default.png",
+    "meta_description": "Home care and care home staffing in Rugby and Warwickshire from Kare Plus Rugby."
   }
 }

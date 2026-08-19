@@ -1,0 +1,134 @@
+// ---------------------------------------------------------------------------
+// Motion
+//
+// Everything here is CSS-only so it runs before hydration. Nothing starts at
+// opacity 0 unless it is guaranteed to animate to 1 - content that depends on
+// JS to become visible is a real risk on a care site where people may be on
+// slow connections or older devices.
+//
+// The whole file is disabled under prefers-reduced-motion at the bottom.
+// ---------------------------------------------------------------------------
+
+// --- Hero background: a very slow blue drift -------------------------------
+.hero-gradient {
+  background: linear-gradient(
+    115deg,
+    #000048 0%,
+    #062463 28%,
+    #0b347f 52%,
+    #12469b 74%,
+    #062463 100%
+  );
+  background-size: 300% 300%;
+  animation: heroDrift 18s ease-in-out infinite;
+}
+
+@keyframes heroDrift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+// --- Hero foreground: subtle dot texture -----------------------------------
+.hero-dots {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.16) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  // Fades out toward the bottom so it never fights the wave divider
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.9),
+    transparent 85%
+  );
+}
+
+// --- Staggered entrance ----------------------------------------------------
+.hero-rise {
+  animation: heroRise 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-rise-1 { animation-delay: 0.02s; }
+.hero-rise-2 { animation-delay: 0.10s; }
+.hero-rise-3 { animation-delay: 0.19s; }
+.hero-rise-4 { animation-delay: 0.28s; }
+.hero-rise-5 { animation-delay: 0.37s; }
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+// --- Route transition ------------------------------------------------------
+// Applied to <main> on navigation. Fade only, no movement: sliding whole pages
+// around is disorientating for the audience this site serves.
+.route-fade {
+  animation: routeFade 0.32s ease-out both;
+}
+
+@keyframes routeFade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+// --- Marquee-free logo/badge shimmer for skeletons -------------------------
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #eef3fa 25%,
+    #f7f9fc 37%,
+    #eef3fa 63%
+  );
+  background-size: 400% 100%;
+  animation: skeletonSweep 1.4s ease-in-out infinite;
+}
+
+@keyframes skeletonSweep {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+// --- Respect the user's preference ----------------------------------------
+// Belt and braces: Tailwind's motion-reduce: variants cover component-level
+// motion, this covers everything declared above.
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient,
+  .hero-rise,
+  .route-fade,
+  .skeleton {
+    animation: none !important;
+  }
+
+  .hero-rise,
+  .route-fade {
+    // Must still end visible - never leave content stuck at opacity 0
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-gradient {
+    background-size: 100% 100%;
+  }
+}

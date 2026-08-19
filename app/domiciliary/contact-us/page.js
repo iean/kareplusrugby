@@ -7,7 +7,7 @@ const ContactUsPage = async () => {
     <>
       {/* Hero Section with Background Image and Gradient */}
       <section
-        className="h-[70vh] bg-gradient-to-br from-[#431c52] via-[#6a2c70] to-[#f4b860] flex items-center relative"
+        className="h-[70vh] bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 flex items-center relative"
         style={{
           backgroundImage: `url('/images/services/respite-care.jpeg')`,
           backgroundSize: "cover",
@@ -16,7 +16,7 @@ const ContactUsPage = async () => {
         }}
       >
         {/* Gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#431c52cc] via-[#6a2c70cc] to-[#f4b860cc]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">

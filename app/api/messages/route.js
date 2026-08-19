@@ -64,15 +64,30 @@ export async function POST(req) {
     date: new Date().toISOString(),
   };
 
-  const messages = await readMessages();
-  messages.push({ id: Date.now(), ...msg });
-  await writeMessages(messages);
+  // Best effort only. On Netlify the filesystem is ephemeral and read-only,
+  // so this write usually fails or is wiped on the next deploy. Email is the
+  // real delivery path — never let a failed write lose the enquiry.
+  try {
+    const messages = await readMessages();
+    messages.push({ id: Date.now(), ...msg });
+    await writeMessages(messages);
+  } catch (err) {
+    console.error("Could not persist message to disk", err);
+  }
 
   try {
     await sendEmail(msg);
   } catch (err) {
-    console.error("Email failed", err);
+    // Previously this was swallowed, so a misconfigured EMAIL_USER/EMAIL_PASS
+    // showed the visitor a thank-you page while the enquiry went nowhere.
+    console.error("Contact email failed to send", err);
+    return new NextResponse(
+      "Sorry — we could not send your message. Please call us or email us directly.",
+      { status: 500, headers: { "Cache-Control": "no-store" } },
+    );
   }
 
-  return NextResponse.redirect("/thank-you");
+  // Must be absolute: NextResponse.redirect rejects a relative URL.
+  // 303 turns the POST into a GET so the browser does not re-post to /thank-you.
+  return NextResponse.redirect(new URL("/thank-you", req.url), 303);
 }

@@ -6,10 +6,10 @@ import { BiArrowBack } from "react-icons/bi";
 
 const DomiciliaryBanner = () => {
   return (
-    <section className="relative z-10 bg-gradient-to-r from-[#70c198] via-[#9dbbdf] to-[#6a7cd1] overflow-hidden">
+    <section className="relative z-10 bg-gradient-to-r from-success via-primary-300 to-primary-400 overflow-hidden">
       <Link
         href="/"
-        className="absolute top-4 left-4 flex items-center text-white text-sm font-semibold bg-[#431c52] bg-opacity-70 hover:bg-opacity-90 px-3 py-1 rounded-full"
+        className="absolute top-4 left-4 flex items-center text-white text-sm font-semibold bg-primary-900 bg-opacity-70 hover:bg-opacity-90 px-3 py-1 rounded-full"
       >
         <BiArrowBack className="mr-1" />
         Services
@@ -26,13 +26,13 @@ const DomiciliaryBanner = () => {
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link
               href="/domiciliary"
-              className="inline-block border-2 border-white text-white px-6 py-3 rounded-full text-base font-semibold shadow hover:bg-white hover:text-[#6a2c70] transition"
+              className="inline-block border-2 border-white text-white px-6 py-3 rounded-full text-base font-semibold shadow hover:bg-white hover:text-primary-800 transition"
             >
               View Services
             </Link>
             <Link
               href="/contact"
-              className="inline-block border-2 border-white text-white px-6 py-3 rounded-full text-base font-semibold shadow hover:bg-white hover:text-[#6a2c70] transition"
+              className="inline-block border-2 border-white text-white px-6 py-3 rounded-full text-base font-semibold shadow hover:bg-white hover:text-primary-800 transition"
             >
               Know More About Us
             </Link>

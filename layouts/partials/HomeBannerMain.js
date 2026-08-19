@@ -50,7 +50,7 @@ const HomeBannerMain = () => {
               }}
             >
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#431c52cc] via-[#6a2c70cc] to-[#f4b860cc]" />
+              <div className="absolute inset-0 z-0 bg-gradient-to-r from-primary-950 via-primary-900 to-primary-700" />
 
               {/* Content */}
               <div className="z-10 max-w-screen-xl mx-auto px-2 md:px-2 w-full">
@@ -62,7 +62,7 @@ const HomeBannerMain = () => {
                   <div className="flex justify-center">
                     <Link
                       href={slide.link}
-                      className="inline-block bg-white text-[#431c52] hover:bg-[#5e3ea1] hover:text-white font-semibold px-6 py-3 rounded-full transition"
+                      className="inline-block bg-white text-primary-900 hover:bg-primary-700 hover:text-white font-semibold px-6 py-3 rounded-full transition"
                     >
                       View Service
                     </Link>
@@ -82,7 +82,7 @@ const HomeBannerMain = () => {
           preserveAspectRatio="none"
         >
           <path
-            fill="#431c52"
+            fill="#062463"
             d="M0,32L60,48C120,64,240,96,360,96C480,96,600,64,720,64C840,64,960,96,1080,106.7C1200,117,1320,107,1380,101.3L1440,96L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"
           ></path>
         </svg>

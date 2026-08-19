@@ -12,15 +12,15 @@ const MissionValues = () => (
       </div>
       <div className="space-y-4">
         <div className="p-6 bg-white border rounded-xl shadow">
-          <h3 className="font-semibold text-accent mb-1">Personalised Care</h3>
+          <h3 className="font-semibold text-primary-800 mb-1">Personalised Care</h3>
           <p className="text-sm text-gray-600">We tailor care plans around each individual's needs.</p>
         </div>
         <div className="p-6 bg-white border rounded-xl shadow">
-          <h3 className="font-semibold text-accent mb-1">Trusted Carers</h3>
+          <h3 className="font-semibold text-primary-800 mb-1">Trusted Carers</h3>
           <p className="text-sm text-gray-600">All staff are fully trained and background checked.</p>
         </div>
         <div className="p-6 bg-white border rounded-xl shadow">
-          <h3 className="font-semibold text-accent mb-1">Ongoing Support</h3>
+          <h3 className="font-semibold text-primary-800 mb-1">Ongoing Support</h3>
           <p className="text-sm text-gray-600">We communicate regularly to ensure happiness and wellbeing.</p>
         </div>
       </div>

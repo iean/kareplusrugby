@@ -4,7 +4,7 @@ const AboutUs = () => (
   <>
     {/* Hero Section with Background Image and Gradient */}
     <section
-      className="h-[70vh] bg-gradient-to-br from-[#431c52] via-[#6a2c70] to-[#f4b860] flex items-center relative"
+      className="h-[70vh] bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 flex items-center relative"
       style={{
         backgroundImage: `url('/images/domiciliary/Bannerdomiciliary.jpg')`,
         backgroundSize: "cover",
@@ -13,14 +13,14 @@ const AboutUs = () => (
       }}
     >
       {/* Gradient overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#431c52cc] via-[#6a2c70cc] to-[#f4b860cc]"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
           Quality, Efficient & Person-centred Service
         </h1>
         <p className="text-xl text-white text-center mb-8 max-w-4xl mx-auto">
-          Kare Plus Rugby is a specialist employment business,
+          Kare Plus Rugby Healthcare is a specialist employment business,
           supplying highly trained healthcare professionals to care homes,
           hospitals, and healthcare clients across the UK.
         </p>
@@ -39,7 +39,7 @@ const AboutUs = () => (
           <div>
             <h2 className="text-3xl font-bold text-primary mb-6">About Us</h2>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              Kare Plus Rugby is a specialist employment business,
+              Kare Plus Rugby Healthcare is a specialist employment business,
               which supplies to care homes, hospitals and other healthcare
               clients across the UK with highly trained nurses, social workers,
               care assistants, support workers and more.
@@ -51,7 +51,7 @@ const AboutUs = () => (
               flexibly selecting the hours they want to work.
             </p>
           </div>
-          <div className="bg-gradient-to-br from-[#431c52] to-[#6a2c70] p-8 rounded-lg text-white">
+          <div className="bg-gradient-to-br from-primary-900 to-primary-800 p-8 rounded-lg text-white">
             <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
             <p className="mb-4">
               To provide exceptional healthcare staffing solutions that connect
@@ -60,11 +60,11 @@ const AboutUs = () => (
             </p>
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-accent">500+</div>
+                <div className="text-3xl font-bold text-primary-800">500+</div>
                 <div className="text-sm">Healthcare Professionals</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-accent">100+</div>
+                <div className="text-3xl font-bold text-primary-800">100+</div>
                 <div className="text-sm">Healthcare Clients</div>
               </div>
             </div>
@@ -81,7 +81,7 @@ const AboutUs = () => (
             Professional, Efficient and Personable
           </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
-            Everything about Kare Plus Rugby stands for quality,
+            Everything about Kare Plus Rugby Healthcare stands for quality,
             whether that&apos;s the services we provide or the staff we employ.
           </p>
         </div>
@@ -172,13 +172,13 @@ const AboutUs = () => (
               clients get the very best standard of staff.
             </p>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              In particular, Kare Plus Rugby aims to recruit
+              In particular, Kare Plus Rugby Healthcare aims to recruit
               individuals who have a great track record of working with diverse
               clients. We always provide an extensive and outstanding level of
               care and service to each one of our clients.
             </p>
             <div className="bg-accent/10 p-6 rounded-lg border-l-4 border-accent">
-              <h4 className="font-semibold text-accent mb-2">
+              <h4 className="font-semibold text-primary-800 mb-2">
                 Quality Personal Service
               </h4>
               <p className="text-gray-700 text-sm">
@@ -187,12 +187,12 @@ const AboutUs = () => (
               </p>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-[#431c52] to-[#6a2c70] p-8 rounded-lg text-white">
+          <div className="bg-gradient-to-br from-primary-900 to-primary-800 p-8 rounded-lg text-white">
             <h3 className="text-2xl font-bold mb-4">Our Specialities</h3>
             <ul className="space-y-3">
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 text-accent mr-3"
+                  className="w-5 h-5 text-primary-800 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -206,7 +206,7 @@ const AboutUs = () => (
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 text-accent mr-3"
+                  className="w-5 h-5 text-primary-800 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -220,7 +220,7 @@ const AboutUs = () => (
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 text-accent mr-3"
+                  className="w-5 h-5 text-primary-800 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -234,7 +234,7 @@ const AboutUs = () => (
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 text-accent mr-3"
+                  className="w-5 h-5 text-primary-800 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -248,7 +248,7 @@ const AboutUs = () => (
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 text-accent mr-3"
+                  className="w-5 h-5 text-primary-800 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -262,7 +262,7 @@ const AboutUs = () => (
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 text-accent mr-3"
+                  className="w-5 h-5 text-primary-800 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -283,7 +283,7 @@ const AboutUs = () => (
     {/* Get In Touch Section */}
     <section
       id="contact"
-      className="py-16 bg-gradient-to-br from-[#431c52] via-[#6a2c70] to-[#f4b860] text-white"
+      className="py-16 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 text-white"
     >
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-12">
@@ -315,7 +315,7 @@ const AboutUs = () => (
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-2">Email</h3>
-            <p className="mb-2">info@heartandhaven.com</p>
+            <p className="mb-2">kp.rugby@kareplus.co.uk</p>
             <p className="text-sm opacity-90">General Inquiries</p>
           </div>
 
@@ -330,7 +330,7 @@ const AboutUs = () => (
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-2">Address</h3>
-            <p className="mb-2">6A Davy Court, Castle Mound Way</p>
+            <p className="mb-2">6a Davy Court, Castle Mound Way</p>
             <p className="text-sm opacity-90">Rugby, CV23 0UZ</p>
           </div>
         </div>

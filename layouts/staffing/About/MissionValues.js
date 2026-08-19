@@ -14,15 +14,15 @@ const MissionValues = () => (
       </div>
       <div className="space-y-4">
         <div className="p-6 bg-white border rounded-xl shadow">
-          <h3 className="font-semibold text-accent mb-1">Quality Recruitment</h3>
+          <h3 className="font-semibold text-primary-800 mb-1">Quality Recruitment</h3>
           <p className="text-sm text-gray-600">All candidates undergo comprehensive vetting.</p>
         </div>
         <div className="p-6 bg-white border rounded-xl shadow">
-          <h3 className="font-semibold text-accent mb-1">Responsive Support</h3>
+          <h3 className="font-semibold text-primary-800 mb-1">Responsive Support</h3>
           <p className="text-sm text-gray-600">Our team is available 24/7 for urgent requests.</p>
         </div>
         <div className="p-6 bg-white border rounded-xl shadow">
-          <h3 className="font-semibold text-accent mb-1">Nationwide Cover</h3>
+          <h3 className="font-semibold text-primary-800 mb-1">Nationwide Cover</h3>
           <p className="text-sm text-gray-600">We place professionals across the UK.</p>
         </div>
       </div>

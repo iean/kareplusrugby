@@ -49,7 +49,7 @@ const ServiceDescription = ({
           </Link>
           <Link
             href="/staffing/how-we-work"
-            className="bg-[#431c52] hover:bg-[#5c2770] text-white font-semibold px-6 py-3 text-sm rounded-full transition"
+            className="bg-primary-900 hover:bg-primary-800 text-white font-semibold px-6 py-3 text-sm rounded-full transition"
           >
             REGISTER TODAY
           </Link>

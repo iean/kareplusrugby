@@ -28,7 +28,7 @@ const ServiceProcess = () => (
             <div className="w-12 h-12 mx-auto mb-4 text-lg font-bold flex items-center justify-center rounded-full bg-accent text-white">
               {i + 1}
             </div>
-            <h3 className="font-semibold text-accent mb-2">{step.title}</h3>
+            <h3 className="font-semibold text-primary-800 mb-2">{step.title}</h3>
             <p className="text-sm text-gray-600">{step.text}</p>
           </div>
         ))}

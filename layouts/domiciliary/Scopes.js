@@ -4,17 +4,17 @@ import { MdLocalHospital, MdOutlineVolunteerActivism, MdElderly } from "react-ic
 
 const scopes = [
   {
-    icon: <MdElderly size={40} className="text-accent" />,
+    icon: <MdElderly size={40} className="text-primary-800" />,
     title: "Elderly Support",
     text: "Helping older adults remain safe and comfortable at home.",
   },
   {
-    icon: <MdOutlineVolunteerActivism size={40} className="text-accent" />,
+    icon: <MdOutlineVolunteerActivism size={40} className="text-primary-800" />,
     title: "Respite Services",
     text: "Short-term care allowing family members to take a break.",
   },
   {
-    icon: <MdLocalHospital size={40} className="text-accent" />,
+    icon: <MdLocalHospital size={40} className="text-primary-800" />,
     title: "Specialist Care",
     text: "Trained carers experienced with complex medical conditions.",
   },
@@ -31,7 +31,7 @@ const ServiceScopes = () => (
             className="border border-gray-200 rounded-xl p-6 text-center bg-white shadow hover:shadow-lg transition"
           >
             <div className="flex justify-center mb-4">{item.icon}</div>
-            <h3 className="text-lg font-semibold text-accent mb-2">{item.title}</h3>
+            <h3 className="text-lg font-semibold text-primary-800 mb-2">{item.title}</h3>
             <p className="text-sm text-gray-600">{item.text}</p>
           </div>
         ))}

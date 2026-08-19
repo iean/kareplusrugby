@@ -30,12 +30,12 @@ const TermsAndConditionsPage = () => {
                 </h2>
                 <p className="mb-6">
                   These Terms and Conditions (&quot;Terms&quot;) govern your use
-                  of Kare Plus Rugby&apos;s services, website, and
+                  of Kare Plus Rugby Healthcare&apos;s services, website, and
                   any related services. By using our services, you agree to be
                   bound by these Terms.
                 </p>
                 <p className="mb-6">
-                  Kare Plus Rugby is a registered domiciliary care
+                  Kare Plus Rugby Healthcare is a registered domiciliary care
                   provider regulated by the Care Quality Commission (CQC) and
                   operates in accordance with UK healthcare regulations.
                 </p>
@@ -61,14 +61,14 @@ const TermsAndConditionsPage = () => {
                     platform and services
                   </li>
                   <li>
-                    <strong>&quot;We/Us/Our&quot;</strong> means Kare Plus Rugby
+                    <strong>&quot;We/Us/Our&quot;</strong> means Kare Plus Rugby Healthcare
                   </li>
                 </ul>
 
                 <h2 className="text-2xl font-bold text-primary mb-6">
                   3. Service Provision
                 </h2>
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   3.1 Care Services
                 </h3>
                 <p className="mb-4">We provide the following services:</p>
@@ -81,7 +81,7 @@ const TermsAndConditionsPage = () => {
                   <li>Specialist care for specific conditions</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   3.2 Service Standards
                 </h3>
                 <p className="mb-6">
@@ -111,18 +111,18 @@ const TermsAndConditionsPage = () => {
                 <h2 className="text-2xl font-bold text-primary mb-6">
                   5. Booking and Cancellation
                 </h2>
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   5.1 Booking
                 </h3>
                 <p className="mb-4">Care services can be booked through:</p>
                 <ul className="list-disc pl-6 mb-6 space-y-2">
                   <li>Our website contact forms</li>
                   <li>Phone: 01788 422422</li>
-                  <li>Email: info@heartandhaven.com</li>
+                  <li>Email: kp.rugby@kareplus.co.uk</li>
                   <li>Direct contact with our care coordinators</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   5.2 Cancellation Policy
                 </h3>
                 <p className="mb-6">
@@ -134,7 +134,7 @@ const TermsAndConditionsPage = () => {
                 <h2 className="text-2xl font-bold text-primary mb-6">
                   6. Payment Terms
                 </h2>
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   6.1 Fees
                 </h3>
                 <p className="mb-4">Our fees are:</p>
@@ -145,7 +145,7 @@ const TermsAndConditionsPage = () => {
                   <li>Exclusive of additional services (clearly stated)</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   6.2 Payment Methods
                 </h3>
                 <p className="mb-6">
@@ -194,7 +194,7 @@ const TermsAndConditionsPage = () => {
                 <h2 className="text-2xl font-bold text-primary mb-6">
                   10. Website Use
                 </h2>
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   10.1 Acceptable Use
                 </h3>
                 <p className="mb-4">You agree not to:</p>
@@ -205,12 +205,12 @@ const TermsAndConditionsPage = () => {
                   <li>Interfere with website functionality</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-accent mb-4">
+                <h3 className="text-xl font-semibold text-primary-800 mb-4">
                   10.2 Intellectual Property
                 </h3>
                 <p className="mb-6">
-                  All content on our website is owned by Kare Plus Rugby and
-                  protected by copyright laws.
+                  All content on our website is owned by Kare Plus Rugby
+                  Healthcare and protected by copyright laws.
                 </p>
 
                 <h2 className="text-2xl font-bold text-primary mb-6">
@@ -244,10 +244,10 @@ const TermsAndConditionsPage = () => {
                 </h2>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <p className="mb-2">
-                    <strong>Kare Plus Rugby</strong>
+                    <strong>Kare Plus Rugby Healthcare</strong>
                   </p>
                   <p className="mb-2">Phone: 01788 422422</p>
-                  <p className="mb-2">Email: info@heartandhaven.com</p>
+                  <p className="mb-2">Email: kp.rugby@kareplus.co.uk</p>
                   <p className="mb-2">Address: [Your Business Address]</p>
                   <p className="mb-2">CQC Registration: [Your CQC Number]</p>
                 </div>

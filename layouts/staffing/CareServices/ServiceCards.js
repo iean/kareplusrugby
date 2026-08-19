@@ -31,7 +31,7 @@ const ServiceCards = () => (
             className="bg-white border border-gray-200 rounded-xl p-6 text-center shadow hover:shadow-lg transition"
           >
             <div className="mb-4 flex justify-center">{item.icon}</div>
-            <h3 className="text-lg font-semibold text-accent mb-2">{item.title}</h3>
+            <h3 className="text-lg font-semibold text-primary-800 mb-2">{item.title}</h3>
             <p className="text-sm text-gray-600">{item.text}</p>
           </div>
         ))}

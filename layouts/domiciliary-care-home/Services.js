@@ -1,6 +1,6 @@
 "use client";
-import BrandLogo from "@components/BrandLogo";
 import Link from "next/link";
+import Image from "next/image";
 
 import {
   MdAccessTime,
@@ -11,35 +11,37 @@ import {
 
 const services = [
   {
-    icon: <MdAccessTime size={40} className="text-accent" />,
+    icon: <MdAccessTime size={40} className="text-primary-800" />,
     title: "Hourly Visiting",
     text: "Flexible visits providing help with day-to-day tasks when you need it.",
   },
   {
-    icon: <MdHome size={40} className="text-accent" />,
+    icon: <MdHome size={40} className="text-primary-800" />,
     title: "Live-In Care",
     text: "24/7 support from a carer living with you at home.",
   },
   {
-    icon: <MdOutlinePsychology size={40} className="text-accent" />,
+    icon: <MdOutlinePsychology size={40} className="text-primary-800" />,
     title: "Dementia Care",
     text: "Specialist assistance allowing those with dementia to stay at home.",
   },
   {
-    icon: <MdHotel size={40} className="text-accent" />,
+    icon: <MdHotel size={40} className="text-primary-800" />,
     title: "Respite Care",
     text: "Short-term care giving family and friends a well-earned break.",
   },
 ];
 
 const DomiciliaryHomeServices = () => (
-  <section className="py-16 bg-[#F9F7FB] bg-gradient-to-r from-[#f9f5ff] via-[#fdf6eb] to-[#fff9ec]">
+  <section className="py-16 bg-primary-50 bg-gradient-to-r from-primary-50 via-surface to-surface">
     <div className="container">
       <div className="flex justify-center mb-4">
-        <BrandLogo
-          linked={false}
-          className="rounded-[2rem] border border-[#431c52]/10 bg-white px-4 py-3 shadow-sm"
-          imageClassName="h-auto w-[180px] sm:w-[220px]"
+        <Image
+          src="/images/kareplus-logo.png"
+          alt="Kare Plus Rugby"
+          width={180}
+          height={80}
+          className="drop-shadow-md"
         />
       </div>
       <h2 className="text-center text-3xl font-bold text-primary mb-8">
@@ -56,7 +58,7 @@ const DomiciliaryHomeServices = () => (
             className="bg-white border border-gray-200 rounded-xl p-6 text-center shadow hover:shadow-lg transition"
           >
             <div className="mb-4 flex justify-center">{item.icon}</div>
-            <h3 className="text-lg font-semibold text-accent mb-2">
+            <h3 className="text-lg font-semibold text-primary-800 mb-2">
               {item.title}
             </h3>
             <p className="text-sm text-gray-600">{item.text}</p>

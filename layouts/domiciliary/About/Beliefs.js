@@ -18,7 +18,7 @@ const Beliefs = () => (
       <ul className="max-w-3xl mx-auto grid gap-4 md:grid-cols-2">
         {beliefs.map((item, i) => (
           <li key={i} className="flex items-start gap-2 text-gray-700">
-            <MdCheck className="text-accent mt-1" size={20} />
+            <MdCheck className="text-primary-800 mt-1" size={20} />
             <span>{item}</span>
           </li>
         ))}

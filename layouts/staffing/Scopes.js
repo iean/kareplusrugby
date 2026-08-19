@@ -4,17 +4,17 @@ import { MdLocalHospital, MdHomeWork, MdElderly } from "react-icons/md";
 
 const scopes = [
   {
-    icon: <MdLocalHospital size={40} className="text-accent" />,
+    icon: <MdLocalHospital size={40} className="text-primary-800" />,
     title: "Hospitals & Clinics",
     text: "Reliable staff to maintain high standards of patient care.",
   },
   {
-    icon: <MdHomeWork size={40} className="text-accent" />,
+    icon: <MdHomeWork size={40} className="text-primary-800" />,
     title: "Care Homes",
     text: "Supportive carers and nurses for residential settings.",
   },
   {
-    icon: <MdElderly size={40} className="text-accent" />,
+    icon: <MdElderly size={40} className="text-primary-800" />,
     title: "Community & Home Care",
     text: "Experienced caregivers helping clients remain independent.",
   },
@@ -33,7 +33,7 @@ const ServiceScopes = () => (
             className="border border-gray-200 rounded-xl p-6 text-center bg-white shadow hover:shadow-lg transition"
           >
             <div className="flex justify-center mb-4">{item.icon}</div>
-            <h3 className="text-lg font-semibold text-accent mb-2">{item.title}</h3>
+            <h3 className="text-lg font-semibold text-primary-800 mb-2">{item.title}</h3>
             <p className="text-sm text-gray-600">{item.text}</p>
           </div>
         ))}

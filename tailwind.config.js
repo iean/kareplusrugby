@@ -33,17 +33,58 @@ module.exports = {
     },
     extend: {
       colors: {
-        // Brand Colors
-        primary: theme.colors.default.theme_color.secondary || "#5a2671", // deep purple
-        accent: theme.colors.default.theme_color.primary || "#b9892f", // gold
-        brandText: theme.colors.default.theme_color.secondary || "#5a2671",
+        // ---- Brand: blue scale anchored on the logo navy (#000048) ----
+        // `primary` is the main brand blue. The 50-950 ramp is available as
+        // primary-50 ... primary-950 for backgrounds, borders and hovers.
+        primary: {
+          50: theme.colors.blue["50"],
+          100: theme.colors.blue["100"],
+          200: theme.colors.blue["200"],
+          300: theme.colors.blue["300"],
+          400: theme.colors.blue["400"],
+          500: theme.colors.blue["500"],
+          600: theme.colors.blue["600"],
+          700: theme.colors.blue["700"],
+          800: theme.colors.blue["800"],
+          900: theme.colors.blue["900"],
+          950: theme.colors.blue["950"],
+          DEFAULT: theme.colors.default.theme_color.secondary,
+        },
+        // Accent = the AA-safe darkened green. The raw brand green is only
+        // 1.95:1 on white, so it is exposed separately as brandGreen and must
+        // only be used for large decorative fills, never for text.
+        accent: theme.colors.default.theme_color.primary,
+        brandGreen: theme.colors.green.brand,
+        greenTint: theme.colors.green["50"],
+        greenTint100: theme.colors.green["100"],
+        greenDark: theme.colors.green.dark,
+        brandText: theme.colors.neutral.text,
 
-        // Support Colors
-        background: theme.colors.default.theme_color.theme_light || "#f9f7fc",
-        body: theme.colors.default.theme_color.body || "#ffffff",
-        border: theme.colors.default.theme_color.border || "#e0e0e0",
-        light: theme.colors.default.text_color.light || "#f5f5f5",
-        dark: theme.colors.default.text_color.dark || "#1a1a1a",
+        // ---- Surfaces ----
+        background: theme.colors.default.theme_color.theme_light,
+        surface: theme.colors.neutral.surface,
+        surfaceAlt: theme.colors.neutral.surface_alt,
+        body: theme.colors.default.theme_color.body,
+
+        // ---- Text ----
+        text: theme.colors.neutral.text,
+        textMuted: theme.colors.neutral.text_muted,
+
+        // ---- Lines ----
+        border: theme.colors.neutral.border,
+        borderStrong: theme.colors.neutral.border_strong,
+
+        // ---- Form/UI states ----
+        success: theme.colors.state.success,
+        successBg: theme.colors.state.success_bg,
+        warning: theme.colors.state.warning,
+        warningBg: theme.colors.state.warning_bg,
+        danger: theme.colors.state.danger,
+        dangerBg: theme.colors.state.danger_bg,
+
+        // Legacy aliases kept so pre-existing markup keeps compiling.
+        light: theme.colors.neutral.text_muted,
+        dark: theme.colors.default.text_color.dark,
       },
       fontSize: {
         base: font_base + "px",
@@ -58,13 +99,32 @@ module.exports = {
         h6: h6 + "rem",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        serif: ["var(--font-playfair)", "serif"],
-        primary: ["var(--font-playfair)", "serif"],
-        secondary: ["var(--font-inter)", "sans-serif"],
+        // Inter throughout. Decorative serifs were hurting legibility for an
+        // older audience, so `primary` now points at Inter too; the alias is
+        // kept so existing `font-primary` classes still resolve.
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        serif: ["var(--font-inter)", "system-ui", "sans-serif"],
+        primary: ["var(--font-inter)", "system-ui", "sans-serif"],
+        secondary: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        header: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        header: "0 1px 3px rgba(6, 36, 99, 0.08)",
+        // Soft, low-contrast elevation - subtle rather than heavy.
+        card: "0 1px 2px rgba(6, 36, 99, 0.04), 0 4px 12px rgba(6, 36, 99, 0.06)",
+        cardHover:
+          "0 2px 4px rgba(6, 36, 99, 0.06), 0 12px 28px rgba(6, 36, 99, 0.10)",
+        focus: "0 0 0 3px rgba(29, 91, 192, 0.35)",
+      },
+      spacing: {
+        section: "5rem",
+        sectionLg: "7rem",
+      },
+      borderRadius: {
+        card: "12px",
+        btn: "10px",
+      },
+      maxWidth: {
+        prose: "68ch",
       },
       keyframes: {
         fadeLeftSlow: {
@@ -81,10 +141,9 @@ module.exports = {
         fadeUp: "fadeUp 0.6s ease-out",
       },
       backgroundImage: {
-        "soft-care-gradient":
-          "linear-gradient(135deg, #7f3a9d 0%, #a249a9 40%, #f6b867 100%)",
-        "brand-text-gradient":
-          "linear-gradient(to right, #8338ec, #d77b55, #f4b860)",
+        // Recoloured from the old purple/orange gradients to the blue scale.
+        "soft-care-gradient": `linear-gradient(135deg, ${theme.colors.blue["900"]} 0%, ${theme.colors.blue["700"]} 55%, ${theme.colors.blue["500"]} 100%)`,
+        "brand-text-gradient": `linear-gradient(to right, ${theme.colors.blue["800"]}, ${theme.colors.blue["600"]})`,
       },
     },
   },

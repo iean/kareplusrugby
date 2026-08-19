@@ -1,8 +1,8 @@
 {
-  "facebook": "https://www.facebook.com/share/18aH1rVtzJ/?mibextid=wwXIfr",
+  "facebook": "",
   "twitter": "",
-  "instagram": "https://www.instagram.com/kareplusrugby?igsh=NXRnOXYwb2FkeWVl",
-  "linkedin": "https://www.linkedin.com/company/kareplusrugby/",
+  "instagram": "",
+  "linkedin": "",
   "youtube": "",
   "github": "",
   "gitlab": "",
@@ -18,15 +18,16 @@
   "tumblr": "",
   "reddit": "",
   "vk": "",
-  "whatsapp": "",
+  "whatsapp": "https://wa.me/447563247176",
   "snapchat": "",
   "vimeo": "",
   "tiktok": "",
   "foursquare": "",
   "rss": "",
-  "email": "Rugby@kareplus.co.uk",
+  "email": "kp.rugby@kareplus.co.uk",
   "phone": "01788 422422",
-  "address": "6A Davy Court, Castle Mound Way, Central Park, Rugby, CV23 0UZ",
+  "address": "6a Davy Court, Castle Mound Way, Central Park, Rugby, Warwickshire, CV23 0UZ",
   "skype": "",
-  "website": ""
+  "website": "",
+  "_note": "Social URLs intentionally left empty so no broken links render. [TODO: SUPPLY REAL KARE PLUS RUGBY SOCIAL PROFILE URLS]"
 }

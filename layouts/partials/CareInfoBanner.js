@@ -12,11 +12,11 @@ const CareInfoBanner = ({
   secondaryButton,
 }) => {
   return (
-    <section className="w-full py-12 px-6 bg-gradient-to-r from-[#f9f5ff] via-[#fdf6eb] to-[#fff9ec]">
+    <section className="w-full py-12 px-6 bg-gradient-to-r from-primary-50 via-surface to-surface">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
         {/* Text Content */}
         <div>
-          <h2 className="text-2xl md:text-3xl font-semibold text-[#431c63] mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold text-primary-900 mb-4">
             {title}
           </h2>
           <p className="text-gray-700 mb-4">{description}</p>
@@ -26,7 +26,7 @@ const CareInfoBanner = ({
             {primaryButton && (
               <Link
                 href={primaryButton.href}
-                className="bg-[#3c2e91] text-white px-5 py-2 rounded-full font-semibold text-sm hover:opacity-90 transition"
+                className="bg-primary-800 text-white px-5 py-2 rounded-full font-semibold text-sm hover:opacity-90 transition"
               >
                 {primaryButton.text}
               </Link>
@@ -43,7 +43,7 @@ const CareInfoBanner = ({
         </div>
 
         {/* Image */}
-        <div className="rounded-xl border-2 border-[#431c63] overflow-hidden">
+        <div className="rounded-xl border-2 border-primary-900 overflow-hidden">
           <Image
             src={imageSrc}
             alt="Care Info"

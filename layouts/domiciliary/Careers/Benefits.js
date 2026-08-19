@@ -22,7 +22,7 @@ const Benefits = () => (
       </div>
       <div className="order-1 md:order-2">
         <h2 className="text-3xl font-bold text-primary mb-4">
-          Why Join Millennium Staffing?
+          Why Join Kare Plus Rugby?
         </h2>
         <ul className="list-disc pl-5 space-y-1 text-gray-700 text-sm mb-4">
           {points.map((item, i) => (

@@ -13,7 +13,7 @@ const TeamShowcase = () => (
       <div className="grid gap-8 md:grid-cols-3">
         {team.map((member, i) => (
           <div key={i} className="bg-white border rounded-xl p-6 shadow text-center">
-            <h3 className="text-lg font-semibold text-accent mb-1">{member.name}</h3>
+            <h3 className="text-lg font-semibold text-primary-800 mb-1">{member.name}</h3>
             <p className="text-sm text-gray-600">{member.role}</p>
           </div>
         ))}
