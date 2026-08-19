@@ -40,3 +40,7 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 .history
+
+# pnpm 11 writes local build approvals here; must never reach the host.
+# Its presence makes Vercel treat this repo as a monorepo and fails the build.
+pnpm-workspace.yaml

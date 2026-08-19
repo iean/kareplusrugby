@@ -49,3 +49,27 @@ Node v24.19.0 is installed at `~/.local/node` (on `PATH` via `~/.zshrc`).
 | [layouts/](layouts/) | React components |
 | [content/](content/) | Markdown pages and blog posts |
 | [styles/](styles/) | SCSS |
+
+## Deployment — read before pushing
+
+The site is hosted on **Vercel**, which builds from the **`main`** branch.
+Pushing to `main-kare-plus` alone only ever produces a Preview build; the
+live site does not change. To ship, the commit must reach `main`.
+
+There is no other deploy path. The old `.github/workflows/deploy.yml` that
+pushed to a VPS at `46.252.193.48` was deleted — nothing pointed at that
+server and every run failed.
+
+Two things that must never be committed, both of which have already broken
+a production build once:
+
+- **`pnpm-workspace.yaml`** — gitignored. pnpm 11 writes local build
+  approvals there, but its presence makes Vercel treat the repo as a
+  monorepo and `allowBuilds:` is a key its older pnpm cannot read.
+- A `base_url` pointing at anything other than `https://www.kareplusrugby.co.uk`.
+
+After pushing, confirm the deploy actually landed rather than assuming it:
+
+```bash
+curl -s https://www.kareplusrugby.co.uk | grep -o '<title>[^<]*'
+```

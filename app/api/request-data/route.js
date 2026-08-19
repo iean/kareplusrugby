@@ -58,9 +58,9 @@ async function sendEmail(formData) {
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     // GDPR requests carry a 30-day statutory deadline, so they must reach a
-    // monitored inbox. Set PRIVACY_EMAIL in Netlify to route them somewhere
-    // dedicated; otherwise they fall back to the main contact address.
-    to: process.env.PRIVACY_EMAIL || config.params.contact_email,
+    // monitored inbox. Every form on the site goes to the one business
+    // address; no environment override, so it cannot be silently diverted.
+    to: config.params.contact_email,
     subject: `Data Request - ${formData.requestType} - ${formData.name}`,
     html,
   });

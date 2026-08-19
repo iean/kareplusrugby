@@ -36,10 +36,10 @@ const Footer = () => {
               <p>
                 <strong>E:</strong>{" "}
                 <a
-                  href="mailto:support@kareplus.co.uk"
+                  href="mailto:kp.rugby@kareplus.co.uk"
                   className="text-primary-700 hover:underline"
                 >
-                  support@kareplus.co.uk
+                  kp.rugby@kareplus.co.uk
                 </a>
               </p>
             </div>

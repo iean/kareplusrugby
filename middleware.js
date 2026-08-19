@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import siteConfig from "@config/config.json";
+
+// Single source of truth for the business inbox (kp.rugby@kareplus.co.uk).
+const ADMIN_EMAIL = siteConfig.params.contact_email;
 
 /**
  * Protects the admin area and the endpoints that expose personal data.
@@ -7,10 +11,10 @@ import { NextResponse } from "next/server";
  * list every contact enquiry, Get Started submission and GDPR data request,
  * complete with names, emails and phone numbers.
  *
- * Auth is HTTP Basic against ADMIN_USER / ADMIN_PASSWORD. Those must be set as
- * environment variables in Netlify. If they are missing we deny everything
- * rather than fall back to a default password — an unset variable should never
- * silently reopen the door.
+ * Auth is HTTP Basic. The username defaults to the business inbox; the
+ * password must be set as ADMIN_PASSWORD in the Vercel project's environment
+ * variables. If it is missing we deny everyone rather than fall back to a
+ * default — an unset secret should never silently reopen the door.
  */
 
 // Public form submissions post here; only reading them is restricted.
@@ -43,10 +47,12 @@ function safeEqual(a, b) {
 }
 
 function isAuthorised(req) {
-  const user = process.env.ADMIN_USER;
+  // The admin username is the business inbox, so there is only one credential
+  // left to configure. It is not a secret, so defaulting it is safe.
+  const user = process.env.ADMIN_USER || ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
 
-  // Fail closed: no credentials configured means nobody gets in.
+  // Fail closed on the password: an unset secret must never open the door.
   if (!user || !password) return false;
 
   const header = req.headers.get("authorization") || "";
