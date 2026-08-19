@@ -120,11 +120,23 @@ const SiteFooter = () => {
                   className="mt-1 text-primary-300"
                 />
                 <address className="not-italic">
-                  {b.address.street}
-                  <br />
-                  {b.address.locality}
-                  <br />
-                  {b.address.postcode}
+                  {/* Opens the office location in whichever maps app the
+                      visitor has. Uses the same query string as the embedded
+                      map so the pin cannot drift from the one on /contact. */}
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      b.map_embed_query,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white hover:underline"
+                  >
+                    {b.address.street}
+                    <br />
+                    {b.address.locality}
+                    <br />
+                    {b.address.postcode}
+                  </a>
                 </address>
               </li>
             </ul>
