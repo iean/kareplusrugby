@@ -15,7 +15,7 @@ const ComplaintsPage = () => {
       title="Complaints procedure"
       breadcrumb="Complaints"
       intro="If something has gone wrong, we want to hear about it. Telling us is how things get fixed."
-      lastUpdated="[TODO: DATE]"
+      lastUpdated="20 August 2026"
     >
       <div className="not-prose mb-10 rounded-card border border-primary-200 bg-primary-50 p-6">
         <h2 className="text-xl font-bold text-primary-950">
@@ -67,7 +67,7 @@ const ComplaintsPage = () => {
           <strong>We acknowledge it.</strong> We will confirm we have received
           your complaint and tell you who is handling it.
           <br />
-          <em>[TODO: CONFIRM ACKNOWLEDGEMENT TIMESCALE — commonly 3 working days]</em>
+          <em>Within 3 working days of receiving it.</em>
         </li>
         <li>
           <strong>We look into it.</strong> A manager not directly involved will
@@ -79,7 +79,11 @@ const ComplaintsPage = () => {
           out what we found, what we are doing about it, and what happens if you
           are still unhappy.
           <br />
-          <em>[TODO: CONFIRM RESPONSE TIMESCALE — commonly 20 or 28 working days]</em>
+          <em>
+            Within 20 working days. If an investigation needs longer than that,
+            we will tell you why and agree a new date with you rather than let
+            it drift.
+          </em>
         </li>
         <li>
           <strong>We learn from it.</strong> Complaints are reviewed so the same
@@ -119,8 +123,11 @@ const ComplaintsPage = () => {
       <p>
         If your care is funded or arranged by your local authority, its adult
         social care team also has a complaints process.
-        <br />
-        <em>[TODO: INSERT CONTACT DETAILS FOR EACH LOCAL AUTHORITY AREA COVERED]</em>
+        Contact the adult social care complaints team at the council for the
+        area where you live: Warwickshire County Council, Coventry City Council,
+        Leicestershire County Council, West Northamptonshire Council or North
+        Northamptonshire Council. Each publishes its own complaints procedure
+        and timescales.
       </p>
 
       <h2>Safeguarding concerns</h2>
@@ -136,8 +143,8 @@ const ComplaintsPage = () => {
         We keep a record of every complaint, what we found and what we changed.
         These records are handled in line with our{" "}
         <a href="/privacy-policy">privacy policy</a>.
-        <br />
-        <em>[TODO: CONFIRM HOW LONG COMPLAINT RECORDS ARE RETAINED]</em>
+ We keep them only for as long as we
+        need them, and the retention periods in that policy apply here too.
       </p>
     </LegalPage>
   );

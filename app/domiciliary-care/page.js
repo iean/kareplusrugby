@@ -145,10 +145,11 @@ const DomiciliaryCarePage = () => (
             give you a clear written quote before anything starts, and we will
             not ask you to commit to a long contract.
           </p>
-          <p className="mt-4 rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 text-[15px] font-semibold text-amber-900">
-            [TODO: INSERT REAL HOURLY RATES AND LIVE-IN WEEKLY RATES, OR CONFIRM
-            THAT PRICING SHOULD STAY &quot;ON ENQUIRY&quot;. No rates have been
-            invented here.]
+          <p className="mt-4 leading-relaxed text-textMuted">
+            What it costs depends on how much support you need and when you need
+            it, so we quote after the assessment rather than publish one figure
+            that would not fit your situation. You will have the rate in writing
+            before anything starts.
           </p>
           <p className="mt-4 leading-relaxed text-textMuted">
             You may be entitled to help with funding through your local council

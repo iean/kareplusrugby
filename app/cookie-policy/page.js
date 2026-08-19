@@ -15,7 +15,7 @@ const CookiePolicyPage = () => {
       title="Cookie policy"
       breadcrumb="Cookie Policy"
       intro="What cookies this website uses, what they do, and how to control them."
-      lastUpdated="[TODO: DATE]"
+      lastUpdated="20 August 2026"
     >
       {/* An honest statement of the current position, which is unusual and worth saying */}
       <div className="not-prose mb-10 rounded-card border border-primary-200 bg-primary-50 p-6">
@@ -52,17 +52,16 @@ const CookiePolicyPage = () => {
           visitors.
         </li>
       </ul>
+      {/* If Google Tag Manager, GA4, Meta Pixel or any other tracking is ever
+          switched on, this section must change before it ships: consent has to
+          be collected BEFORE those cookies are set (PECR reg 6), and the cookie
+          table needs a row per cookie giving its purpose and lifespan. The
+          consent banner component already exists and is wired to gate it. */}
       <h3>Analytics and marketing</h3>
       <p>
         <strong>None currently in use.</strong> The site includes a Google Tag
         Manager integration, but it is not configured with a container ID and so
         loads nothing.
-      </p>
-      <p className="not-prose rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 font-semibold text-amber-900">
-        [TODO: IF GOOGLE TAG MANAGER, GOOGLE ANALYTICS, META PIXEL OR ANY OTHER
-        TRACKING IS SWITCHED ON, A CONSENT BANNER IS LEGALLY REQUIRED BEFORE
-        THOSE COOKIES ARE SET, AND THE TABLE BELOW MUST LIST EACH COOKIE, ITS
-        PURPOSE AND ITS LIFESPAN.]
       </p>
 
       <h2>Third-party content</h2>
@@ -77,9 +76,14 @@ const CookiePolicyPage = () => {
           no request is made to Google when you visit.
         </li>
         <li>
-          <strong>Embedded video</strong> — where a video is embedded, the
-          provider may set cookies once you press play.
-          <em> [TODO: CONFIRM WHETHER ANY VIDEO EMBEDS REMAIN ON THE SITE]</em>
+          <strong>Google Maps</strong> — the map showing our office on the
+          contact page is not loaded until you choose to load it. Nothing is
+          requested from Google, and no Google cookies are set, unless you
+          press the button to show the map.
+        </li>
+        <li>
+          <strong>Embedded video</strong> — there are no video embeds anywhere
+          on this site, so no video provider sets cookies when you visit.
         </li>
       </ul>
 

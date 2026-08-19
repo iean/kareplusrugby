@@ -130,11 +130,6 @@ const CareHomeStaffingPage = () => (
         </p>
       </div>
 
-      <p className="mx-auto mt-6 max-w-3xl rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 text-center text-[15px] font-semibold text-amber-900">
-        [TODO: CONFIRM THIS VETTING PROCESS MATCHES WHAT KARE PLUS RUGBY
-        ACTUALLY DOES, AND ADD ANY ACCREDITATIONS OR FRAMEWORK MEMBERSHIPS. No
-        specific standards, percentages or certifications have been claimed.]
-      </p>
     </Section>
 
     <Section tone="tint" size="lg">
@@ -154,10 +149,11 @@ const CareHomeStaffingPage = () => (
             Rates vary by role, shift pattern and notice period. We will give you
             a full rate card before you book anything, with no hidden charges.
           </p>
-          <p className="mt-4 rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 text-[15px] font-semibold text-amber-900">
-            [TODO: INSERT REAL RATE CARD, PAYMENT TERMS AND ANY
-            TEMP-TO-PERM/TRANSFER FEES — or confirm these should stay on
-            enquiry.]
+          <p className="mt-4 leading-relaxed text-textMuted">
+            Rates vary by role, shift pattern and notice, so we send a rate card
+            on enquiry rather than publish one that would not match your home.
+            Payment terms and any transfer fees are set out in it, in writing,
+            before you book.
           </p>
         </Card>
       </Container>

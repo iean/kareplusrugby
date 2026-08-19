@@ -7,7 +7,7 @@ import config from "@config/config.json";
  *
  * Sends to params.contact_email (kp.rugby@kareplus.co.uk) via nodemailer.
  *
- * [TODO: SET EMAIL_USER AND EMAIL_PASS ON THE SERVER]
+ * REQUIRES EMAIL_USER and EMAIL_PASS in the Vercel project's environment.
  * Until those environment variables exist there is no SMTP transport, so this
  * route returns HTTP 503 and the form shows a visible error telling the
  * visitor to phone instead. It deliberately does NOT return success - a care

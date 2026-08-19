@@ -116,10 +116,10 @@ const SupportedLivingPage = () => (
             worker or care manager. We can work alongside them, but we cannot
             give benefits or financial advice.
           </p>
-          <p className="mt-4 rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 text-[15px] font-semibold text-amber-900">
-            [TODO: CONFIRM WHICH LOCAL AUTHORITIES KARE PLUS RUGBY HOLDS
-            CONTRACTS WITH, AND WHETHER SUPPORTED LIVING IS AVAILABLE IN ALL
-            OPERATING AREAS.]
+          <p className="mt-4 leading-relaxed text-textMuted">
+            Availability depends on the area and the level of support needed, so
+            call us with the specifics and we will tell you honestly whether we
+            can help before anyone gets their hopes up.
           </p>
         </div>
       </Container>

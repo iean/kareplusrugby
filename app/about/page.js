@@ -59,11 +59,11 @@ const AboutPage = () => (
               front room, and we hold our own service to the standard we would
               want for our own families.
             </p>
-            <div className="rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 text-[15px] font-semibold text-amber-900">
-              [TODO: REPLACE THIS SECTION WITH THE REAL COMPANY STORY — when
-              Kare Plus Rugby was founded, by whom, and why. Nothing about the
-              founding date, founder or history has been invented here.]
-            </div>
+            <p>
+              The company behind the service, Divergent Healthcare Limited, was
+              incorporated on {site.business.incorporated} and trades as Kare
+              Plus Rugby. We cover {site.business.areas_served}.
+            </p>
           </div>
         </div>
         <Reveal>
@@ -112,7 +112,11 @@ const AboutPage = () => (
               ["CQC provider ID", site.business.cqc_provider_id],
               ["CQC status", site.business.cqc_status],
               ["ICO registration", site.business.ico_registration],
-            ].map(([label, value]) => (
+            ]
+              // A regulatory table must never show a placeholder. Rows whose
+              // value has not been verified are left out entirely.
+              .filter(([, value]) => typeof value === "string" && value && !value.includes("[TODO"))
+              .map(([label, value]) => (
               <div key={label} className="border-t border-border pt-4">
                 <dt className="text-sm font-semibold uppercase tracking-wide text-textMuted">
                   {label}

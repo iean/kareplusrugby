@@ -10,10 +10,10 @@ import config from "@config/config.json";
  * untracked writes into the repo directory cause conflicts that silently
  * stall future deploys.
  *
- * [TODO: SET EMAIL_USER AND EMAIL_PASS ON THE SERVER] - without them this
+ * REQUIRES EMAIL_USER and EMAIL_PASS in the environment - without them this
  * returns 503 and the form tells the applicant to call instead.
  *
- * [TODO: AGREE A CV RETENTION POLICY] - CVs are personal data under UK GDPR.
+ * OUTSTANDING - a CV retention policy. CVs are personal data under UK GDPR.
  * Decide how long they are kept and who can see them, then say so in the
  * privacy policy. Emailing them means they live in an inbox indefinitely
  * unless someone manages that.

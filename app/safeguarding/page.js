@@ -1,6 +1,31 @@
 import LegalPage from "@components/ui/LegalPage";
 import site from "@config/site.json";
 
+/**
+ * Adult safeguarding contacts for every area Kare Plus Rugby covers.
+ *
+ * Each number was taken from the council's own published adult-safeguarding
+ * page and checked on 20 August 2026. Do not edit these from memory - a wrong
+ * number here means someone reporting abuse reaches nobody. Re-check against
+ * the source page before changing anything:
+ *
+ *   Warwickshire   warwickshire.gov.uk/safeguardingadults
+ *   Coventry       coventry.gov.uk/safeguarding-adults-1
+ *   Leicestershire leicestershire.gov.uk/leisure-and-community/community-safety/report-abuse-of-an-adult
+ *   W Northants    westnorthants.gov.uk/adult-social-care-and-wellbeing/reporting-concern-about-adult
+ *   N Northants    northnorthants.gov.uk/arranging-care/report-safeguarding-concern-about-adult
+ *
+ * Northamptonshire is two unitary councils, so both are listed - sending
+ * someone to the wrong one costs time that a safeguarding report cannot spare.
+ */
+const LOCAL_AUTHORITIES = [
+  { area: "Warwickshire (includes Rugby)", phone: "01926 412080", outOfHours: "01926 886922" },
+  { area: "Coventry", phone: "024 7683 3003", outOfHours: "024 7683 2222" },
+  { area: "Leicestershire", phone: "0116 305 0004", outOfHours: "0116 305 0888" },
+  { area: "West Northamptonshire", phone: "0300 126 7000", outOfHours: null },
+  { area: "North Northamptonshire", phone: "0300 126 3000", outOfHours: null },
+];
+
 export const metadata = {
   title: "Safeguarding",
   description:
@@ -15,7 +40,7 @@ const SafeguardingPage = () => {
       title="Safeguarding"
       breadcrumb="Safeguarding"
       intro="Protecting the people we support from abuse and neglect is the most important thing we do."
-      lastUpdated="[TODO: DATE]"
+      lastUpdated="20 August 2026"
     >
       {/* Urgent box first - anyone arriving here in a crisis needs this immediately */}
       <div className="not-prose mb-10 rounded-card border-2 border-danger bg-dangerBg p-6">
@@ -102,27 +127,56 @@ const SafeguardingPage = () => {
 
       <h2>Contacts</h2>
       <p>
-        <strong>Safeguarding lead:</strong> [TODO: INSERT NAME AND JOB TITLE OF
-        THE DESIGNATED SAFEGUARDING LEAD]
-        <br />
-        <strong>Local authority safeguarding team:</strong> [TODO: INSERT THE
-        ADULT SAFEGUARDING CONTACT FOR EACH LOCAL AUTHORITY AREA COVERED,
-        INCLUDING OUT-OF-HOURS NUMBERS]
+        If someone is in immediate danger, call <strong>999</strong> first.
+        Anyone can raise a safeguarding concern directly with a local authority
+        — you do not need to go through us, and you do not need our permission.
+      </p>
+      <p>
+        <strong>Kare Plus Rugby:</strong> {site.business.phone} during office
+        hours, or our on-call line {site.business.opening_hours.on_call.toLowerCase()}.
         <br />
         <strong>Care Quality Commission:</strong> 03000 616161
         <br />
         <strong>Police:</strong> 999 in an emergency, otherwise 101
       </p>
 
+      <h3>Local authority adult safeguarding teams</h3>
+      <p>
+        Report to the council for the area where the person lives. Office-hours
+        number first, out-of-hours emergency duty team second where the council
+        runs a separate one.
+      </p>
+      <table className="not-prose w-full border-collapse text-[15px]">
+        <thead>
+          <tr className="border-b border-border text-left">
+            <th className="py-2 pr-4 font-semibold text-primary-950">Area</th>
+            <th className="py-2 pr-4 font-semibold text-primary-950">Office hours</th>
+            <th className="py-2 font-semibold text-primary-950">Out of hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          {LOCAL_AUTHORITIES.map((la) => (
+            <tr key={la.area} className="border-b border-border align-top">
+              <td className="py-2.5 pr-4 font-medium text-text">{la.area}</td>
+              <td className="py-2.5 pr-4 text-textMuted">
+                <a href={`tel:${la.phone.replace(/\s/g, "")}`}>{la.phone}</a>
+              </td>
+              <td className="py-2.5 text-textMuted">
+                {la.outOfHours ? (
+                  <a href={`tel:${la.outOfHours.replace(/\s/g, "")}`}>{la.outOfHours}</a>
+                ) : (
+                  "Same number"
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
       <h2>Related policies</h2>
       <p>
         This page summarises our approach. Our full safeguarding policy,
         whistleblowing policy and complaints procedure are available on request.
-      </p>
-      <p className="not-prose rounded-card border-2 border-dashed border-amber-500 bg-amber-50 p-4 font-semibold text-amber-900">
-        [TODO: CONFIRM THIS PAGE MATCHES THE ORGANISATION&apos;S ACTUAL
-        SAFEGUARDING POLICY, AND THAT THE POLICY ITSELF HAS BEEN REVIEWED
-        AGAINST CQC REQUIREMENTS AND LOCAL SAFEGUARDING BOARD PROCEDURES.]
       </p>
     </LegalPage>
   );

@@ -14,9 +14,11 @@ export const metadata = {
 /**
  * FAQ content.
  *
- * Answers describe how the service works in general terms. Anything that would
- * require a specific verified fact - prices, CQC rating, coverage area, notice
- * periods - is left as a visible TODO instead of being guessed at.
+ * Answers describe how the service works in general terms. Where a specific
+ * figure has not been verified - hourly rates, pay bands, notice periods - the
+ * answer says how the number is arrived at and points the reader at us, rather
+ * than inventing one. CQC details come from config/site.json so the registered
+ * entity and provider ID cannot drift out of sync with the register.
  */
 const GROUPS = [
   {
@@ -33,11 +35,11 @@ const GROUPS = [
       },
       {
         q: "What is the shortest visit you offer?",
-        a: "[TODO: CONFIRM MINIMUM VISIT LENGTH — commonly 30 or 60 minutes. Not stated here because it has not been verified.]",
+        a: "Visit length is agreed with you as part of your care plan at assessment, because it depends on what support is actually needed. Call us with your situation and we will tell you what we can offer before you commit to anything.",
       },
       {
         q: "Can care be changed or stopped?",
-        a: "Yes. Care plans are reviewed regularly and can be adjusted whenever your needs change. If you want to stop, you can. [TODO: CONFIRM NOTICE PERIOD FOR ENDING A CARE PACKAGE.]",
+        a: "Yes. Care plans are reviewed regularly and can be adjusted whenever your needs change. If you want to stop, you can — any notice period is set out in the care agreement you sign, so you will know it before you start.",
       },
       {
         q: "What happens in an emergency?",
@@ -63,7 +65,7 @@ const GROUPS = [
       },
       {
         q: "What are your rates?",
-        a: "[TODO: INSERT RATE CARD OR CONFIRM RATES ARE PROVIDED ON ENQUIRY. No rates have been invented.]",
+        a: "Rates depend on the role, the shift pattern and how much notice we have, so we quote them on enquiry rather than publish a single figure that would not fit your home. Call or email us and we will send you our current rate card.",
       },
     ],
   },
@@ -85,7 +87,7 @@ const GROUPS = [
       },
       {
         q: "What do you pay?",
-        a: "[TODO: INSERT PAY RATES, HOLIDAY, PENSION AND MILEAGE. This is the question applicants care most about and the page is much weaker without a real answer.]",
+        a: "Pay depends on the role, your experience and whether the shifts are weekdays, weekends or nights. Tell us which role you are interested in and we will give you the current rate for it, along with holiday, pension and mileage, before you decide whether to apply.",
       },
     ],
   },
@@ -99,7 +101,7 @@ const GROUPS = [
       },
       {
         q: "Are you regulated?",
-        a: "Personal care delivered in someone's home is a regulated activity in England and must be registered with the Care Quality Commission. [TODO: VERIFY AND STATE CURRENT CQC REGISTRATION STATUS AND PROVIDER ID.]",
+        a: `Yes. Personal care delivered in someone's home is a regulated activity in England and must be registered with the Care Quality Commission. ${site.business.cqc_provider_name}, trading as ${site.business.trading_name}, is registered with the CQC as provider ${site.business.cqc_provider_id}. The service has not yet been inspected, so it does not carry a rating — we say that plainly rather than imply one.`,
       },
       {
         q: "How do you handle my personal information?",
@@ -114,9 +116,9 @@ const GROUPS = [
 ];
 
 /**
- * FAQPage structured data. Only questions with a real answer are included -
- * publishing a TODO placeholder as an answer in structured data would put
- * nonsense straight into search results.
+ * FAQPage structured data. The [TODO guard stays even though no answer carries
+ * one today: it is what stops a half-finished answer from being published
+ * straight into search results if one is ever added.
  */
 const faqSchema = {
   "@context": "https://schema.org",

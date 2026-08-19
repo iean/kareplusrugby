@@ -18,27 +18,13 @@ const LegalPage = ({ title, intro, breadcrumb, lastUpdated, children }) => (
       breadcrumbs={[{ label: breadcrumb || title }]}
     />
 
+    {/* NOTE FOR MAINTAINERS, not for the page: these policies are structural
+        drafts. They have not been reviewed by a solicitor or checked against
+        UK GDPR and CQC requirements. The banner that used to say so here was
+        addressed to the developer, not the reader, so it does not belong on a
+        public page - but the review is still outstanding. */}
     <Section tone="white" size="lg">
       <Container width="narrow">
-        {/* Deliberately loud and impossible to miss */}
-        <div
-          role="note"
-          className="mb-10 rounded-card border-2 border-amber-500 bg-amber-50 p-5"
-        >
-          <h2 className="text-lg font-bold text-amber-900">
-            ⚠ [TODO: HAVE THIS POLICY REVIEWED BY A SOLICITOR BEFORE PUBLISHING]
-          </h2>
-          <p className="mt-2 text-[15px] leading-relaxed text-amber-900">
-            This is a structural draft written during a website rebuild. It is
-            not legal advice and has not been checked against UK GDPR, the Care
-            Quality Commission&apos;s requirements, or this business&apos;s
-            actual practices. It must be reviewed by a qualified solicitor, and
-            checked against what the company genuinely does, before it goes
-            live. Sections marked [TODO] need real information from the
-            business.
-          </p>
-        </div>
-
         {lastUpdated && (
           <p className="mb-8 text-sm text-textMuted">
             Last updated: <strong className="text-text">{lastUpdated}</strong>

@@ -3,12 +3,10 @@ import site from "@config/site.json";
 /**
  * sitemap.xml
  *
- * Next.js requires absolute URLs here. The live domain does not currently
- * resolve and site.seo.base_url is still a placeholder, so we fall back to a
- * clearly-wrong-but-valid host rather than emitting the literal "[TODO: ...]"
- * string, which would produce an invalid sitemap.
- *
- * [TODO: SET seo.base_url IN config/site.json ONCE THE DOMAIN IS LIVE]
+ * Next.js requires absolute URLs here. seo.base_url in config/site.json is the
+ * live domain, so that is what gets used. The fallback below stays as a guard:
+ * if someone ever blanks that value or leaves a placeholder in it, emitting a
+ * clearly-wrong-but-valid host beats emitting an invalid sitemap.
  */
 const FALLBACK = "https://example.invalid";
 

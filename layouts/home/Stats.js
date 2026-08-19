@@ -1,37 +1,38 @@
 import { Container } from "@components/ui/Section";
 import StatCounter from "@components/ui/StatCounter";
 import Reveal from "@components/ui/Reveal";
+import site from "@config/site.json";
 
 /**
- * Stats band.
+ * Facts band.
  *
- * ⚠ EVERY FIGURE HERE IS A PLACEHOLDER. None of these numbers were verifiable,
- * and inventing statistics for a healthcare provider is both dishonest and a
- * regulatory risk (CQC expects marketing to be truthful; the CAP Code applies
- * to substantiation).
+ * Every value here is verifiable. The band previously carried invented
+ * figures - years in business, staff headcount, a 98% fill rate - behind a
+ * warning label. Inventing statistics for a healthcare provider is dishonest
+ * and a regulatory risk: CQC expects marketing to be truthful and the CAP Code
+ * requires substantiation for claims like these.
  *
- * The band is visibly marked as placeholder so it cannot be mistaken for real
- * data. Replace every value and remove the warning, or delete the section.
+ * So the numbers were not filled in, they were replaced. Each item below traces
+ * to something on the public record or to config/site.json:
+ *   - on-call hours: business.opening_hours.on_call
+ *   - areas covered: business.areas_served
+ *   - CQC registration: business.cqc_provider_id (registered, not yet inspected)
+ *   - trading since: business.incorporated (Companies House 14277673)
+ *
+ * Do not add a figure here that cannot be evidenced if someone asks.
  */
-const STATS = [
-  { value: "10+", label: "Years supporting people at home", todo: "real years in business" },
-  { value: "200+", label: "Carers and nurses on our team", todo: "real staff headcount" },
-  { value: "24/7", label: "On-call support, every day", todo: "confirm this is accurate" },
-  { value: "98%", label: "Shifts filled on request", todo: "real fill rate, or remove" },
+const FACTS = [
+  { value: "24/7", label: "On-call support, every day of the year" },
+  { value: "4", label: "Areas covered: Rugby, Coventry, Leicestershire, Northamptonshire" },
+  { value: "CQC", label: "Registered provider — not yet inspected" },
+  { value: "2022", label: "Trading as Kare Plus Rugby since" },
 ];
 
 const Stats = () => (
-  <section className="border-y border-amber-400 bg-primary-900 text-white">
+  <section className="border-y border-primary-800 bg-primary-900 text-white">
     <Container className="py-14 md:py-16">
-      <div className="mb-8 text-center">
-        <p className="inline-block rounded bg-amber-300/20 px-3 py-1.5 text-sm font-bold text-amber-200">
-          ⚠ Placeholder figures — every number below is invented scaffolding and
-          must be replaced or removed before launch
-        </p>
-      </div>
-
       <ul className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-        {STATS.map((s, i) => (
+        {FACTS.map((s, i) => (
           <li key={s.label}>
             <Reveal delay={i * 90}>
               <div className="text-center">
@@ -41,9 +42,6 @@ const Stats = () => (
                 />
                 <span className="mt-2 block text-[15px] leading-snug text-primary-100">
                   {s.label}
-                </span>
-                <span className="mt-2 block text-xs font-semibold text-amber-200">
-                  [TODO: {s.todo}]
                 </span>
               </div>
             </Reveal>
