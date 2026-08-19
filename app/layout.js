@@ -37,6 +37,9 @@ export const metadata = {
   authors: [{ name: site.seo.site_name }],
   openGraph: {
     type: "website",
+    // Absolute canonical URL for the share card; without it some scrapers
+    // fall back to whatever URL they were handed, including tracking params.
+    ...(baseUrl ? { url: baseUrl } : {}),
     siteName: site.seo.site_name,
     title: site.seo.default_title,
     description: site.seo.default_description,
