@@ -43,7 +43,7 @@ Node v24.19.0 is installed at `~/.local/node` (on `PATH` via `~/.zshrc`).
 |---|---|
 | [config/theme.json](config/theme.json) | Colors, fonts, spacing — global theme |
 | [config/config.json](config/config.json) | Site title, logo, contact email, footer |
-| [config/menu.json](config/menu.json) | Main nav (+ `menu-domiciliary.json`, `menu-staffing.json`) |
+| [config/site.json](config/site.json) | Business details, main nav (`nav.primary`), footer nav, SEO defaults. Single source of truth |
 | [tailwind.config.js](tailwind.config.js) | Reads theme.json, derives the type scale |
 | [app/](app/) | Routes (App Router) |
 | [layouts/](layouts/) | React components |
