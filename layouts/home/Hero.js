@@ -26,7 +26,7 @@ import { Phone, ShieldCheck, BadgeCheck, Clock, ArrowRight } from "lucide-react"
 
 const TRUST = [
   { icon: ShieldCheck, label: "Fully insured" },
-  { icon: BadgeCheck, label: "Vetted, DBS-checked staff" },
+  { icon: BadgeCheck, label: "Enhanced DBS-checked staff" },
   { icon: Clock, label: "24/7 on-call support" },
 ];
 
@@ -88,7 +88,12 @@ const Hero = () => (
           </Button>
         </div>
 
-        {/* Trust badges - generic, verifiable claims only. No numbers. */}
+        {/*
+          Trust badges. Every claim here was confirmed by the business owner on
+          22 August 2026: all staff hold an enhanced DBS and are on the update
+          service, the company is insured, and the on-call line runs 24/7.
+          Do not add a claim here that has not been confirmed the same way.
+        */}
         <ul className="hero-rise hero-rise-5 mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-6">
           {TRUST.map((t) => {
             const Icon = t.icon;

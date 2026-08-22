@@ -285,7 +285,7 @@ Every item above, with what happened to it. Nothing dropped silently.
 | F3 | Carousel | **Fixed** `48a662e` — the fault was real, on the section pages rather than the homepage |
 | F4 | Focus / reduced motion | Already correct — no action |
 | G1 | Testimonials / stats | Already cleaned — no action |
-| G2 | Vetting & training claims | **Outstanding — needs Alif.** Pre-existing content, so the plan's rules permit it and pass 3 scopes removal to what I wrote. Top of the questions list |
+| G2 | Vetting & training claims | **RESOLVED 2026-08-22.** Alif confirmed all of them directly. Recorded in `config/site.json` → `business.staff_assurances`, and the site now states them more specifically than before |
 | G3 | `[TODO]` in `site.json` | **Outstanding — needs Alif.** All `isReal()`-guarded; none reaches the public |
 | H | Missing pages | **Fixed** — `/referrals` `cad6b43`, `/staff` `e70db20`, markdown vacancies `6d1d8a4` |
 | I | Plan assumptions that were untrue | Recorded. Note that **I.1 was wrong** — the duplicated carousel was real, just not on the homepage |

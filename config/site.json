@@ -123,7 +123,16 @@
         ]
       }
     ],
-    "areas_note": "Coverage depends on the level of support needed and current staffing. We will always tell you honestly at the enquiry stage whether we can cover your address properly, rather than agreeing and then struggling to staff it."
+    "areas_note": "Coverage depends on the level of support needed and current staffing. We will always tell you honestly at the enquiry stage whether we can cover your address properly, rather than agreeing and then struggling to staff it.",
+    "staff_assurances": {
+      "_comment": "CONFIRMED BY THE BUSINESS OWNER (Alif) on 2026-08-22, in response to the audit that flagged these as unverified. These claims MAY be published. Anything not listed here still may not be claimed - do not extrapolate from this list, and do not add a figure, a percentage or a timescale to any of it.",
+      "dbs": "All staff hold an enhanced DBS check and are registered on the DBS update service.",
+      "insurance": "The company is insured.",
+      "mandatory_training": "All staff complete the mandatory training legally required to work as a carer.",
+      "care_certificate": "All staff complete the Care Certificate as a minimum; some do more.",
+      "further_qualifications": "Staff are offered the opportunity to work towards NVQ Level 2 and Level 3. An opportunity, not a guarantee - do not word it as one.",
+      "_still_unverified": "NOT confirmed and still must not be claimed: any specific insurance type or cover level, any training provider name, any completion statistic, any timescale for achieving a qualification."
+    }
   },
   "nav": {
     "primary": [

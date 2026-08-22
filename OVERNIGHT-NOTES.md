@@ -12,27 +12,32 @@ Alif's explicit instruction. Verified live afterwards — see §10.
 
 This is the section that matters most. Everything below is blocked on you.
 
-## 1a. The claims I could not verify — please confirm or correct
+## 1a. The vetting and training claims — NOW CONFIRMED ✅
 
-These are **pre-existing** on the site. I did not write them and I have not
-removed them, because the plan permits claims already published. But they are
-exactly the class of claim that causes real harm if wrong, and several are
-regulated. **Please confirm each one is true and evidenced.**
+**Resolved on 22 August 2026.** Alif confirmed all of these directly, so they
+are verified and published. Recorded in `config/site.json` →
+`business.staff_assurances` so nobody re-flags them later:
 
-| Claim | Where |
-|---|---|
-| "Vetted, DBS-checked staff" and "Fully insured" | `layouts/home/Hero.js:29-31` |
-| "Every worker we place holds an enhanced DBS check … for nurses — current NMC registration checked before placement" | `app/faq/page.js:75` |
-| "All staff are recruited safely, receive safeguarding training" | `layouts/partials/SiteFooter.js:61` |
-| "All roles are subject to an enhanced DBS check and satisfactory references" | `app/careers/page.js:153` |
-| "A paid induction aligned to the Care Certificate" | `app/careers/page.js:36`, `app/faq/page.js:98` |
-| "Licensed UK visa sponsor (A-rated)" | `config/site.json:36`, `app/careers/page.js:110` |
-| "trained, vetted carers" / "properly vetted" | meta descriptions on `/domiciliary-care`, `/care-home-staffing` |
+- All staff hold an **enhanced DBS check** and are on the **DBS update service**
+- The company **is insured**
+- All staff complete the **mandatory training legally required** to work as a carer
+- All staff complete the **Care Certificate** as a minimum; some do more
+- Staff are offered the **opportunity to work towards NVQ Level 2 and Level 3**
 
-Also **unverified by me and high-consequence**: the five local-authority
-safeguarding phone numbers on `app/safeguarding/page.js:22-26`. Worth one check
-against each council's own website — a wrong number there is the worst kind of
-error this site could carry.
+Because these are now confirmed, the site says more than it did. The update
+service, the Care Certificate and the NVQ route were all absent before — the NVQ
+progression in particular is a genuine recruitment draw that was not mentioned
+anywhere. A new FAQ, "What qualifications will I get?", now answers it.
+
+**Still not confirmed, so still not claimed anywhere:** any specific insurance
+type or cover level, any training provider, any completion statistic, and any
+timescale for achieving a qualification. The NVQ route is worded as an
+opportunity, not a guarantee.
+
+**One thing still worth checking:** the five local-authority safeguarding phone
+numbers on `app/safeguarding/page.js:22-26`. Those are pre-existing and I could
+not verify them. A wrong safeguarding number is the worst error this site could
+carry — worth one check against each council's own website.
 
 ## 1b. Every `TODO:` placeholder, with its location
 

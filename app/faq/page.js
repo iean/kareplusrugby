@@ -57,7 +57,7 @@ const GROUPS = [
       },
       {
         q: "Are your staff DBS checked?",
-        a: "Yes. Every worker we place holds an enhanced DBS check appropriate to the role, alongside verified identity, right to work, references, and — for nurses — current NMC registration checked before placement.",
+        a: "Yes. Every worker we place holds an enhanced DBS check and is registered on the DBS update service, so their check is kept current rather than being a snapshot from the day they joined. That sits alongside verified identity, right to work, references, and — for nurses — current NMC registration checked before placement.",
       },
       {
         q: "Can we request the same staff again?",
@@ -83,7 +83,11 @@ const GROUPS = [
       },
       {
         q: "What training will I get?",
-        a: "A paid induction aligned to the Care Certificate, mandatory training kept up to date, and shadow shifts before you work independently. There are routes on to senior roles for people who want them.",
+        a: "A paid induction, then the Care Certificate — every one of our carers completes it — along with all the mandatory training required to work in care, kept up to date. You will shadow experienced carers before working independently. Beyond that, we support carers who want to work towards an NVQ Level 2 or Level 3, and there are routes on to senior roles for people who want them.",
+      },
+      {
+        q: "What qualifications will I get?",
+        a: "Every carer completes the Care Certificate as a minimum, and all the mandatory training the role requires. If you want to go further, we can support you towards an NVQ Level 2 or Level 3 in care. You do not need any qualification to apply — we train you.",
       },
       {
         q: "What do you pay?",

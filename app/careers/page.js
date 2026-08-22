@@ -27,7 +27,7 @@ export const metadata = {
 
 const BENEFITS = [
   { icon: FaCalendarAlt, title: "Shifts that fit your life", body: "Tell us when you can work. Full time, part time, nights, weekends or bank shifts around study or family." },
-  { icon: FaGraduationCap, title: "Training that counts", body: "A paid induction aligned to the Care Certificate, mandatory training kept up to date, and support towards further qualifications." },
+  { icon: FaGraduationCap, title: "Training that counts", body: "A paid induction, the Care Certificate, and all the mandatory training the role requires — kept up to date. If you want to go further we can support you towards an NVQ Level 2 or Level 3." },
   { icon: FaUserFriends, title: "A real person to call", body: "You get a named coordinator who knows you — not a different voice on the phone every time." },
   { icon: FaRoute, title: "Work near home", body: "We match you to work close to where you live wherever we can, so you spend less of your day travelling." },
   { icon: FaHeadset, title: "Out-of-hours support", body: "Someone is on call whenever you are working, so you are never on your own with a difficult situation." },
@@ -135,8 +135,8 @@ const CareersPage = () => {
         ))}
       </ol>
       <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-textMuted">
-        All roles are subject to an enhanced DBS check and satisfactory
-        references. We are committed to safer recruitment and to equality of
+        All roles are subject to an enhanced DBS check — and we register our
+        carers on the DBS update service — along with satisfactory references. We are committed to safer recruitment and to equality of
         opportunity — we welcome applications from everyone, regardless of
         background.
       </p>
