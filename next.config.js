@@ -17,7 +17,7 @@ const nextConfig = {
    * which is local development only.
    */
   experimental: {
-    serverComponentsExternalPackages: ["pg", "@electric-sql/pglite"],
+    serverComponentsExternalPackages: ["pg", "@electric-sql/pglite", "pdfkit"],
   },
 
   images: {
