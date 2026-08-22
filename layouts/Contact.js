@@ -20,10 +20,14 @@ const Contact = ({ data, requestType }) => {
   return (
     <section className="section">
       <div className="container">
-        {markdownify(title, "h1", "text-center font-normal mb-8")}
+        {/* h2, not h1: this layout is always embedded as a section inside a
+            page that already has its own <h1>, so an <h1> here produced two per
+            page. */}
+        {markdownify(title, "h2", "text-center font-normal mb-8 h2")}
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="order-2 md:order-1 content">
-            {markdownify(info.title, "h4")}
+            {/* h3, not h4 - jumping h2 -> h4 skips a level. */}
+            {markdownify(info.title, "h3", "h4")}
             {markdownify(info.description, "p", "mt-4")}
             <ul className="contact-list mt-5 space-y-2">
               {contacts.map((contact, index) => (
