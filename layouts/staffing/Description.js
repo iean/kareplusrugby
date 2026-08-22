@@ -48,7 +48,7 @@ const ServiceDescription = ({
             FIND OUT MORE
           </Link>
           <Link
-            href="/staffing/how-we-work"
+            href="/how-we-work"
             className="bg-primary-900 hover:bg-primary-800 text-white font-semibold px-6 py-3 text-sm rounded-full transition"
           >
             REGISTER TODAY
