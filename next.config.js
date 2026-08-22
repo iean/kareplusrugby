@@ -21,6 +21,26 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
+  /**
+   * Retired URLs.
+   *
+   * /pricing and /elements were Bigspring template pages that were never
+   * removed. /pricing in particular published three fabricated subscription
+   * plans (£49/£69/£99 a month, "Customs Clearance", "Cloud Service") on a
+   * CQC-regulated care site. Both are deleted.
+   *
+   * They are redirected rather than left to 404 so that anything already
+   * indexed or bookmarked is superseded: a 301 tells search engines to drop
+   * the old page, where a 404 leaves it lingering. /pricing goes to the FAQ,
+   * which explains honestly how rates are actually quoted.
+   */
+  async redirects() {
+    return [
+      { source: "/pricing", destination: "/faq", permanent: true },
+      { source: "/elements", destination: "/", permanent: true },
+    ];
+  },
+
   // Long-lived caching for static assets, and baseline security headers.
   // The site is served over plain HTTP today, so HSTS is deliberately NOT set
   // here - enabling it before TLS exists would make the site unreachable.
