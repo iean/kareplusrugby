@@ -42,6 +42,29 @@ const nextConfig = {
       // fetched its data and then returned only a meta tag. Nothing linked to
       // it. Retired to the page that covers the same subject properly.
       { source: "/domiciliary-care-home", destination: "/domiciliary-care", permanent: true },
+
+      /**
+       * Recruitment consolidated onto /careers.
+       *
+       * /domiciliary/jobs advertised three FABRICATED vacancies with working
+       * "Apply Now" buttons — Care Assistant in London, Support Worker in
+       * Birmingham, Registered Nurse in Manchester — hardcoded into a
+       * component. Kare Plus Rugby is in Rugby and covers Warwickshire and
+       * its neighbours; none of those jobs or cities was real.
+       *
+       * The other three were near-empty shells or a second careers page.
+       * /careers now carries the real markdown-driven vacancy list and an
+       * honest empty state.
+       */
+      { source: "/domiciliary/jobs", destination: "/careers", permanent: true },
+      { source: "/domiciliary/available-jobs", destination: "/careers", permanent: true },
+      { source: "/staffing/available-jobs", destination: "/careers", permanent: true },
+      { source: "/domiciliary/our-careers", destination: "/careers", permanent: true },
+
+      // /domiciliary/how-we-work and /staffing/how-we-work rendered a
+      // byte-identical component tree to each other. Three URLs for one page.
+      { source: "/domiciliary/how-we-work", destination: "/how-we-work", permanent: true },
+      { source: "/staffing/how-we-work", destination: "/how-we-work", permanent: true },
     ];
   },
 

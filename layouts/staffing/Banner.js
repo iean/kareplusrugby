@@ -16,7 +16,7 @@ const SLIDES = [
     title: "Expert healthcare staffing",
     text: "Connecting you with qualified professionals when you need them most.",
     buttonText: "How we work",
-    buttonLink: "/staffing/how-we-work",
+    buttonLink: "/how-we-work",
   },
   {
     title: "Rapid placement",
