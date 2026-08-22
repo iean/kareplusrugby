@@ -50,3 +50,41 @@ pnpm-workspace.yaml
 # The work plan now lives at the repo root, alongside PROJECT.md, where it is
 # not served. This guard stays so one cannot be added back under public/.
 public/**/*.md
+
+# ---------------------------------------------------------------------------
+# Recruitment system (RECRUITMENT-SPEC.md).
+#
+# This subsystem is the only part of the site that stores personal data:
+# job applications, uploaded certificates and CVs, and references. None of it
+# may ever reach the repository. Added before the first row was written, as
+# the spec requires, and checked in Phase 7 pass 2.
+# ---------------------------------------------------------------------------
+
+# Any local database file, whatever driver is in use.
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+/.pgdata/
+/data/recruitment/
+
+# Uploaded files: certificates, CVs. Stored in object storage in production;
+# this covers any local staging directory used while developing.
+/uploads/
+/private-uploads/
+/tmp-uploads/
+
+# Generated application and reference PDFs.
+/generated-pdfs/
+*.application.pdf
+*.reference.pdf
+
+# Environment files. `.env` is the dangerous one: Next.js auto-loads it into
+# the server environment, and it would carry the database connection string,
+# the SMTP password and the status-page password. `.gitignore` previously
+# covered only .env.local and the .env.*.local variants, not a bare `.env`.
+.env
+.env.*
+!.env.example

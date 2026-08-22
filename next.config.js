@@ -5,6 +5,21 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  /**
+   * Database drivers must not be bundled by webpack.
+   *
+   * `pg` opens real sockets and `@electric-sql/pglite` loads a WASM build from
+   * its own package directory. Bundled, PGlite resolves its asset path to a URL
+   * and throws ERR_INVALID_ARG_TYPE before a single query runs. Listing them
+   * here leaves both as ordinary Node requires at runtime.
+   *
+   * PGlite is a devDependency and is only reached when DATABASE_URL is unset,
+   * which is local development only.
+   */
+  experimental: {
+    serverComponentsExternalPackages: ["pg", "@electric-sql/pglite"],
+  },
+
   images: {
     // next/image converts on the fly; AVIF first, WebP as the fallback.
     formats: ["image/avif", "image/webp"],
