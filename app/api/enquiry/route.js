@@ -53,15 +53,36 @@ export async function POST(req) {
 
   const errors = {};
 
+  /**
+   * Only a name and ONE way to reach them is required.
+   *
+   * This form is often filled in by someone under real stress, arranging care
+   * for a parent. Every extra mandatory field loses some of them. Previously
+   * both phone and email were required and so was a message; that is now the
+   * minimum the plan asks for and no more.
+   */
   if (!str(body.name)) errors.name = "Name is required.";
-  if (!EMAIL_RE.test(str(body.email))) errors.email = "A valid email address is required.";
-  if (!str(body.phone)) errors.phone = "Phone number is required.";
-  if (str(body.message).length < 10) errors.message = "Please give us a little more detail.";
+
+  const hasEmail = Boolean(str(body.email));
+  const hasPhone = Boolean(str(body.phone));
+
+  if (!hasEmail && !hasPhone) {
+    errors.contact = "Please give us either a phone number or an email address.";
+  }
+  // Validate the format only of whatever they actually gave us.
+  if (hasEmail && !EMAIL_RE.test(str(body.email))) {
+    errors.email = "That email address does not look right.";
+  }
+
   if (body.consent !== true) errors.consent = "Consent is required.";
   if (!VALID_TYPES.includes(body.enquiryType)) errors.enquiryType = "Unknown enquiry type.";
 
   // Length ceilings so a malicious client cannot post megabytes of text.
-  for (const [field, max] of [["name", 200], ["email", 320], ["phone", 40], ["organisation", 200], ["message", 5000]]) {
+  for (const [field, max] of [
+    ["name", 200], ["email", 320], ["phone", 40], ["organisation", 200],
+    ["message", 5000], ["area", 120], ["supportType", 120], ["funding", 120],
+    ["contactMethod", 60], ["contactTime", 60], ["who", 120], ["when", 120],
+  ]) {
     if (str(body[field]).length > max) errors[field] = `${field} is too long.`;
   }
 
@@ -110,17 +131,24 @@ export async function POST(req) {
       from: process.env.EMAIL_USER,
       to,
       // replyTo means staff can hit reply and reach the enquirer directly.
-      replyTo: str(body.email),
+      // Omitted when no email was given - an empty replyTo breaks some clients.
+      ...(hasEmail ? { replyTo: str(body.email) } : {}),
       subject: `${LABELS[body.enquiryType]} — ${str(body.name)}`,
       html: `
         <h2>${esc(LABELS[body.enquiryType])}</h2>
         <p><strong>Name:</strong> ${esc(body.name)}</p>
-        <p><strong>Email:</strong> ${esc(body.email)}</p>
-        <p><strong>Phone:</strong> ${esc(body.phone)}</p>
+        <p><strong>Email:</strong> ${esc(str(body.email) || "Not given")}</p>
+        <p><strong>Phone:</strong> ${esc(str(body.phone) || "Not given")}</p>
         ${body.organisation ? `<p><strong>Organisation:</strong> ${esc(body.organisation)}</p>` : ""}
+        ${body.who ? `<p><strong>Care is for:</strong> ${esc(body.who)}</p>` : ""}
+        ${body.supportType ? `<p><strong>Support needed:</strong> ${esc(body.supportType)}</p>` : ""}
+        ${body.area ? `<p><strong>Postcode / area:</strong> ${esc(body.area)}</p>` : ""}
+        ${body.when ? `<p><strong>How soon:</strong> ${esc(body.when)}</p>` : ""}
+        ${body.funding ? `<p><strong>Likely funding:</strong> ${esc(body.funding)}</p>` : ""}
+        ${body.contactMethod || body.contactTime ? `<p><strong>Best way to contact:</strong> ${esc([str(body.contactMethod), str(body.contactTime)].filter(Boolean).join(", "))}</p>` : ""}
         <p><strong>Subject:</strong> ${esc(body.subject)}</p>
         <p><strong>Message:</strong></p>
-        <p>${esc(body.message).replace(/\n/g, "<br>")}</p>
+        <p>${esc(str(body.message) || "No message given").replace(/\n/g, "<br>")}</p>
         <hr>
         <p style="color:#666;font-size:12px">Sent from the Kare Plus Rugby website at ${new Date().toISOString()}</p>
       `,
