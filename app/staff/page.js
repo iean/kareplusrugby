@@ -154,9 +154,9 @@ const StaffPage = () => (
             <p className="mt-2 text-base leading-relaxed text-text">
               If you have a concern about abuse or neglect, report it straight
               away — to your coordinator, to the office, or to the local
-              authority safeguarding team. You will never be penalised for
-              raising a concern in good faith. If someone is in immediate
-              danger, call <strong>999</strong>.
+              authority safeguarding team. Raising a concern in good faith is
+              protected — see the whistleblowing policy above. If someone is in
+              immediate danger, call <strong>999</strong>.
             </p>
             <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-base">
               <a

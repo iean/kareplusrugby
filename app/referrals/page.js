@@ -40,7 +40,7 @@ const WHAT_WE_NEED = [
   {
     icon: Phone,
     title: "How to reach you",
-    body: "A direct number is best. Most referrals are settled in one call once we have the outline.",
+    body: "A direct number is best, and let us know when you are usually reachable. We will come back to you to work through the detail.",
   },
 ];
 
@@ -155,7 +155,7 @@ const ReferralsPage = () => (
 
     <CtaBand
       title="Would rather talk it through?"
-      body="Most referrals are settled in a single phone call. If it is easier to pick up the phone, please do."
+      body="If it is easier to pick up the phone than to fill in a form, please do — especially if there is a deadline involved."
       primary={{ label: `Call ${site.business.phone}`, href: site.business.phone_href }}
       secondary={{ label: "See what we provide", href: "/care-home-staffing" }}
     />

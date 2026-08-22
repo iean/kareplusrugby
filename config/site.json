@@ -265,7 +265,7 @@
     },
     "payroll": {
       "name": "Payroll",
-      "purpose": "Your payslips and your P60.",
+      "purpose": "Your payslips and pay documents.",
       "url": "[TODO: ADD THE PAYROLL PORTAL SIGN-IN URL - AND CONFIRM THE PROVIDER NAME]"
     },
     "training": {

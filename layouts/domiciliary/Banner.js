@@ -23,7 +23,9 @@ const SLIDES = [
   },
   {
     title: "Reliable carers",
-    text: "A small, familiar team you get to know, rather than a different face each visit.",
+    // Wording follows the FAQ, which is careful not to promise complete
+    // continuity - carers take holiday and get ill. Do not harden this.
+    text: "We plan rotas for continuity, so you should see a small group of familiar faces.",
   },
   {
     title: "Peace of mind",
