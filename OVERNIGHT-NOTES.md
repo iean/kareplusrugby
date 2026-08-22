@@ -45,3 +45,69 @@ What the audit found that the plan did *not* know about:
 - **Legacy `SeoMeta` still emits `og:url` = `//pricing`** — plan item 2.3 was
   fixed on the modern pages only.
 - **30 instances of 15px body text** against the plan's 16px floor.
+
+---
+
+## Phase 2 — fixing the known faults
+
+The plan's numbered items 1–7 were mostly already done (see `AUDIT.md` §I). The
+real work was the faults the audit turned up. Commits, in order:
+
+| Commit | What |
+|---|---|
+| `64e6bd2` | Removed `/pricing` and `/elements` |
+| `26d9d5a` | Stopped three forms writing personal data into the repo |
+| `feb271f` | Fixed four broken links and the footer map pin |
+| `771f0a9` | Fixed duplicate and wrong page metadata |
+| `4253bc4` | Deleted the dead template components |
+
+### `64e6bd2` — the fabricated pricing page
+
+`/pricing` was live and advertised "Basic £49/month", "Professional £69/month"
+and "Business £99/month", with features including "Customs Clearance" and
+"Cloud Service". Straight Bigspring template content nobody had removed. On a
+CQC-regulated care site this is the one thing on the page a family could have
+acted on and been misled by. Gone, along with `/elements` (typography demo) and
+`content/faq.md` (lorem ipsum, unreachable but one config edit from being live).
+
+Both URLs 301 rather than 404, so whatever Google has indexed is superseded
+rather than left to age out. `/pricing` → `/faq`, which explains honestly that
+rates are quoted on enquiry.
+
+### `26d9d5a` — personal data in the repository
+
+Three endpoints appended every submission to a JSON file under `data/` and
+served the whole list over GET:
+
+- `/api/messages` — name, email, phone, message. **`data/messages.json` was
+  tracked in git.**
+- `/api/get-started` — who needs care, name, email, phone
+- `/api/request-data` — name, email, phone, and a *proof of identity* field
+
+The last is the worst: a subject access request carries identity details by
+definition, so filing it into the repo is the exact processing someone would be
+exercising their rights against.
+
+**It had never worked in production** — Vercel's filesystem is read-only, which
+is why the admin message viewer always said "No messages". So removing it costs
+no working feature. All three now email and retain nothing.
+
+Found while rewriting them: submissions were interpolated into the HTML email
+**unescaped**, and two of the three had no server-side validation at all.
+
+### `771f0a9` — metadata that had never worked
+
+Fixing `base_url` exposed the bigger problem. `SeoMeta` emitted a **second**
+`<title>`, description and `og:url` into the head next to the root layout's.
+The first of a duplicated pair wins, so `/how-we-work`, every blog post and
+every blog pagination page had been serving the **generic site title** — the
+exact opposite of what the component existed to do. Those pages now use Next's
+`metadata` export and `SeoMeta` is deleted.
+
+Also: the root layout set `openGraph.url`, and metadata is inherited — so every
+page carried `og:url = <homepage>`, telling Facebook and LinkedIn that a share
+of any page was a share of the homepage.
+
+And `/domiciliary-care-home` rendered an **entirely empty `<main>`**: the
+component fetched its content and then returned only a meta tag. Nothing linked
+to it. Retired to `/domiciliary-care`.
