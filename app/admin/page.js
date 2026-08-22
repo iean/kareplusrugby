@@ -1,5 +1,15 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "Admin",
+  description:
+    "Internal administration area for Kare Plus Rugby.",
+  alternates: { canonical: "/admin" },
+  // Not useful in search results, and kept out of the sitemap too.
+  robots: { index: false, follow: true },
+};
+
+
 /**
  * Admin index.
  *

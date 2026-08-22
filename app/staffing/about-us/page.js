@@ -1,5 +1,13 @@
 import PageHero from "@layouts/partials/PageHero";
 
+export const metadata = {
+  title: "About Our Staffing Service",
+  description:
+    "How Kare Plus Rugby's temporary staffing service works, and the standards we hold the nurses and carers we place to.",
+  alternates: { canonical: "/staffing/about-us" },
+};
+
+
 const AboutUs = () => (
   <>
     {/* Hero Section with Background Image and Gradient */}

@@ -1,5 +1,13 @@
 import PageHero from "@layouts/partials/PageHero";
 
+export const metadata = {
+  title: "Privacy Policy",
+  description:
+    "How Kare Plus Rugby collects, uses and protects your personal information under UK GDPR, and the rights you have over your data.",
+  alternates: { canonical: "/privacy-policy" },
+};
+
+
 const PrivacyPolicyPage = () => {
   return (
     <>

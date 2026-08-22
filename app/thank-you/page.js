@@ -1,3 +1,13 @@
+
+export const metadata = {
+  title: "Thank You",
+  description:
+    "Thank you — your message has been sent to Kare Plus Rugby.",
+  alternates: { canonical: "/thank-you" },
+  // Not useful in search results, and kept out of the sitemap too.
+  robots: { index: false, follow: true },
+};
+
 const ThankYou = () => (
   <section className="section text-center">
     <div className="container">

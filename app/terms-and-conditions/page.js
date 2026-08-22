@@ -1,5 +1,13 @@
 import PageHero from "@layouts/partials/PageHero";
 
+export const metadata = {
+  title: "Terms and Conditions",
+  description:
+    "The terms on which Kare Plus Rugby provides home care, supported living and care home staffing services.",
+  alternates: { canonical: "/terms-and-conditions" },
+};
+
+
 const TermsAndConditionsPage = () => {
   return (
     <>

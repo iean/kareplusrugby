@@ -4,6 +4,14 @@ import ServiceScopes from "@layouts/staffing/Scopes";
 import ServiceDescription from "@layouts/staffing/Description";
 import WhatWeProvide from "@layouts/staffing/WhatWeProvide";
 
+export const metadata = {
+  title: "Temporary Care Home Staffing",
+  description:
+    "Kare Plus Rugby supplies nurses, senior carers and care assistants to care homes across Rugby, Coventry, Leicestershire and Northamptonshire.",
+  alternates: { canonical: "/staffing" },
+};
+
+
 const StaffingPage = () => {
   return (
     <>

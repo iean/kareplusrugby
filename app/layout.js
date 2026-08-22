@@ -112,12 +112,38 @@ const orgSchema = {
     name: a.name,
     ...(a.county && a.county !== a.name ? { containedInPlace: { "@type": "AdministrativeArea", name: a.county } } : {}),
   })),
+  /**
+   * OFFICE hours only. The on-call line is answered 24/7, but that is
+   * expressed below as a contactPoint rather than as opening hours: telling
+   * search engines the office is open 24 hours would put "Open 24 hours" in
+   * the knowledge panel and send someone to Davy Court on a Sunday night.
+   */
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:00",
       closes: "17:00",
+    },
+  ],
+  // The 24/7 on-call line, stated as what it actually is: a phone number that
+  // is answered at any hour, not a building that is open.
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: b.phone,
+      contactType: "customer service",
+      areaServed: "GB",
+      availableLanguage: "English",
+      hoursAvailable: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday", "Tuesday", "Wednesday", "Thursday",
+          "Friday", "Saturday", "Sunday",
+        ],
+        opens: "00:00",
+        closes: "23:59",
+      },
     },
   ],
   makesOffer: [
