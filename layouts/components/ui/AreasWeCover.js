@@ -39,17 +39,25 @@ const AreasWeCover = ({ tone = "surface", compact = false }) => {
         {areas.map((a, i) => (
           <li key={a.id}>
             <Reveal delay={i * 80} className="h-full">
-              <Card className="flex h-full flex-col p-6 md:p-7">
-                <div className="mb-4 flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-3">
+              <Card className="flex h-full flex-col p-5 sm:p-6 md:p-7">
+                {/* flex-wrap: at 400% zoom the area name and the "Our base" badge
+                    cannot share a line, and the badge is shrink-0, so without this
+                    it pushed the card past the right edge of the screen. */}
+                <div className="mb-4 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                  <div className="flex min-w-0 items-center gap-3">
                     <span
                       aria-hidden="true"
                       className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary-700"
                     >
                       {a.home ? <Home className="h-5 w-5" /> : <MapPin className="h-5 w-5" />}
                     </span>
-                    <div>
-                      <h3 className="text-xl font-bold text-primary-950">{a.name}</h3>
+                    <div className="min-w-0">
+                      {/* break-words: "Northamptonshire" is one unbreakable 16-character
+                        word, and at 400% zoom it is wider than the space left for it
+                        once the icon and card padding are taken out. */}
+                      <h3 className="break-words text-xl font-bold text-primary-950">
+                        {a.name}
+                      </h3>
                       <p className="text-base text-textMuted">{a.county}</p>
                     </div>
                   </div>

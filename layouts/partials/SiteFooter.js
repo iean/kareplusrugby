@@ -76,7 +76,10 @@ const SiteFooter = () => {
       <Container className="py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand + contact */}
-          <div className="lg:col-span-2">
+          {/* min-w-0: a grid item defaults to min-width:auto, so it refuses to
+              shrink below its widest child and pushes the whole page sideways on a
+              narrow screen. */}
+          <div className="min-w-0 lg:col-span-2">
             <Image
               src="/images/kareplus-logo-white.png"
               alt={logo_text}
@@ -84,7 +87,7 @@ const SiteFooter = () => {
               height={239}
               className="h-14 w-auto object-contain"
             />
-            <p className="mt-4 max-w-sm text-base leading-relaxed text-white/80">
+            <p className="mt-4 max-w-full text-base leading-relaxed text-white/80 sm:max-w-sm">
               Home care for people who want to stay independent, and trusted
               nurses and carers for the homes that need them.
             </p>
@@ -145,7 +148,10 @@ const SiteFooter = () => {
               <h2 className="mb-3 text-sm font-bold uppercase tracking-wider text-primary-100">
                 Follow us
               </h2>
-              <Social source={social} className="flex gap-3 text-lg text-white" />
+              <Social
+                source={social}
+                className="flex flex-wrap gap-2 text-lg text-white"
+              />
             </div>
           </div>
 
