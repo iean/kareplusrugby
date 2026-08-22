@@ -34,7 +34,7 @@ const ServiceScopes = () => (
           >
             <div className="flex justify-center mb-4">{item.icon}</div>
             <h3 className="text-lg font-semibold text-primary-800 mb-2">{item.title}</h3>
-            <p className="text-sm text-gray-600">{item.text}</p>
+            <p className="text-base text-gray-600">{item.text}</p>
           </div>
         ))}
       </div>

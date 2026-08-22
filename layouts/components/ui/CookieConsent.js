@@ -104,7 +104,7 @@ const CookieConsent = () => {
             <h2 id="cookie-title" className="text-lg font-bold text-primary-950">
               Cookies on this site
             </h2>
-            <p id="cookie-desc" className="mt-1.5 text-[15px] leading-relaxed text-textMuted">
+            <p id="cookie-desc" className="mt-1.5 text-base leading-relaxed text-textMuted">
               We use only the cookies needed to make this site work. We would
               also like to set optional analytics cookies to understand how the
               site is used — but only if you agree. You can change your mind at

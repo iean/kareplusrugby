@@ -37,7 +37,7 @@ const SiteFooter = () => {
           <li key={i.url}>
             <Link
               href={i.url}
-              className="text-[15px] text-white/85 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-950"
+              className="text-base text-white/85 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-950"
             >
               {i.text}
             </Link>
@@ -56,7 +56,7 @@ const SiteFooter = () => {
             <h2 className="shrink-0 text-sm font-bold uppercase tracking-wider text-primary-100">
               Safeguarding
             </h2>
-            <p className="max-w-4xl text-[15px] leading-relaxed text-white/90">
+            <p className="max-w-4xl text-base leading-relaxed text-white/90">
               Kare Plus Rugby is committed to protecting the safety, dignity
               and wellbeing of every person we support. All staff are recruited
               safely, receive safeguarding training, and have a duty to report
@@ -84,12 +84,12 @@ const SiteFooter = () => {
               height={239}
               className="h-14 w-auto object-contain"
             />
-            <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-white/80">
+            <p className="mt-4 max-w-sm text-base leading-relaxed text-white/80">
               Home care for people who want to stay independent, and trusted
               nurses and carers for the homes that need them.
             </p>
 
-            <ul className="mt-6 space-y-3 text-[15px]">
+            <ul className="mt-6 space-y-3 text-base">
               <li>
                 <a
                   href={b.phone_href}
@@ -184,7 +184,7 @@ const SiteFooter = () => {
                 height={56}
                 className="h-14 w-14 shrink-0 object-contain"
               />
-              <div className="text-[15px] text-white/90">
+              <div className="text-base text-white/90">
                 <p className="font-semibold text-white">
                   Regulated by the Care Quality Commission
                 </p>

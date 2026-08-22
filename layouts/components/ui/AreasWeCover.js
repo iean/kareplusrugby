@@ -50,14 +50,14 @@ const AreasWeCover = ({ tone = "surface", compact = false }) => {
                     </span>
                     <div>
                       <h3 className="text-xl font-bold text-primary-950">{a.name}</h3>
-                      <p className="text-sm text-textMuted">{a.county}</p>
+                      <p className="text-base text-textMuted">{a.county}</p>
                     </div>
                   </div>
 
                   {a.home && (
                     // Brand green as a decorative fill only - it is 1.95:1 on
                     // white, so the text on it must be dark navy, never white.
-                    <span className="shrink-0 rounded-full bg-brandGreen px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-950">
+                    <span className="shrink-0 rounded-full bg-brandGreen px-3 py-1 text-sm font-bold uppercase tracking-wide text-primary-950">
                       Our base
                     </span>
                   )}
@@ -73,7 +73,7 @@ const AreasWeCover = ({ tone = "surface", compact = false }) => {
                     {a.places.map((p) => (
                       <li
                         key={p}
-                        className="rounded-full bg-primary-50 px-3 py-1 text-[13px] font-medium text-primary-800"
+                        className="rounded-full bg-primary-50 px-3 py-1 text-base font-medium text-primary-800"
                       >
                         {p}
                       </li>

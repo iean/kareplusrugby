@@ -254,7 +254,7 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
             >
               {WHEN.map((o) => <option key={o} value={o}>{o}</option>)}
             </Field>
-            <p className="rounded-card bg-primary-50 p-4 text-[15px] leading-relaxed text-text">
+            <p className="rounded-card bg-primary-50 p-4 text-base leading-relaxed text-text">
               There is no obligation at this stage, and no charge for an initial
               conversation or a home assessment.
             </p>
@@ -296,7 +296,7 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
               <h3 className="text-sm font-bold uppercase tracking-wide text-textMuted">
                 Your answers
               </h3>
-              <dl className="mt-3 space-y-2 text-[15px]">
+              <dl className="mt-3 space-y-2 text-base">
                 <div className="flex gap-2">
                   <dt className="font-semibold text-text">Care for:</dt>
                   <dd className="text-textMuted">{values.who}</dd>
@@ -330,7 +330,7 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
                   aria-describedby={errors.consent ? fid("consent-error") : undefined}
                   className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
                 />
-                <label htmlFor={fid("consent")} className="text-[15px] leading-relaxed text-text">
+                <label htmlFor={fid("consent")} className="text-base leading-relaxed text-text">
                   I agree to {site.business.trading_name} contacting me about this enquiry.
                   <span aria-hidden="true" className="ml-0.5 text-danger">*</span>
                   <span className="sr-only"> (required)</span>
@@ -341,7 +341,7 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
                   ⚠ {errors.consent}
                 </p>
               )}
-              <p className="mt-3 text-sm text-textMuted">
+              <p className="mt-3 text-base text-textMuted">
                 We use your details only to respond to this enquiry. Read our{" "}
                 <a href="/privacy-policy" className="font-medium text-primary-700 underline underline-offset-4">
                   privacy policy

@@ -96,7 +96,7 @@ const CareersPage = () => (
           </div>
         </div>
       </div>
-      <p className="mx-auto mt-8 max-w-3xl text-center text-[15px] leading-relaxed text-textMuted">
+      <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-textMuted">
         Pay depends on the role, your experience and whether the shifts are
         weekdays, weekends or nights. Tell us which role you are interested in
         and we will give you the rate for it — along with holiday, pension and
@@ -129,7 +129,7 @@ const CareersPage = () => (
           </li>
         ))}
       </ol>
-      <p className="mx-auto mt-8 max-w-3xl text-center text-[15px] leading-relaxed text-textMuted">
+      <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-textMuted">
         All roles are subject to an enhanced DBS check and satisfactory
         references. We are committed to safer recruitment and to equality of
         opportunity — we welcome applications from everyone, regardless of
@@ -152,7 +152,7 @@ const CareersPage = () => (
             than a vacancy list anyway. Surface the live list here once roles
             are being kept up to date in the admin area. */}
         <div className="rounded-card border border-border bg-white p-7 text-center shadow-card">
-          <p className="text-[15px] leading-relaxed text-textMuted">
+          <p className="text-base leading-relaxed text-textMuted">
             We are always interested in hearing from carers and nurses, whether
             or not a specific role is advertised. Send us an application and we
             will tell you honestly what we have coming up in your area.

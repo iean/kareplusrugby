@@ -291,7 +291,7 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
             aria-describedby={errors.consent ? fid("consent-error") : undefined}
             className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
           />
-          <label htmlFor={fid("consent")} className="text-[15px] leading-relaxed text-text">
+          <label htmlFor={fid("consent")} className="text-base leading-relaxed text-text">
             I agree to Kare Plus Rugby contacting me about this enquiry.
             <span aria-hidden="true" className="ml-0.5 text-danger">*</span>
             <span className="sr-only"> (required)</span>
@@ -302,7 +302,7 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
             ⚠ {errors.consent}
           </p>
         )}
-        <p className="mt-3 text-sm text-textMuted">
+        <p className="mt-3 text-base text-textMuted">
           We use your details only to respond to this enquiry. Read our{" "}
           <a href="/privacy-policy" className="font-medium text-primary-700 underline underline-offset-4">
             privacy policy

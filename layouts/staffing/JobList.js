@@ -25,7 +25,7 @@ const JobList = () => {
             >
               <div>
                 <h3 className="font-semibold text-primary-800">{job.title}</h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-base text-gray-600">
                   {job.location} – {job.type}
                 </p>
               </div>

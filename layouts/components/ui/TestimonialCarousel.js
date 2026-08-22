@@ -109,7 +109,7 @@ const TestimonialCarousel = ({ items }) => {
                   </div>
                 </div>
 
-                <p className="mb-3 inline-flex w-fit rounded bg-amber-200 px-2 py-1 text-xs font-bold uppercase tracking-wide text-amber-900">
+                <p className="mb-3 inline-flex w-fit rounded bg-amber-200 px-2 py-1 text-sm font-bold uppercase tracking-wide text-amber-900">
                   Placeholder — not a real quote
                 </p>
 

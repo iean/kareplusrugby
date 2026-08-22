@@ -26,7 +26,7 @@ const LegalPage = ({ title, intro, breadcrumb, lastUpdated, children }) => (
     <Section tone="white" size="lg">
       <Container width="narrow">
         {lastUpdated && (
-          <p className="mb-8 text-sm text-textMuted">
+          <p className="mb-8 text-base text-textMuted">
             Last updated: <strong className="text-text">{lastUpdated}</strong>
           </p>
         )}

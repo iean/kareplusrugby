@@ -125,7 +125,7 @@ const AboutPage = () => (
               </div>
             ))}
           </dl>
-          <p className="mt-6 text-[15px] leading-relaxed text-textMuted">
+          <p className="mt-6 text-base leading-relaxed text-textMuted">
             These details are taken from the Companies House and CQC public
             registers. You can check our CQC registration yourself at{" "}
             <a

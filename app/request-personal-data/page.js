@@ -140,7 +140,7 @@ const RequestPersonalDataPage = () => {
                     <h4 className="font-semibold text-yellow-800 mb-3">
                       Healthcare Records
                     </h4>
-                    <p className="text-sm text-yellow-700">
+                    <p className="text-base text-yellow-700">
                       Please note that healthcare records are subject to
                       specific retention periods under NHS guidelines and may
                       not be deleted even if requested.
@@ -283,7 +283,7 @@ const RequestPersonalDataPage = () => {
                 </form>
 
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-base text-gray-600">
                     <strong>Contact:</strong> For urgent requests or questions,
                     please contact our Data Protection Officer at
                     kp.rugby@kareplus.co.uk or call 01788 422422.

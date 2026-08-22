@@ -228,7 +228,7 @@ const ApplicationForm = ({ id = "apply" }) => {
                 checked={values[field]} onChange={set(field)}
                 className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
               />
-              <label htmlFor={field} className="text-[15px] leading-relaxed text-text">
+              <label htmlFor={field} className="text-base leading-relaxed text-text">
                 {label}
               </label>
             </div>
@@ -253,7 +253,7 @@ const ApplicationForm = ({ id = "apply" }) => {
           onChange={onFile}
           aria-describedby={errors.cv ? "cv-error cv-hint" : "cv-hint"}
           aria-invalid={errors.cv ? "true" : undefined}
-          className="block w-full cursor-pointer rounded-btn border border-borderStrong bg-white text-base text-text file:mr-4 file:cursor-pointer file:border-0 file:bg-primary-50 file:px-5 file:py-3 file:text-[15px] file:font-semibold file:text-primary-800 hover:file:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-primary-600"
+          className="block w-full cursor-pointer rounded-btn border border-borderStrong bg-white text-base text-text file:mr-4 file:cursor-pointer file:border-0 file:bg-primary-50 file:px-5 file:py-3 file:text-base file:font-semibold file:text-primary-800 hover:file:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-primary-600"
         />
         <p id="cv-hint" className="text-sm text-textMuted">
           PDF, DOC, DOCX, RTF or ODT. Maximum 5 MB. You can also send it later
@@ -280,7 +280,7 @@ const ApplicationForm = ({ id = "apply" }) => {
             aria-describedby={errors.consent ? "consent-error" : undefined}
             className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
           />
-          <label htmlFor="consent" className="text-[15px] leading-relaxed text-text">
+          <label htmlFor="consent" className="text-base leading-relaxed text-text">
             I agree to Kare Plus Rugby storing the details I have given
             here so my application can be considered.
             <span aria-hidden="true" className="ml-0.5 text-danger">*</span>
@@ -292,7 +292,7 @@ const ApplicationForm = ({ id = "apply" }) => {
             ⚠ {errors.consent}
           </p>
         )}
-        <p className="mt-3 text-sm text-textMuted">
+        <p className="mt-3 text-base text-textMuted">
           All roles are subject to an enhanced DBS check and satisfactory
           references. Read our{" "}
           <a href="/privacy-policy" className="font-medium text-primary-700 underline underline-offset-4">

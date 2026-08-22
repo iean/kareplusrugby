@@ -181,7 +181,7 @@ const AboutUs = () => (
               <h4 className="font-semibold text-primary-800 mb-2">
                 Quality Personal Service
               </h4>
-              <p className="text-gray-700 text-sm">
+              <p className="text-gray-700 text-base">
                 We do this by matching up our recruits to roles that allow them
                 to thrive and make a real difference in the healthcare sector.
               </p>
@@ -304,7 +304,7 @@ const AboutUs = () => (
             </div>
             <h3 className="text-xl font-semibold mb-2">Phone</h3>
             <p className="mb-2">01788 422422</p>
-            <p className="text-sm opacity-90">Main Office</p>
+            <p className="text-base opacity-90">Main Office</p>
           </div>
 
           <div className="text-center">
@@ -316,7 +316,7 @@ const AboutUs = () => (
             </div>
             <h3 className="text-xl font-semibold mb-2">Email</h3>
             <p className="mb-2">kp.rugby@kareplus.co.uk</p>
-            <p className="text-sm opacity-90">General Inquiries</p>
+            <p className="text-base opacity-90">General Inquiries</p>
           </div>
 
           <div className="text-center">
@@ -331,7 +331,7 @@ const AboutUs = () => (
             </div>
             <h3 className="text-xl font-semibold mb-2">Address</h3>
             <p className="mb-2">6a Davy Court, Castle Mound Way</p>
-            <p className="text-sm opacity-90">Rugby, CV23 0UZ</p>
+            <p className="text-base opacity-90">Rugby, CV23 0UZ</p>
           </div>
         </div>
 

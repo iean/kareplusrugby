@@ -42,7 +42,7 @@ export const ErrorPanel = ({ children }) => (
       <span aria-hidden="true" className="mt-0.5 text-lg text-danger">
         ⚠
       </span>
-      <div className="text-[15px] leading-relaxed">
+      <div className="text-base leading-relaxed">
         <p className="font-bold text-danger">Sorry — we could not send that.</p>
         <p className="mt-1 text-text">{children}</p>
         <p className="mt-2 text-text">

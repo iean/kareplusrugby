@@ -59,7 +59,7 @@ const WhatWeProvide = () => (
               <h3 className="text-lg font-semibold text-primary-900 mb-2">
                 {item.title}
               </h3>
-              <p className="text-sm text-gray-600 flex-grow">{item.text}</p>
+              <p className="text-base text-gray-600 flex-grow">{item.text}</p>
               <Link
                 href={item.link}
                 className="mt-4 inline-block bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-5 py-2 rounded-full transition"

@@ -39,7 +39,7 @@ const HelpCards = () => {
                 {iconMap[item.icon]}
               </div>
               <h3 className="text-lg font-semibold text-primary-800">{item.title}</h3>
-              <p className="mt-3 text-gray-600 text-sm leading-relaxed">{item.description}</p>
+              <p className="mt-3 text-gray-600 text-base leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>

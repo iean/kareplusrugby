@@ -69,7 +69,7 @@ const LocationMap = ({ className = "", height = "380", tone = "light" }) => {
               <MapPin className="h-6 w-6" />
             </span>
 
-            <p className={`max-w-sm text-[15px] leading-relaxed ${addressCls}`}>
+            <p className={`max-w-sm text-base leading-relaxed ${addressCls}`}>
               The map is loaded from Google, which sets its own cookies. Choose
               below to load it.
             </p>

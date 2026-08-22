@@ -16,11 +16,11 @@ const PrivacyPolicyPage = () => {
             <div className="content prose prose-lg max-w-none">
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <div className="mb-8">
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-base text-gray-600 mb-4">
                     <strong>Last updated:</strong>{" "}
                     {new Date().toLocaleDateString("en-GB")}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-base text-gray-600">
                     <strong>Version:</strong> 1.0
                   </p>
                 </div>
@@ -202,7 +202,7 @@ const PrivacyPolicyPage = () => {
                 </div>
 
                 <div className="mt-8 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-                  <p className="text-sm text-blue-800">
+                  <p className="text-base text-blue-800">
                     <strong>Supervisory Authority:</strong> You have the right
                     to lodge a complaint with the Information
                     Commissioner&apos;s Office (ICO) at{" "}

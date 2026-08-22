@@ -146,7 +146,7 @@ const SafeguardingPage = () => {
         number first, out-of-hours emergency duty team second where the council
         runs a separate one.
       </p>
-      <table className="not-prose w-full border-collapse text-[15px]">
+      <table className="not-prose w-full border-collapse text-base">
         <thead>
           <tr className="border-b border-border text-left">
             <th className="py-2 pr-4 font-semibold text-primary-950">Area</th>
