@@ -42,13 +42,13 @@ const StaffingOptions = () => (
 
         <div className="mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-4">
           <Link
-            href="/work-for-us"
+            href="/careers"
             className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             JOIN OUR CARE TEAM
           </Link>
           <Link
-            href="/staff-request"
+            href="/care-home-staffing"
             className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             NEED COMPASSIONATE STAFF?
@@ -77,7 +77,7 @@ const StaffingOptions = () => (
             <h3 className="text-lg font-semibold text-primary-900 mb-2">
               {item.title}
             </h3>
-            <p className="text-sm text-gray-600">{item.text}</p>
+            <p className="text-base text-gray-600">{item.text}</p>
           </div>
         ))}
       </div>

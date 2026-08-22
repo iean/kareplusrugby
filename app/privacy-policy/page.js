@@ -1,5 +1,13 @@
 import PageHero from "@layouts/partials/PageHero";
 
+export const metadata = {
+  title: "Privacy Policy",
+  description:
+    "How Kare Plus Rugby collects, uses and protects your personal information under UK GDPR, and the rights you have over your data.",
+  alternates: { canonical: "/privacy-policy" },
+};
+
+
 const PrivacyPolicyPage = () => {
   return (
     <>
@@ -16,11 +24,11 @@ const PrivacyPolicyPage = () => {
             <div className="content prose prose-lg max-w-none">
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <div className="mb-8">
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-base text-gray-600 mb-4">
                     <strong>Last updated:</strong>{" "}
                     {new Date().toLocaleDateString("en-GB")}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-base text-gray-600">
                     <strong>Version:</strong> 1.0
                   </p>
                 </div>
@@ -29,8 +37,9 @@ const PrivacyPolicyPage = () => {
                   1. Introduction
                 </h2>
                 <p className="mb-6">
-                  Kare Plus Rugby Healthcare (&quot;we&quot;, &quot;our&quot;, or
-                  &quot;us&quot;) is committed to protecting and respecting your
+                  Divergent Healthcare Limited, trading as Kare Plus Rugby
+                  (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), is
+                  committed to protecting and respecting your
                   privacy. This Privacy Policy explains how we collect, use,
                   store, and protect your personal information when you visit
                   our website, use our services, or interact with us in any way.
@@ -195,20 +204,25 @@ const PrivacyPolicyPage = () => {
                   <p className="mb-2">
                     <strong>Data Protection Officer</strong>
                   </p>
-                  <p className="mb-2">Kare Plus Rugby Healthcare</p>
+                  <p className="mb-2">
+                    Divergent Healthcare Limited, trading as Kare Plus Rugby
+                  </p>
                   <p className="mb-2">Email: kp.rugby@kareplus.co.uk</p>
                   <p className="mb-2">Phone: 01788 422422</p>
-                  <p className="mb-2">Address: [Your Business Address]</p>
+                  <p className="mb-2">Address: 6a Davy Court, Castle Mound Way, Central Park, Rugby, Warwickshire, CV23 0UZ</p>
+                  <p className="mb-2">
+                    Registered in England &amp; Wales, company no. 14277673
+                  </p>
                 </div>
 
-                <div className="mt-8 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-                  <p className="text-sm text-blue-800">
+                <div className="mt-8 p-4 bg-primary-50 border-l-4 border-primary-400 rounded">
+                  <p className="text-base text-primary-900">
                     <strong>Supervisory Authority:</strong> You have the right
                     to lodge a complaint with the Information
                     Commissioner&apos;s Office (ICO) at{" "}
                     <a
                       href="https://ico.org.uk"
-                      className="text-blue-600 hover:underline"
+                      className="text-primary-700 underline underline-offset-4 hover:no-underline"
                     >
                       ico.org.uk
                     </a>

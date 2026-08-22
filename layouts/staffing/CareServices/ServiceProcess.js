@@ -29,7 +29,7 @@ const ServiceProcess = () => (
               {i + 1}
             </div>
             <h3 className="font-semibold text-primary-800 mb-2">{step.title}</h3>
-            <p className="text-sm text-gray-600">{step.text}</p>
+            <p className="text-base text-gray-600">{step.text}</p>
           </div>
         ))}
       </div>

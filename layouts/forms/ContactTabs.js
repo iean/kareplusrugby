@@ -51,7 +51,7 @@ const ContactTabs = () => {
             aria-controls={`${base}-panel-${t.id}`}
             tabIndex={active === t.id ? 0 : -1}
             onClick={() => setActive(t.id)}
-            className={`flex-1 rounded-btn px-5 py-3 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
+            className={`flex-1 rounded-btn px-5 py-3 text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
               active === t.id
                 ? "bg-primary-700 text-white"
                 : "text-primary-900 hover:bg-primary-100"

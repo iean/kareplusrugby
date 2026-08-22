@@ -1,5 +1,13 @@
 import PageHero from "@layouts/partials/PageHero";
 
+export const metadata = {
+  title: "About Our Staffing Service",
+  description:
+    "How Kare Plus Rugby's temporary staffing service works, and the standards we hold the nurses and carers we place to.",
+  alternates: { canonical: "/staffing/about-us" },
+};
+
+
 const AboutUs = () => (
   <>
     {/* Hero Section with Background Image and Gradient */}
@@ -20,7 +28,7 @@ const AboutUs = () => (
           Quality, Efficient & Person-centred Service
         </h1>
         <p className="text-xl text-white text-center mb-8 max-w-4xl mx-auto">
-          Kare Plus Rugby Healthcare is a specialist employment business,
+          Kare Plus Rugby is a specialist employment business,
           supplying highly trained healthcare professionals to care homes,
           hospitals, and healthcare clients across the UK.
         </p>
@@ -39,7 +47,7 @@ const AboutUs = () => (
           <div>
             <h2 className="text-3xl font-bold text-primary mb-6">About Us</h2>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              Kare Plus Rugby Healthcare is a specialist employment business,
+              Kare Plus Rugby is a specialist employment business,
               which supplies to care homes, hospitals and other healthcare
               clients across the UK with highly trained nurses, social workers,
               care assistants, support workers and more.
@@ -81,7 +89,7 @@ const AboutUs = () => (
             Professional, Efficient and Personable
           </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
-            Everything about Kare Plus Rugby Healthcare stands for quality,
+            Everything about Kare Plus Rugby stands for quality,
             whether that&apos;s the services we provide or the staff we employ.
           </p>
         </div>
@@ -172,7 +180,7 @@ const AboutUs = () => (
               clients get the very best standard of staff.
             </p>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              In particular, Kare Plus Rugby Healthcare aims to recruit
+              In particular, Kare Plus Rugby aims to recruit
               individuals who have a great track record of working with diverse
               clients. We always provide an extensive and outstanding level of
               care and service to each one of our clients.
@@ -181,7 +189,7 @@ const AboutUs = () => (
               <h4 className="font-semibold text-primary-800 mb-2">
                 Quality Personal Service
               </h4>
-              <p className="text-gray-700 text-sm">
+              <p className="text-gray-700 text-base">
                 We do this by matching up our recruits to roles that allow them
                 to thrive and make a real difference in the healthcare sector.
               </p>
@@ -304,7 +312,7 @@ const AboutUs = () => (
             </div>
             <h3 className="text-xl font-semibold mb-2">Phone</h3>
             <p className="mb-2">01788 422422</p>
-            <p className="text-sm opacity-90">Main Office</p>
+            <p className="text-base opacity-90">Main Office</p>
           </div>
 
           <div className="text-center">
@@ -316,7 +324,7 @@ const AboutUs = () => (
             </div>
             <h3 className="text-xl font-semibold mb-2">Email</h3>
             <p className="mb-2">kp.rugby@kareplus.co.uk</p>
-            <p className="text-sm opacity-90">General Inquiries</p>
+            <p className="text-base opacity-90">General Inquiries</p>
           </div>
 
           <div className="text-center">
@@ -331,7 +339,7 @@ const AboutUs = () => (
             </div>
             <h3 className="text-xl font-semibold mb-2">Address</h3>
             <p className="mb-2">6a Davy Court, Castle Mound Way</p>
-            <p className="text-sm opacity-90">Rugby, CV23 0UZ</p>
+            <p className="text-base opacity-90">Rugby, CV23 0UZ</p>
           </div>
         </div>
 

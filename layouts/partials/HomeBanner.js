@@ -1,22 +1,25 @@
-"use client";
-
 import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
 
-SwiperCore.use([Autoplay, Pagination]);
-
+/**
+ * Section banner for /domiciliary.
+ *
+ * The image panel used to be a Swiper that cycled four photographs every four
+ * seconds, on a loop, with no pause control - a WCAG 2.2.2 failure - and alt
+ * text reading "Banner 1", "Banner 2", "Banner 3", "Banner 4". The rotation
+ * carried no information and neither did the alt text, so it is one still
+ * image, marked decorative. That also drops Swiper from this route's bundle.
+ *
+ * The heading was painted with a hardcoded hex gradient (#12469B, #1D5BC0,
+ * #847432) onto transparent text over a dark blue panel: against the house
+ * rule on hardcoded hexes, and gradient-on-transparent text has no dependable
+ * contrast ratio. It is plain white now.
+ */
 const HomeBanner = ({ banner }) => {
-  const bannerImages = banner.images || [
-    "/images/domiciliary/Bannerdomiciliary.jpg",
-    "/images/domiciliary/h1.png",
-    "/images/domiciliary/h2.jpg",
-    "/images/domiciliary/h3.png",
-  ];
+  const bannerImage =
+    (Array.isArray(banner.images) && banner.images[0]) ||
+    "/images/domiciliary/Bannerdomiciliary.jpg";
 
   return (
     <section className="relative z-10 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 overflow-hidden">
@@ -27,13 +30,7 @@ const HomeBanner = ({ banner }) => {
         {/* Left Content */}
         <div className="w-full lg:w-1/2 text-left animate-fadeLeftSlow">
           {/* Gradient Title */}
-          <h1
-            className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #12469B, #1D5BC0, #847432)",
-            }}
-          >
+          <h1 className="text-4xl font-extrabold text-white md:text-5xl">
             {banner.title}
           </h1>
 
@@ -55,24 +52,17 @@ const HomeBanner = ({ banner }) => {
         {/* Right Image Slider */}
         <div className="w-full max-w-[680px] h-auto">
           <div className="h-[400px] lg:h-[500px] rounded-2xl shadow-xl overflow-hidden border border-gray-200 bg-white">
-            <Swiper
-              modules={[Autoplay, Pagination]}
-              autoplay={{ delay: 4000, disableOnInteraction: false }}
-              pagination={{ clickable: true }}
-              loop
-            >
-              {bannerImages.map((src, i) => (
-                <SwiperSlide key={i}>
-                  <Image
-                    src={src}
-                    alt={`Banner ${i + 1}`}
-                    width={900}
-                    height={720}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            <Image
+              src={bannerImage}
+              alt=""
+              aria-hidden="true"
+              width={900}
+              height={720}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              quality={60}
+              priority
+              className="h-full w-full object-cover object-center"
+            />
           </div>
         </div>
       </div>

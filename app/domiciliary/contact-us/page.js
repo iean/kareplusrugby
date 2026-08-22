@@ -1,6 +1,14 @@
 import Contact from "@layouts/Contact";
 import { getRegularPage } from "@lib/contentParser";
 
+export const metadata = {
+  title: "Contact Our Home Care Team",
+  description:
+    "Talk to Kare Plus Rugby about arranging care at home in Rugby and Warwickshire. Call 01788 422422 or send us an enquiry.",
+  alternates: { canonical: "/domiciliary/contact-us" },
+};
+
+
 const ContactUsPage = async () => {
   const data = await getRegularPage("contact");
   return (

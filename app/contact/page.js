@@ -53,7 +53,7 @@ const ContactPage = () => {
       {/* Urgent notice - safety first, above everything else */}
       <div className="border-b border-danger/30 bg-dangerBg">
         <Container className="py-4">
-          <p className="text-center text-[15px] font-semibold text-text">
+          <p className="text-center text-base font-semibold text-text">
             <span aria-hidden="true">⚠ </span>
             If someone is in immediate danger or needs urgent medical help, call{" "}
             <strong>999</strong>. This form is not monitored around the clock.
@@ -93,7 +93,7 @@ const ContactPage = () => {
                       ) : (
                         <p className="mt-1 text-lg font-medium text-text">{d.value}</p>
                       )}
-                      <p className="mt-0.5 text-[15px] text-textMuted">{d.note}</p>
+                      <p className="mt-0.5 text-base text-textMuted">{d.note}</p>
                     </div>
                   </li>
                 );

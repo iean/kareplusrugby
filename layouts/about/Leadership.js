@@ -60,7 +60,7 @@ const Leadership = () => {
                 <p className="mt-1 font-semibold text-primary-700">{d.title}</p>
 
                 {isReal(d.bio) && (
-                  <p className="mt-4 text-[15px] leading-relaxed text-neutral-text-muted">
+                  <p className="mt-4 text-base leading-relaxed text-neutral-text-muted">
                     {d.bio}
                   </p>
                 )}
@@ -73,7 +73,7 @@ const Leadership = () => {
       {isReal(registered_manager) && (
         <div className="mx-auto mt-8 max-w-4xl rounded-card border border-border bg-white p-5 text-center">
           <h3 className="font-bold text-primary-950">Registered Manager</h3>
-          <p className="mt-1.5 text-[15px] leading-relaxed text-neutral-text-muted">
+          <p className="mt-1.5 text-base leading-relaxed text-neutral-text-muted">
             {registered_manager}
           </p>
         </div>

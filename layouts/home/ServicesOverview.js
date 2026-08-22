@@ -63,7 +63,7 @@ const ServicesOverview = () => (
                 <p className="mt-2 leading-relaxed text-textMuted">{s.summary}</p>
                 <ul className="mt-4 space-y-1.5">
                   {s.points.map((p) => (
-                    <li key={p} className="flex items-start gap-2 text-[15px] text-text">
+                    <li key={p} className="flex items-start gap-2 text-base text-text">
                       <span aria-hidden="true" className="mt-1 text-primary-600">
                         ✓
                       </span>

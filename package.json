@@ -1,6 +1,6 @@
 {
   "name": "kare-plus-rugby",
-  "description": "Kare Plus Rugby \u2014 home care and care home staffing",
+  "description": "Kare Plus Rugby — home care and care home staffing",
   "version": "2.0.0",
   "private": true,
   "license": "MIT",
@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.8",
-    "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.15",
     "autoprefixer": "^10.4.20",
     "date-fns": "^3.6.0",

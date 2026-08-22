@@ -17,12 +17,11 @@ const ADMIN_EMAIL = siteConfig.params.contact_email;
  * default — an unset secret should never silently reopen the door.
  */
 
-// Public form submissions post here; only reading them is restricted.
-const READ_PROTECTED = [
-  "/api/messages",
-  "/api/get-started",
-  "/api/request-data",
-];
+// Nothing here any more. /api/messages, /api/get-started and /api/request-data
+// used to expose stored submissions over GET; none of them stores anything now
+// and all three return 405 to a GET, so there is no personal data left behind
+// them to protect. Add a path here if a route ever reads personal data again.
+const READ_PROTECTED = [];
 
 // Public job listings read this; only writing is restricted.
 const WRITE_PROTECTED = ["/api/jobs"];
@@ -106,9 +105,6 @@ export const config = {
   matcher: [
     "/admin/:path*",
     "/admin",
-    "/api/messages",
     "/api/jobs",
-    "/api/get-started",
-    "/api/request-data",
   ],
 };

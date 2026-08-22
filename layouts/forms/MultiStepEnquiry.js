@@ -5,6 +5,7 @@ import Field from "@components/ui/Field";
 import Button from "@components/ui/Button";
 import { validators, validateAll } from "@lib/formValidation";
 import { SuccessPanel, ErrorPanel, ErrorSummary } from "./FormStatus";
+import { Honeypot, PrivacyNote } from "./FormExtras";
 import site from "@config/site.json";
 import { Check, ChevronLeft, ChevronRight, Send } from "lucide-react";
 
@@ -43,10 +44,40 @@ const WHO = [
 ];
 
 const WHEN = [
-  "As soon as possible",
-  "Within the next few weeks",
-  "Within a few months",
+  "Urgently",
+  "Within the next 2 weeks",
+  "Within a month",
   "Just researching for now",
+];
+
+const SUPPORT_TYPE = [
+  "Not sure yet — help me work it out",
+  "Care at home (domiciliary)",
+  "Supported living",
+  "Live-in care",
+  "Respite / short-term cover",
+];
+
+/**
+ * Funding is asked because the answer changes who we need to involve and how
+ * quickly things can move, not to filter anyone out. "Not sure" is first so
+ * that it reads as an acceptable answer rather than a gap.
+ */
+const FUNDING = [
+  "Not sure yet",
+  "Paying privately (self-funded)",
+  "Local authority / social services",
+  "NHS (including continuing healthcare)",
+  "Direct payment / personal budget",
+];
+
+const CONTACT_METHOD = ["Either is fine", "Phone", "Email"];
+
+const CONTACT_TIME = [
+  "Any time in working hours",
+  "Morning",
+  "Afternoon",
+  "Early evening",
 ];
 
 const MultiStepEnquiry = ({ id = "enquiry" }) => {
@@ -54,11 +85,17 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({
     who: WHO[0],
+    area: "",
+    supportType: SUPPORT_TYPE[0],
     when: WHEN[0],
+    funding: FUNDING[0],
     message: "",
     name: "",
     phone: "",
     email: "",
+    contactMethod: CONTACT_METHOD[0],
+    contactTime: CONTACT_TIME[0],
+    website: "", // honeypot - see FormExtras
     consent: false,
   });
   const [errors, setErrors] = useState({});
@@ -69,18 +106,24 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
   const summaryRef = useRef(null);
 
   // Only the fields on that screen — you can never be blocked by an unseen error.
+  /**
+   * Only the fields on that screen - you can never be blocked by an unseen error.
+   *
+   * Deliberately thin. Everything except a name and ONE contact method is
+   * optional: this form is often filled in by someone under real stress, and
+   * every extra mandatory field loses some of them. The description used to be
+   * required and both phone and email used to be; none of that is necessary to
+   * ring someone back.
+   */
   const SCHEMAS = [
     {},
-    {
-      message: [
-        validators.required("A short description"),
-        validators.minLength(10, "A short description"),
-      ],
-    },
+    {},
     {
       name: [validators.required("Your name")],
-      phone: [validators.required("Phone number"), validators.phone],
-      email: [validators.required("Email address"), validators.email],
+      // Both of these already pass on an empty value, so they check the format
+      // of whatever was actually given without making the field mandatory.
+      email: [validators.email],
+      phone: [validators.phone],
       consent: [
         validators.checked("You must agree to us contacting you about this enquiry"),
       ],
@@ -130,6 +173,14 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
   const submit = async (e) => {
     e.preventDefault();
     const found = validateAll(values, SCHEMAS[2]);
+
+    // Cross-field rule: either is fine, neither is not. Attached to the phone
+    // field so the error summary can link straight to something focusable.
+    if (!values.phone.trim() && !values.email.trim()) {
+      found.phone =
+        "Please give us either a phone number or an email address, so we can reply.";
+    }
+
     setErrors(found);
     setTouched((t) => ({
       ...t,
@@ -152,6 +203,14 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
           phone: values.phone,
           subject: `${values.who} — ${values.when}`,
           message: values.message,
+          who: values.who,
+          area: values.area,
+          supportType: values.supportType,
+          when: values.when,
+          funding: values.funding,
+          contactMethod: values.contactMethod,
+          contactTime: values.contactTime,
+          website: values.website,
           consent: values.consent,
           enquiryType: "care",
         }),
@@ -189,8 +248,18 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
       onSubmit={isLast ? submit : (e) => { e.preventDefault(); next(); }}
       noValidate
       id={id}
-      className="rounded-card border border-border bg-white p-6 shadow-card md:p-8"
+      className="relative rounded-card border border-border bg-white p-6 shadow-card md:p-8"
     >
+      <div className="mb-8">
+        <PrivacyNote>
+          What you tell us here is emailed to our care team so they can call you
+          back. It is not stored on this website. Please do not include medical
+          records or NHS numbers.
+        </PrivacyNote>
+      </div>
+
+      <Honeypot value={values.website} onChange={set("website")} />
+
       {/* Progress */}
       <ol className="mb-8 flex items-center gap-2" aria-label="Progress">
         {STEPS.map((s, i) => (
@@ -249,12 +318,12 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
               {WHO.map((o) => <option key={o} value={o}>{o}</option>)}
             </Field>
             <Field
-              id={fid("when")} as="select" label="When would you like support to start?"
-              value={values.when} onChange={set("when")}
-            >
-              {WHEN.map((o) => <option key={o} value={o}>{o}</option>)}
-            </Field>
-            <p className="rounded-card bg-primary-50 p-4 text-[15px] leading-relaxed text-text">
+              id={fid("area")} label="Postcode or area"
+              hint="Optional. Just the area is fine — it tells us straight away whether we cover you."
+              className="sm:max-w-xs"
+              value={values.area} onChange={set("area")}
+            />
+            <p className="rounded-card bg-primary-50 p-4 text-base leading-relaxed text-text">
               There is no obligation at this stage, and no charge for an initial
               conversation or a home assessment.
             </p>
@@ -262,13 +331,39 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
         )}
 
         {step === 1 && (
-          <Field
-            id={fid("message")} as="textarea" rows={7} required
-            label="Tell us a little about what would help"
-            hint="For example: help getting up and dressed in the mornings, company during the day, or overnight support. Don't worry about getting it exactly right."
-            value={values.message} onChange={set("message")}
-            onBlur={blur("message")} error={errors.message}
-          />
+          <>
+            <Field
+              id={fid("supportType")} as="select"
+              label="What kind of support do you think is needed?"
+              hint="If you are not sure, leave it as it is — working that out is part of what we do."
+              value={values.supportType} onChange={set("supportType")}
+            >
+              {SUPPORT_TYPE.map((o) => <option key={o} value={o}>{o}</option>)}
+            </Field>
+
+            <Field
+              id={fid("when")} as="select" label="How soon is support needed?"
+              value={values.when} onChange={set("when")}
+            >
+              {WHEN.map((o) => <option key={o} value={o}>{o}</option>)}
+            </Field>
+
+            <Field
+              id={fid("funding")} as="select" label="How is the care likely to be paid for?"
+              hint="Asked because it changes who we need to involve and how quickly things can move — not to decide whether we can help."
+              value={values.funding} onChange={set("funding")}
+            >
+              {FUNDING.map((o) => <option key={o} value={o}>{o}</option>)}
+            </Field>
+
+            <Field
+              id={fid("message")} as="textarea" rows={6}
+              label="Tell us a little about what would help"
+              hint="Optional. For example: help getting up and dressed in the mornings, company during the day, or overnight support. Don't worry about getting it exactly right."
+              value={values.message} onChange={set("message")}
+              onBlur={blur("message")} error={errors.message}
+            />
+          </>
         )}
 
         {step === 2 && (
@@ -280,30 +375,63 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
                 onBlur={blur("name")} error={errors.name}
               />
               <Field
-                id={fid("phone")} label="Phone number" type="tel" required autoComplete="tel"
+                id={fid("phone")} label="Phone number" type="tel" autoComplete="tel"
                 value={values.phone} onChange={set("phone")}
                 onBlur={blur("phone")} error={errors.phone}
               />
             </div>
             <Field
-              id={fid("email")} label="Email address" type="email" required autoComplete="email"
+              id={fid("email")} label="Email address" type="email" autoComplete="email"
               value={values.email} onChange={set("email")}
               onBlur={blur("email")} error={errors.email}
             />
+            <p className="text-base leading-relaxed text-textMuted">
+              A phone number or an email address — whichever you prefer. We only
+              need one of them.
+            </p>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field
+                id={fid("contactMethod")} as="select" label="Best way to contact you"
+                value={values.contactMethod} onChange={set("contactMethod")}
+              >
+                {CONTACT_METHOD.map((o) => <option key={o} value={o}>{o}</option>)}
+              </Field>
+              <Field
+                id={fid("contactTime")} as="select" label="Best time to contact you"
+                value={values.contactTime} onChange={set("contactTime")}
+              >
+                {CONTACT_TIME.map((o) => <option key={o} value={o}>{o}</option>)}
+              </Field>
+            </div>
 
             {/* Review before sending */}
             <div className="rounded-card border border-border bg-surface p-4">
               <h3 className="text-sm font-bold uppercase tracking-wide text-textMuted">
                 Your answers
               </h3>
-              <dl className="mt-3 space-y-2 text-[15px]">
+              <dl className="mt-3 space-y-2 text-base">
                 <div className="flex gap-2">
                   <dt className="font-semibold text-text">Care for:</dt>
                   <dd className="text-textMuted">{values.who}</dd>
                 </div>
+                {values.area && (
+                  <div className="flex gap-2">
+                    <dt className="font-semibold text-text">Area:</dt>
+                    <dd className="text-textMuted">{values.area}</dd>
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <dt className="font-semibold text-text">Support:</dt>
+                  <dd className="text-textMuted">{values.supportType}</dd>
+                </div>
                 <div className="flex gap-2">
                   <dt className="font-semibold text-text">Timescale:</dt>
                   <dd className="text-textMuted">{values.when}</dd>
+                </div>
+                <div className="flex gap-2">
+                  <dt className="font-semibold text-text">Funding:</dt>
+                  <dd className="text-textMuted">{values.funding}</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-text">What would help:</dt>
@@ -330,7 +458,7 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
                   aria-describedby={errors.consent ? fid("consent-error") : undefined}
                   className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
                 />
-                <label htmlFor={fid("consent")} className="text-[15px] leading-relaxed text-text">
+                <label htmlFor={fid("consent")} className="text-base leading-relaxed text-text">
                   I agree to {site.business.trading_name} contacting me about this enquiry.
                   <span aria-hidden="true" className="ml-0.5 text-danger">*</span>
                   <span className="sr-only"> (required)</span>
@@ -341,7 +469,7 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
                   ⚠ {errors.consent}
                 </p>
               )}
-              <p className="mt-3 text-sm text-textMuted">
+              <p className="mt-3 text-base text-textMuted">
                 We use your details only to respond to this enquiry. Read our{" "}
                 <a href="/privacy-policy" className="font-medium text-primary-700 underline underline-offset-4">
                   privacy policy

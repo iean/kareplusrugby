@@ -57,7 +57,7 @@ const Hero = () => (
 
     <Container className="relative py-16 md:py-24 lg:py-28">
       <div className="max-w-3xl">
-        <p className="hero-rise hero-rise-1 mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-semibold text-primary-100 ring-1 ring-inset ring-white/20">
+        <p className="hero-rise hero-rise-1 mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-base font-semibold text-primary-100 ring-1 ring-inset ring-white/20">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-300 opacity-75 motion-reduce:hidden" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary-200" />
@@ -95,7 +95,7 @@ const Hero = () => (
             return (
               <li
                 key={t.label}
-                className="flex items-center gap-2 text-[15px] font-medium text-white/85"
+                className="flex items-center gap-2 text-base font-medium text-white/85"
               >
                 <Icon aria-hidden="true" className="h-[18px] w-[18px] text-primary-200" />
                 {t.label}

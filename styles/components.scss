@@ -40,7 +40,7 @@
 
 // content style
 .content {
-  @apply prose max-w-none prose-headings:font-bold prose-h1:mb-4 prose-h1:text-h1-sm prose-h2:mb-4 prose-h2:mt-4 prose-h2:text-h2-sm prose-h3:mt-4 prose-h3:text-h3-sm prose-h4:mt-4 prose-h5:mb-4 prose-h5:text-base prose-h6:mb-6 prose-h6:text-[15px] prose-a:no-underline hover:prose-a:text-primary prose-blockquote:border-primary prose-blockquote:py-1 prose-blockquote:px-4 prose-ol:pl-4 prose-ul:list-none prose-ul:pl-0 prose-hr:my-5 md:prose-h1:text-h1 md:prose-h2:text-h2 md:prose-h3:text-h3;
+  @apply prose max-w-none prose-headings:font-bold prose-h1:mb-4 prose-h1:text-h1-sm prose-h2:mb-4 prose-h2:mt-4 prose-h2:text-h2-sm prose-h3:mt-4 prose-h3:text-h3-sm prose-h4:mt-4 prose-h5:mb-4 prose-h5:text-base prose-h6:mb-6 prose-h6:text-base prose-a:no-underline hover:prose-a:text-primary prose-blockquote:border-primary prose-blockquote:py-1 prose-blockquote:px-4 prose-ol:pl-4 prose-ul:list-none prose-ul:pl-0 prose-hr:my-5 md:prose-h1:text-h1 md:prose-h2:text-h2 md:prose-h3:text-h3;
 
   ul {
     li {
@@ -63,6 +63,36 @@
     &.swiper-pagination-bullet-active {
       @apply bg-primary;
     }
+  }
+}
+
+// Banner carousel pagination.
+//
+// Swiper's default bullet is an 8px dot, which Lighthouse correctly flags as an
+// undersized tap target and which is genuinely hard to hit for anyone with a
+// tremor. The bullet keeps its small *appearance* but gets a 44x44 hit area:
+// transparent padding carries the touch target, and background-clip:content-box
+// keeps the visible dot the size it was.
+.swiper-pagination {
+  .swiper-pagination-bullet {
+    width: 44px;
+    height: 44px;
+    padding: 17px;
+    margin: 0 !important;
+    background-clip: content-box;
+    background-color: rgba(255, 255, 255, 0.45);
+    opacity: 1;
+    border-radius: 9999px;
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: -6px;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #fff;
+    background-clip: content-box;
   }
 }
 

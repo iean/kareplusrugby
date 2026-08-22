@@ -21,6 +21,53 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
+  /**
+   * Retired URLs.
+   *
+   * /pricing and /elements were Bigspring template pages that were never
+   * removed. /pricing in particular published three fabricated subscription
+   * plans (£49/£69/£99 a month, "Customs Clearance", "Cloud Service") on a
+   * CQC-regulated care site. Both are deleted.
+   *
+   * They are redirected rather than left to 404 so that anything already
+   * indexed or bookmarked is superseded: a 301 tells search engines to drop
+   * the old page, where a 404 leaves it lingering. /pricing goes to the FAQ,
+   * which explains honestly how rates are actually quoted.
+   */
+  async redirects() {
+    return [
+      { source: "/pricing", destination: "/faq", permanent: true },
+      { source: "/elements", destination: "/", permanent: true },
+      // /domiciliary-care-home rendered an entirely empty <main>: the component
+      // fetched its data and then returned only a meta tag. Nothing linked to
+      // it. Retired to the page that covers the same subject properly.
+      { source: "/domiciliary-care-home", destination: "/domiciliary-care", permanent: true },
+
+      /**
+       * Recruitment consolidated onto /careers.
+       *
+       * /domiciliary/jobs advertised three FABRICATED vacancies with working
+       * "Apply Now" buttons — Care Assistant in London, Support Worker in
+       * Birmingham, Registered Nurse in Manchester — hardcoded into a
+       * component. Kare Plus Rugby is in Rugby and covers Warwickshire and
+       * its neighbours; none of those jobs or cities was real.
+       *
+       * The other three were near-empty shells or a second careers page.
+       * /careers now carries the real markdown-driven vacancy list and an
+       * honest empty state.
+       */
+      { source: "/domiciliary/jobs", destination: "/careers", permanent: true },
+      { source: "/domiciliary/available-jobs", destination: "/careers", permanent: true },
+      { source: "/staffing/available-jobs", destination: "/careers", permanent: true },
+      { source: "/domiciliary/our-careers", destination: "/careers", permanent: true },
+
+      // /domiciliary/how-we-work and /staffing/how-we-work rendered a
+      // byte-identical component tree to each other. Three URLs for one page.
+      { source: "/domiciliary/how-we-work", destination: "/how-we-work", permanent: true },
+      { source: "/staffing/how-we-work", destination: "/how-we-work", permanent: true },
+    ];
+  },
+
   // Long-lived caching for static assets, and baseline security headers.
   // The site is served over plain HTTP today, so HSTS is deliberately NOT set
   // here - enabling it before TLS exists would make the site unreachable.

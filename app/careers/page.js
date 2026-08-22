@@ -6,6 +6,8 @@ import Card from "@components/ui/Card";
 import ApplicationForm from "@layouts/forms/ApplicationForm";
 import CtaBand from "@layouts/home/CtaBand";
 import site from "@config/site.json";
+import VacancyList from "@layouts/careers/VacancyList";
+import { getVacancies } from "@lib/vacancies";
 import {
   FaCalendarAlt, FaGraduationCap, FaUserFriends, FaRoute,
   FaHeadset, FaChartLine,
@@ -39,7 +41,10 @@ const STEPS = [
   { n: 4, title: "Induction and first shift", body: "Paid induction training, then shadow shifts before you work on your own." },
 ];
 
-const CareersPage = () => (
+const CareersPage = () => {
+  const vacancies = getVacancies();
+
+  return (
   <>
     <PageHeader
       eyebrow="Join our team"
@@ -96,7 +101,7 @@ const CareersPage = () => (
           </div>
         </div>
       </div>
-      <p className="mx-auto mt-8 max-w-3xl text-center text-[15px] leading-relaxed text-textMuted">
+      <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-textMuted">
         Pay depends on the role, your experience and whether the shifts are
         weekdays, weekends or nights. Tell us which role you are interested in
         and we will give you the rate for it — along with holiday, pension and
@@ -129,7 +134,7 @@ const CareersPage = () => (
           </li>
         ))}
       </ol>
-      <p className="mx-auto mt-8 max-w-3xl text-center text-[15px] leading-relaxed text-textMuted">
+      <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-textMuted">
         All roles are subject to an enhanced DBS check and satisfactory
         references. We are committed to safer recruitment and to equality of
         opportunity — we welcome applications from everyone, regardless of
@@ -146,24 +151,9 @@ const CareersPage = () => (
           subtitle="We recruit continuously across all our roles. If you do not see the right thing, apply anyway — we will keep your details on file."
           className="mb-8"
         />
-        {/* Vacancies are managed at /admin/jobs, backed by /api/jobs. Nothing
-            is listed here yet, so rather than show an empty grid we invite
-            speculative applications - in care recruitment those are worth more
-            than a vacancy list anyway. Surface the live list here once roles
-            are being kept up to date in the admin area. */}
-        <div className="rounded-card border border-border bg-white p-7 text-center shadow-card">
-          <p className="text-[15px] leading-relaxed text-textMuted">
-            We are always interested in hearing from carers and nurses, whether
-            or not a specific role is advertised. Send us an application and we
-            will tell you honestly what we have coming up in your area.
-          </p>
-          <a
-            href="/careers#apply"
-            className="mt-5 inline-flex items-center justify-center rounded-btn bg-primary-700 px-7 py-3.5 font-semibold text-white transition hover:bg-primary-800"
-          >
-            Apply now
-          </a>
-        </div>
+        {/* Driven by content/vacancies/*.md - see lib/vacancies.js. Adding a
+            markdown file publishes a role; no code change, no admin login. */}
+        <VacancyList vacancies={vacancies} />
       </Container>
     </Section>
 
@@ -188,6 +178,7 @@ const CareersPage = () => (
       secondary={{ label: "Read our FAQs", href: "/faq" }}
     />
   </>
-);
+  );
+};
 
 export default CareersPage;

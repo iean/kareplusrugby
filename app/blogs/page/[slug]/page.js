@@ -1,6 +1,5 @@
 import Pagination from "@components/Pagination";
 import config from "@config/config.json";
-import SeoMeta from "@layouts/SeoMeta";
 import { getListPage, getSinglePage } from "@lib/contentParser";
 import { markdownify } from "@lib/utils/textConverter";
 import Posts from "@partials/Posts";
@@ -26,7 +25,6 @@ const BlogPagination = async ({ params }) => {
 
   return (
     <>
-      <SeoMeta title={title} />
       <section className="section">
         <div className="container">
           {markdownify(title, "h1", "h1 text-center font-normal text-[56px]")}
@@ -43,6 +41,20 @@ const BlogPagination = async ({ params }) => {
 };
 
 export default BlogPagination;
+
+/**
+ * Per-page metadata. Previously SeoMeta emitted a second <title> into the head
+ * next to the root layout's, and the first one won - so every pagination page
+ * shared the generic site title.
+ */
+export async function generateMetadata({ params }) {
+  const currentPage = parseInt((params && params.slug) || 1);
+  return {
+    title: `Blog — page ${currentPage}`,
+    description: `Page ${currentPage} of news and advice from Kare Plus Rugby on home care, supported living and care home staffing.`,
+    alternates: { canonical: `/blogs/page/${currentPage}` },
+  };
+}
 
 export async function generateStaticParams() {
   const getAllSlug = await getSinglePage(`content/${blog_folder}`);

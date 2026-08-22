@@ -186,7 +186,7 @@ const GetStartedForm = () => {
               <input
                 type="checkbox"
                 required
-                className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="mt-1 h-5 w-5 text-primary-700 focus:ring-2 focus:ring-primary-600 border-borderStrong rounded"
               />
               <label className="text-sm text-gray-600">
                 By using this form you agree with the storage and handling of

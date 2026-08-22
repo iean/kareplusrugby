@@ -67,7 +67,7 @@ const StickyContactBar = () => {
                 <a
                   href={it.href}
                   {...props}
-                  className={`flex min-h-[52px] flex-col items-center justify-center gap-0.5 rounded-btn px-2 py-2 text-xs font-semibold ring-1 ring-inset ring-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${it.className}`}
+                  className={`flex min-h-[52px] flex-col items-center justify-center gap-0.5 rounded-btn px-2 py-2 text-sm font-semibold ring-1 ring-inset ring-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${it.className}`}
                 >
                   <Icon aria-hidden="true" className="h-5 w-5" />
                   <span aria-hidden="true">{it.label}</span>

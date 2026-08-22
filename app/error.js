@@ -67,7 +67,7 @@ const Error = ({ error, reset }) => {
           </p>
 
           {error?.digest && (
-            <p className="mt-6 text-xs text-textMuted">
+            <p className="mt-6 text-base text-textMuted">
               Reference: <code className="font-mono">{error.digest}</code>
             </p>
           )}

@@ -1,5 +1,13 @@
 import GetStartedForm from "@layouts/partials/GetStartedForm";
 
+export const metadata = {
+  title: "Getting Started with Home Care",
+  description:
+    "How to start home care with Kare Plus Rugby — tell us what support is needed and we will call you back to talk it through. No obligation.",
+  alternates: { canonical: "/domiciliary/get-started" },
+};
+
+
 const GetStartedPage = async () => {
   return (
     <>

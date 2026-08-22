@@ -37,9 +37,11 @@ export const metadata = {
   authors: [{ name: site.seo.site_name }],
   openGraph: {
     type: "website",
-    // Absolute canonical URL for the share card; without it some scrapers
-    // fall back to whatever URL they were handed, including tracking params.
-    ...(baseUrl ? { url: baseUrl } : {}),
+    // Deliberately NO `url` here. Metadata is inherited, so setting it in the
+    // root layout stamped og:url="<homepage>" onto every page that did not
+    // override it - telling scrapers that every share of any page was really a
+    // share of the homepage. Pages that need one set it themselves; where it is
+    // absent, scrapers correctly fall back to the URL they fetched.
     siteName: site.seo.site_name,
     title: site.seo.default_title,
     description: site.seo.default_description,
@@ -110,12 +112,38 @@ const orgSchema = {
     name: a.name,
     ...(a.county && a.county !== a.name ? { containedInPlace: { "@type": "AdministrativeArea", name: a.county } } : {}),
   })),
+  /**
+   * OFFICE hours only. The on-call line is answered 24/7, but that is
+   * expressed below as a contactPoint rather than as opening hours: telling
+   * search engines the office is open 24 hours would put "Open 24 hours" in
+   * the knowledge panel and send someone to Davy Court on a Sunday night.
+   */
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:00",
       closes: "17:00",
+    },
+  ],
+  // The 24/7 on-call line, stated as what it actually is: a phone number that
+  // is answered at any hour, not a building that is open.
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: b.phone,
+      contactType: "customer service",
+      areaServed: "GB",
+      availableLanguage: "English",
+      hoursAvailable: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday", "Tuesday", "Wednesday", "Thursday",
+          "Friday", "Saturday", "Sunday",
+        ],
+        opens: "00:00",
+        closes: "23:59",
+      },
     },
   ],
   makesOffer: [

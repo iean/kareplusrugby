@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Kare Plus Rugby",
-    "base_url": "/",
+    "base_url": "https://www.kareplusrugby.co.uk",
     "favicon": "/images/favicon.png",
     "logo": "/images/kareplus-logo.png",
     "logo_width": "640",

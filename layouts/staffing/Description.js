@@ -43,12 +43,12 @@ const ServiceDescription = ({
         <div className="flex flex-wrap gap-4">
           <Link
             href="/staffing/about-us"
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 text-sm rounded-full transition"
+            className="bg-primary-700 hover:bg-primary-800 text-white font-semibold px-6 py-3 text-base rounded-full transition"
           >
             FIND OUT MORE
           </Link>
           <Link
-            href="/staffing/how-we-work"
+            href="/how-we-work"
             className="bg-primary-900 hover:bg-primary-800 text-white font-semibold px-6 py-3 text-sm rounded-full transition"
           >
             REGISTER TODAY

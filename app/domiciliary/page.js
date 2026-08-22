@@ -11,6 +11,14 @@ import StaffingApart from "@layouts/domiciliary-care-home/StaffingApart";
 import Contact from "@layouts/Contact";
 import CareInfoBanner from "@layouts/partials/CareInfoBanner";
 
+export const metadata = {
+  title: "Domiciliary Care",
+  description:
+    "Domiciliary care from Kare Plus Rugby — support at home with washing, dressing, medication and companionship across Rugby and Warwickshire.",
+  alternates: { canonical: "/domiciliary" },
+};
+
+
 const Domiciliary = async () => {
   const homePage = await getListPage("content/_index.md");
   const contactPage = await getRegularPage("contact");
@@ -37,7 +45,7 @@ const Domiciliary = async () => {
         primaryButton={{ text: "FIND OUT MORE", href: "/domiciliary" }}
         secondaryButton={{
           text: "OUR CARERS",
-          href: "/domciliary/our-careers",
+          href: "/careers",
         }}
       />
     </>

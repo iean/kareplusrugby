@@ -57,7 +57,7 @@ const HomeFeatures = ({ feature }) => {
               <h3 className="text-lg font-semibold text-primary-800">
                 {item.name}
               </h3>
-              <p className="mt-3 text-gray-600 text-sm leading-relaxed">
+              <p className="mt-3 text-gray-600 text-base leading-relaxed">
                 {item.content}
               </p>
             </div>

@@ -40,7 +40,7 @@ const Stats = () => (
                   value={s.value}
                   className="block text-4xl font-bold tracking-tight text-white md:text-5xl"
                 />
-                <span className="mt-2 block text-[15px] leading-snug text-primary-100">
+                <span className="mt-2 block text-base leading-snug text-primary-100">
                   {s.label}
                 </span>
               </div>

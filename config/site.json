@@ -20,7 +20,7 @@
     "cqc_provider_id": "1-18444576596",
     "ico_registration": "[TODO: INSERT ICO DATA PROTECTION REGISTRATION NUMBER]",
     "opening_hours": {
-      "office": "Monday to Friday, 9:00am \u2013 5:00pm",
+      "office": "Monday to Friday, 9:00am – 5:00pm",
       "on_call": "24 hours a day, 7 days a week"
     },
     "areas_served": "Rugby, Coventry, Leicestershire and Northamptonshire",
@@ -33,7 +33,7 @@
     "mobile_href": "tel:+447563247176",
     "cqc_provider_name": "Divergent Healthcare Limited",
     "cqc_profile_url": "https://www.cqc.org.uk/provider/1-18444576596",
-    "cqc_status": "Registered \u2014 not yet inspected",
+    "cqc_status": "Registered — not yet inspected",
     "sponsor_licence": "Licensed UK visa sponsor (A-rated)",
     "registered_manager": "[TODO: ADD REGISTERED MANAGER NAME]",
     "directors": [
@@ -75,7 +75,7 @@
         "county": "West Midlands",
         "home": false,
         "summary": "City-wide home care and staffing cover.",
-        "body": "Coventry is a short drive from our Rugby base, and we support both households and care providers across the city. As a large urban area with a mix of city-centre flats, suburban housing and a significant student and working-age population caring for older relatives at a distance, needs vary a great deal \u2014 so care plans here are built individually rather than to a template. We also supply nurses and care assistants to residential and nursing homes across the city.",
+        "body": "Coventry is a short drive from our Rugby base, and we support both households and care providers across the city. As a large urban area with a mix of city-centre flats, suburban housing and a significant student and working-age population caring for older relatives at a distance, needs vary a great deal — so care plans here are built individually rather than to a template. We also supply nurses and care assistants to residential and nursing homes across the city.",
         "places": [
           "Coventry city centre",
           "Earlsdon",
@@ -204,12 +204,20 @@
           "url": "/careers"
         },
         {
+          "text": "Refer a Client",
+          "url": "/referrals"
+        },
+        {
           "text": "FAQs",
           "url": "/faq"
         },
         {
           "text": "Contact",
           "url": "/contact"
+        },
+        {
+          "text": "Staff Area",
+          "url": "/staff"
         }
       ],
       "legal": [
@@ -247,5 +255,53 @@
     "default_description": "Kare Plus Rugby provides domiciliary care at home and supplies vetted nurses and carers to care homes across Rugby and Warwickshire. Call 01788 422422.",
     "og_image": "/images/og-default.png",
     "twitter_handle": ""
+  },
+  "staff_systems": {
+    "_comment": "Sign-in links for the systems staff already use. The website does NOT replace any of these - it only points at them. Values wrapped in [TODO: ...] are not real: /staff renders the card without a link and tells staff to ask the office, rather than sending them to a guessed URL. Replace the string with the real sign-in address and the link appears automatically.",
+    "rota": {
+      "name": "OneTouch Health",
+      "purpose": "Your rota, your visits and your availability.",
+      "url": "[TODO: ADD THE ONETOUCH HEALTH SIGN-IN URL FOR KARE PLUS RUGBY]"
+    },
+    "payroll": {
+      "name": "Payroll",
+      "purpose": "Your payslips and pay documents.",
+      "url": "[TODO: ADD THE PAYROLL PORTAL SIGN-IN URL - AND CONFIRM THE PROVIDER NAME]"
+    },
+    "training": {
+      "name": "FlexiBee",
+      "purpose": "Your mandatory training and refresher courses.",
+      "url": "[TODO: ADD THE FLEXIBEE SIGN-IN URL FOR KARE PLUS RUGBY]"
+    }
+  },
+  "staff_documents": {
+    "_comment": "Documents for staff to download. Each `file` must be a real path under public/. Entries whose file is still a [TODO: ...] placeholder are listed as 'not yet available' rather than rendered as a broken download link.",
+    "items": [
+      {
+        "title": "Staff handbook",
+        "description": "How we work, what is expected, and who to go to.",
+        "file": "[TODO: ADD THE STAFF HANDBOOK PDF TO public/documents/]"
+      },
+      {
+        "title": "Safeguarding policy",
+        "description": "Spotting a concern and how to raise it.",
+        "file": "[TODO: ADD THE SAFEGUARDING POLICY PDF TO public/documents/]"
+      },
+      {
+        "title": "Medication policy",
+        "description": "Administering, prompting and recording medication.",
+        "file": "[TODO: ADD THE MEDICATION POLICY PDF TO public/documents/]"
+      },
+      {
+        "title": "Health and safety / lone working",
+        "description": "Working safely in someone else's home.",
+        "file": "[TODO: ADD THE HEALTH AND SAFETY POLICY PDF TO public/documents/]"
+      },
+      {
+        "title": "Whistleblowing policy",
+        "description": "Raising a concern about practice, in confidence.",
+        "file": "[TODO: ADD THE WHISTLEBLOWING POLICY PDF TO public/documents/]"
+      }
+    ]
   }
 }

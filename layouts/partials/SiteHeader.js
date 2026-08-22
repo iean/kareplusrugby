@@ -124,7 +124,7 @@ const SiteHeader = () => {
                 <Link
                   href={item.url}
                   aria-current={isActive(item.url) ? "page" : undefined}
-                  className={`whitespace-nowrap rounded-btn px-2.5 py-2 text-[15px] font-semibold transition-colors xl:px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
+                  className={`whitespace-nowrap rounded-btn px-2.5 py-2 text-base font-semibold transition-colors xl:px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
                     isActive(item.url)
                       ? "bg-primary-50 text-primary-800"
                       : "text-primary-950 hover:bg-primary-50 hover:text-primary-800"

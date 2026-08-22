@@ -117,7 +117,7 @@ const HowItWorks = () => {
             aria-controls={`${base}-panel-${k}`}
             tabIndex={active === k ? 0 : -1}
             onClick={() => setActive(k)}
-            className={`flex-1 rounded-btn px-5 py-3 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
+            className={`flex-1 rounded-btn px-5 py-3 text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
               active === k
                 ? "bg-primary-700 text-white"
                 : "text-primary-900 hover:bg-primary-50"
