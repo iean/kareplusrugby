@@ -1,4 +1,5 @@
 import Link from "next/link";
+import site from "@config/site.json";
 
 /**
  * Honeypot field.
@@ -44,6 +45,34 @@ export const PrivacyNote = ({ children }) => (
     >
       Read our privacy policy
     </Link>
+    .
+  </p>
+);
+
+/**
+ * A direct route to us, shown under every submit button.
+ *
+ * Deliberately quiet — it must not pull people out of a form that works. But
+ * it is always there, so nobody is ever left with only a button that might
+ * fail. Costs nothing, involves no third party, and needs no configuration:
+ * it is just our phone number and our inbox.
+ */
+export const DirectContactNote = ({ what = "this" }) => (
+  <p className="text-base leading-relaxed text-textMuted">
+    Having trouble with the form? You can email {what} straight to{" "}
+    <a
+      href={`mailto:${site.business.email}`}
+      className="font-semibold text-primary-700 underline underline-offset-4"
+    >
+      {site.business.email}
+    </a>{" "}
+    or call us on{" "}
+    <a
+      href={site.business.phone_href}
+      className="font-semibold text-primary-700 underline underline-offset-4"
+    >
+      {site.business.phone}
+    </a>
     .
   </p>
 );

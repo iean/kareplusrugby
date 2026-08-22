@@ -6,7 +6,7 @@ import Button from "@components/ui/Button";
 import site from "@config/site.json";
 import { validators, validateAll } from "@lib/formValidation";
 import { SuccessPanel, ErrorPanel, ErrorSummary, buildMailto } from "./FormStatus";
-import { Honeypot, PrivacyNote } from "./FormExtras";
+import { Honeypot, PrivacyNote, DirectContactNote } from "./FormExtras";
 
 /**
  * Enquiry form, used in four configurations: home-care enquiry, professional
@@ -451,9 +451,12 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
         </p>
       </div>
 
+      <div className="space-y-3">
       <Button type="submit" size="lg" disabled={state === "submitting"}>
         {state === "submitting" ? "Sending…" : "Send enquiry"}
       </Button>
+        <DirectContactNote what="your enquiry" />
+      </div>
     </form>
   );
 };

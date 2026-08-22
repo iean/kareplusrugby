@@ -12,7 +12,7 @@ import {
   formatBytes,
 } from "@lib/formValidation";
 import { SuccessPanel, ErrorPanel, ErrorSummary, buildMailto } from "./FormStatus";
-import { Honeypot, PrivacyNote } from "./FormExtras";
+import { Honeypot, PrivacyNote, DirectContactNote } from "./FormExtras";
 
 /**
  * Job application form for carers and nurses.
@@ -486,9 +486,12 @@ const ApplicationForm = ({ id = "apply" }) => {
         </p>
       </div>
 
-      <Button type="submit" size="lg" disabled={state === "submitting"}>
-        {state === "submitting" ? "Sending your application…" : "Submit application"}
-      </Button>
+      <div className="space-y-3">
+        <Button type="submit" size="lg" disabled={state === "submitting"}>
+          {state === "submitting" ? "Sending your application…" : "Submit application"}
+        </Button>
+        <DirectContactNote what="your application and CV" />
+      </div>
     </form>
   );
 };

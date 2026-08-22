@@ -5,7 +5,7 @@ import Field from "@components/ui/Field";
 import Button from "@components/ui/Button";
 import { validators, validateAll } from "@lib/formValidation";
 import { SuccessPanel, ErrorPanel, ErrorSummary, buildMailto } from "./FormStatus";
-import { Honeypot, PrivacyNote } from "./FormExtras";
+import { Honeypot, PrivacyNote, DirectContactNote } from "./FormExtras";
 import site from "@config/site.json";
 import { Check, ChevronLeft, ChevronRight, Send } from "lucide-react";
 
@@ -501,6 +501,12 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
           </>
         )}
       </div>
+
+      {isLast && (
+        <div className="mt-6">
+          <DirectContactNote what="your enquiry" />
+        </div>
+      )}
 
       {/* Navigation */}
       <div className="mt-8 flex items-center justify-between gap-3 border-t border-border pt-6">
