@@ -111,3 +111,70 @@ of any page was a share of the homepage.
 And `/domiciliary-care-home` rendered an **entirely empty `<main>`**: the
 component fetched its content and then returned only a meta tag. Nothing linked
 to it. Retired to `/domiciliary-care`.
+
+---
+
+## Phase 3 — the new pages
+
+| Commit | What |
+|---|---|
+| `87fa9e8` | Job application form extended to the plan's field list |
+| `6d1d8a4` | Vacancies driven by markdown |
+| `36cfcd2` | Care enquiry form asks more, and requires less |
+| `cad6b43` | New `/referrals` page for professionals |
+| `e70db20` | New `/staff` signposting hub |
+
+**3a Careers** — the page already existed. Added the missing fields (care
+experience band, DBS on the update service with a real "not sure" option,
+availability as checkboxes, free-text). Right to work and driving licence were
+single checkboxes, which cannot tell "no" apart from "never answered"; both are
+yes/no radios now.
+
+Vacancies moved from `data/jobs.json` behind the admin login to
+`content/vacancies/*.md`. With none published the page says so and invites a
+speculative application — it never falls back to a sample role.
+
+**3b Enquiry** — added area, support type, funding and contact preference. More
+importantly it now *requires less*: name plus one contact method, enforced
+server-side too. Description, phone and email had all been mandatory.
+
+**3c Referrals** — new. Takes **initials only** for the person being referred,
+enforced in the API rather than just hinted at, and tells professionals to
+phone for anything urgent or clinically detailed.
+
+**3d FAQ** — already done, and better than the plan asked. The plan wanted
+`TODO:` stubs; there are real answers that explain how a figure is arrived at
+instead of inventing one. Left alone.
+
+**3e Staff hub** — new, signposting only. Every system link and policy download
+is TODO-guarded, because I do not know the real URLs and a guessed sign-in link
+sends a carer somewhere wrong. See the TODO list at the top of this file.
+
+---
+
+## Phase 4 — local SEO
+
+| Commit | What |
+|---|---|
+| `bb58ba2` | Removed the template blog posts |
+| `48a662e` | Fixed the duplicated carousel slides and auto-advancing banners |
+| `288b4e2` | Removed fabricated job adverts; recruitment consolidated on `/careers` |
+| `754cf96` | Unique title, description and canonical on every page |
+
+Three more pieces of invented content surfaced here, none of which the plan
+mentions:
+
+1. **The blog was five Bigspring sample posts** — photography, "how to make toys
+   from old Olarpaper", a CRM dialer — with blog-1 identical to blog-3 and
+   blog-2 to blog-4, all sharing one lorem meta description.
+2. **`/domiciliary/jobs` advertised three vacancies that do not exist**, with
+   working "Apply Now" buttons: Care Assistant in **London**, Support Worker in
+   **Birmingham**, Registered Nurse in **Manchester**. Hardcoded in a component.
+   This company is in Rugby.
+3. **The plan's item 2.1 was real after all.** The homepage carousel was gone,
+   so it looked fixed — but `/staffing` and `/domiciliary/care-services` still
+   rendered five `<h1>`s from three slides, with two headings appearing twice,
+   because Swiper's `loop` clones slides into the DOM.
+
+Every route now has exactly one `<h1>`, a unique title and description, and a
+canonical. Verified against the built HTML, not assumed.
