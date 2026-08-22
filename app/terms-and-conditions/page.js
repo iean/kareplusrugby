@@ -38,14 +38,17 @@ const TermsAndConditionsPage = () => {
                 </h2>
                 <p className="mb-6">
                   These Terms and Conditions (&quot;Terms&quot;) govern your use
-                  of Kare Plus Rugby Healthcare&apos;s services, website, and
+                  of the services and website of Divergent Healthcare Limited,
+                  trading as Kare Plus Rugby, and
                   any related services. By using our services, you agree to be
                   bound by these Terms.
                 </p>
                 <p className="mb-6">
-                  Kare Plus Rugby Healthcare is a registered domiciliary care
-                  provider regulated by the Care Quality Commission (CQC) and
-                  operates in accordance with UK healthcare regulations.
+                  Divergent Healthcare Limited, trading as Kare Plus Rugby, is
+                  registered with the Care Quality Commission (CQC) as provider
+                  1-18444576596 and operates in accordance with UK healthcare
+                  regulations. The service has not yet been inspected, so it
+                  does not carry a CQC rating.
                 </p>
 
                 <h2 className="text-2xl font-bold text-primary mb-6">
@@ -69,7 +72,8 @@ const TermsAndConditionsPage = () => {
                     platform and services
                   </li>
                   <li>
-                    <strong>&quot;We/Us/Our&quot;</strong> means Kare Plus Rugby Healthcare
+                    <strong>&quot;We/Us/Our&quot;</strong> means Divergent Healthcare
+                    Limited, trading as Kare Plus Rugby
                   </li>
                 </ul>
 
@@ -252,12 +256,17 @@ const TermsAndConditionsPage = () => {
                 </h2>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <p className="mb-2">
-                    <strong>Kare Plus Rugby Healthcare</strong>
+                    <strong>
+                      Divergent Healthcare Limited, trading as Kare Plus Rugby
+                    </strong>
                   </p>
                   <p className="mb-2">Phone: 01788 422422</p>
                   <p className="mb-2">Email: kp.rugby@kareplus.co.uk</p>
-                  <p className="mb-2">Address: [Your Business Address]</p>
-                  <p className="mb-2">CQC Registration: [Your CQC Number]</p>
+                  <p className="mb-2">Address: 6a Davy Court, Castle Mound Way, Central Park, Rugby, Warwickshire, CV23 0UZ</p>
+                  <p className="mb-2">CQC provider ID: 1-18444576596</p>
+                  <p className="mb-2">
+                    Registered in England &amp; Wales, company no. 14277673
+                  </p>
                 </div>
 
                 <div className="mt-8 p-4 bg-warningBg border-l-4 border-warning rounded">

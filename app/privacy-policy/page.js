@@ -37,8 +37,9 @@ const PrivacyPolicyPage = () => {
                   1. Introduction
                 </h2>
                 <p className="mb-6">
-                  Kare Plus Rugby Healthcare (&quot;we&quot;, &quot;our&quot;, or
-                  &quot;us&quot;) is committed to protecting and respecting your
+                  Divergent Healthcare Limited, trading as Kare Plus Rugby
+                  (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), is
+                  committed to protecting and respecting your
                   privacy. This Privacy Policy explains how we collect, use,
                   store, and protect your personal information when you visit
                   our website, use our services, or interact with us in any way.
@@ -203,10 +204,15 @@ const PrivacyPolicyPage = () => {
                   <p className="mb-2">
                     <strong>Data Protection Officer</strong>
                   </p>
-                  <p className="mb-2">Kare Plus Rugby Healthcare</p>
+                  <p className="mb-2">
+                    Divergent Healthcare Limited, trading as Kare Plus Rugby
+                  </p>
                   <p className="mb-2">Email: kp.rugby@kareplus.co.uk</p>
                   <p className="mb-2">Phone: 01788 422422</p>
-                  <p className="mb-2">Address: [Your Business Address]</p>
+                  <p className="mb-2">Address: 6a Davy Court, Castle Mound Way, Central Park, Rugby, Warwickshire, CV23 0UZ</p>
+                  <p className="mb-2">
+                    Registered in England &amp; Wales, company no. 14277673
+                  </p>
                 </div>
 
                 <div className="mt-8 p-4 bg-primary-50 border-l-4 border-primary-400 rounded">

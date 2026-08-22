@@ -11,6 +11,7 @@ const RequestPersonalDataPage = () => {
     requestType: "",
     additionalInfo: "",
     identification: "",
+    website: "", // honeypot - see the hidden field below
     consent: false,
   });
 
@@ -79,7 +80,7 @@ const RequestPersonalDataPage = () => {
                   <p className="mb-6">
                     Under the UK General Data Protection Regulation (UK GDPR),
                     you have several rights regarding your personal information
-                    held by Kare Plus Rugby Healthcare.
+                    held by Kare Plus Rugby.
                   </p>
 
                   <h3 className="text-xl font-semibold text-primary-800 mb-4">
@@ -155,62 +156,92 @@ const RequestPersonalDataPage = () => {
                   Submit Your Request
                 </h2>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="relative space-y-6">
+                  {/* Honeypot. Off-screen, aria-hidden and out of the tab
+                      order, so no person ever reaches it; /api/request-data
+                      discards any submission that fills it in. */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[-9999px] h-px w-px overflow-hidden"
+                  >
+                    <label htmlFor="dsr-website">Leave this field empty</label>
+                    <input
+                      id="dsr-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleChange}
+                    />
+                  </div>
+
                   {/* Name */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
+                    <label htmlFor="dsr-name" className="mb-2 block text-base font-semibold text-primary-950">
+                      Full name
+                      {" "}<span aria-hidden="true" className="text-danger">*</span>
+                      <span className="sr-only">(required)</span>
                     </label>
                     <input
                       type="text"
+                      id="dsr-name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                      className="w-full rounded-md border border-borderStrong px-4 py-3 text-base text-text focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600"
                     />
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
+                    <label htmlFor="dsr-email" className="mb-2 block text-base font-semibold text-primary-950">
+                      Email address
+                      {" "}<span aria-hidden="true" className="text-danger">*</span>
+                      <span className="sr-only">(required)</span>
                     </label>
                     <input
                       type="email"
+                      id="dsr-email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                      className="w-full rounded-md border border-borderStrong px-4 py-3 text-base text-text focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600"
                     />
                   </div>
 
                   {/* Phone */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
+                    <label htmlFor="dsr-phone" className="mb-2 block text-base font-semibold text-primary-950">
+                      Phone number
+                      {" "}
                     </label>
                     <input
                       type="tel"
+                      id="dsr-phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                      className="w-full rounded-md border border-borderStrong px-4 py-3 text-base text-text focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600"
                     />
                   </div>
 
                   {/* Request Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Type of Request *
+                    <label htmlFor="dsr-requestType" className="mb-2 block text-base font-semibold text-primary-950">
+                      Type of request
+                      {" "}<span aria-hidden="true" className="text-danger">*</span>
+                      <span className="sr-only">(required)</span>
                     </label>
                     <select
+                      id="dsr-requestType"
                       name="requestType"
                       value={formData.requestType}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                      className="w-full rounded-md border border-borderStrong px-4 py-3 text-base text-text focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600"
                     >
                       <option value="">Select request type</option>
                       <option value="access">Access to personal data</option>
@@ -228,49 +259,59 @@ const RequestPersonalDataPage = () => {
 
                   {/* Additional Information */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Additional Information
+                    <label htmlFor="dsr-additionalInfo" className="mb-2 block text-base font-semibold text-primary-950">
+                      Additional information
+                      {" "}
                     </label>
                     <textarea
+                      id="dsr-additionalInfo"
                       name="additionalInfo"
                       value={formData.additionalInfo}
                       onChange={handleChange}
                       rows="4"
                       placeholder="Please provide any additional details about your request..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                      className="w-full rounded-md border border-borderStrong px-4 py-3 text-base text-text focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600"
                     />
                   </div>
 
                   {/* Identification */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Proof of Identity
+                    <label htmlFor="dsr-identification" className="mb-2 block text-base font-semibold text-primary-950">
+                      Proof of identity
+                      {" "}
                     </label>
                     <textarea
+                      id="dsr-identification"
                       name="identification"
                       value={formData.identification}
                       onChange={handleChange}
                       rows="3"
-                      placeholder="Please describe how you can prove your identity (e.g., passport number, driving licence, etc.)"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="For example: I can bring photo ID to your office, or send a copy by post."
+                      className="w-full rounded-md border border-borderStrong px-4 py-3 text-base text-text focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600"
                     />
                   </div>
 
                   {/* Consent */}
                   <div className="flex items-start space-x-3">
                     <input
+                      id="dsr-consent"
                       type="checkbox"
                       name="consent"
                       checked={formData.consent}
                       onChange={handleChange}
                       required
-                      className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                      className="mt-1 h-5 w-5 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
                     />
-                    <label className="text-sm text-gray-600">
+                    {/* "Kare Plus Rugby" was not a real entity name.
+                        The trading name is Kare Plus Rugby; the registered
+                        company is Divergent Healthcare Limited. */}
+                    <label htmlFor="dsr-consent" className="text-base leading-relaxed text-text">
                       I confirm that I am the data subject or have legal
                       authority to make this request on their behalf. I
-                      understand that Kare Plus Rugby Healthcare may need to
-                      verify my identity before processing this request. *
+                      understand that Kare Plus Rugby may need to verify my
+                      identity before processing this request.{" "}
+                      <span aria-hidden="true" className="text-danger">*</span>
+                      <span className="sr-only">(required)</span>
                     </label>
                   </div>
 

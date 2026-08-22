@@ -9,7 +9,7 @@ const Contact = ({ data, requestType }) => {
   const { phone, address, email } = social;
 
   const defaultContacts = [
-    `**\uD83D\uDCCD Address**  \nKare Plus Rugby Healthcare  \n${address}`,
+    `**\uD83D\uDCCD Address**  \nKare Plus Rugby  \n${address}`,
     `**\uD83D\uDCDE Phone**  \n${phone}`,
     `**\uD83D\uDCE7 Email**  \n[${email}](mailto:${email})`,
     `**\uD83D\uDD50 Office Hours**  \nMonday – Friday: 9:00 AM – 6:00 PM  \nWeekend appointments available by request.`,
