@@ -3,8 +3,8 @@
 Work plan: `public/images/WEBSITE-WORK-PLAN.md`, executed in full on branch
 `main-kare-plus`.
 
-**Nothing was pushed. Nothing was merged. `main` is untouched. The pull request
-is yours to open.**
+**Status: merged to `main` and deployed to production on 22 August 2026**, on
+Alif's explicit instruction. Verified live afterwards — see §10.
 
 ---
 
@@ -286,8 +286,20 @@ got, not the targets.**
 ¹ `/staff` scores 92 on SEO only because it is deliberately `noindex`. That is
 intended — it is for your team, not for searchers.
 
-**Against the plan's targets: accessibility 95+ is met everywhere with room
-(100). Performance 90+ is met on desktop (95–96) but NOT on mobile (85–88).**
+### Measured again on live production after deploying
+
+The localhost numbers above were pessimistic, as suspected. On Vercel, with the
+CDN and compression doing their job:
+
+| Page | Perf | A11y | Best practices | SEO | LCP |
+|---|---|---|---|---|---|
+| `/` | **94** | **100** | 100 | 100 | 2.7 s |
+| `/careers` | **99** | **100** | 100 | 100 | 2.1 s |
+| `/referrals` | **98** | **100** | 100 | 100 | 2.1 s |
+
+**Both of the plan's targets are met on the live site: accessibility 95+ (100)
+and performance 90+ (94–99).** LCP came down from ~4s on localhost to 2.1–2.7s
+in production.
 
 The mobile gap is entirely Largest Contentful Paint, at ~4s. Total Blocking Time
 is 0–20ms and Cumulative Layout Shift is **0**, which are as good as they get.
@@ -385,3 +397,35 @@ a redesign of the hero, which is what it would now take.
    `/staffing` vs `/care-home-staffing`) and redirect the loser.
 6. **Then chase mobile LCP** — a smaller, better-compressed hero image is most of
    the remaining gap.
+
+
+---
+
+# 10. Deployed — verified on the live site
+
+Merged `main-kare-plus` into `main` (`ad0b433`) and pushed. Vercel deployed it.
+Checked against `https://www.kareplusrugby.co.uk` afterwards rather than assumed:
+
+**The two that mattered most**
+- `/pricing` → **308 → /faq**. The fabricated £49/£69/£99 plans, "Customs
+  Clearance" and "Cloud Service" are gone from the live site.
+- `/domiciliary/jobs` → **308 → /careers**. The invented London, Birmingham and
+  Manchester vacancies are gone.
+
+**Everything else checked live**
+- All 22 public routes return 200; `/sitemap.xml` and `/robots.txt` serve.
+- All 7 other retired URLs 301 correctly.
+- `/admin` returns 401.
+- `/images/WEBSITE-WORK-PLAN.md` returns **404** — the plan is no longer under
+  `public/`, so it is not published.
+- Privacy policy and terms carry the real entity, address, CQC provider ID and
+  company number, and no longer contain `[Your Business Address]`,
+  `[Your CQC Number]` or "Kare Plus Rugby Healthcare".
+- Phone, email, address and the CQC "not yet inspected" line are all intact on
+  the homepage.
+- Lighthouse on production: accessibility **100**, performance **94–99**.
+
+**Still outstanding and unchanged by the deploy:** everything in §1. The
+DBS/vetting claims are now live exactly as they were before — deploying did not
+verify them. The forms will keep returning an honest 503 until `EMAIL_USER` and
+`EMAIL_PASS` are set in the Vercel project.
