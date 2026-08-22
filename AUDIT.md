@@ -310,3 +310,23 @@ Three further pieces of invented content the Phase 1 pass missed, all fixed:
 - **Safeguarding phone numbers** on `/safeguarding` (five local authorities) are
   pre-existing and unverified by me. A wrong safeguarding number is
   high-consequence — worth one check against each council's website.
+
+
+---
+
+# Recheck pass — found after Phase 7
+
+A second verification pass over the finished work, driving a real browser rather
+than re-reading the code. It found four things the original audit missed. All
+fixed in `3cca476`.
+
+| Item | Why the first audit missed it |
+|---|---|
+| **"Kare Plus Rugby Healthcare" is not a real entity** — used 13 times, including as the named data controller in the privacy policy and the contracting party in the terms | I checked that the *CQC* details were right and never checked the trading name against them |
+| **`Address: [Your Business Address]` and `CQC Registration: [Your CQC Number]` rendering live** on the privacy policy and terms | I grepped for `TODO` and `Lorem`, not for `[Your ...]` |
+| **Seven unlabelled controls on the GDPR data-request form** — visible labels with no `htmlFor` and no `id` | I inspected the forms I had built and the shared `Field` component, and never opened this page's hand-rolled form |
+| **The "Proof of Identity" box invited a passport number** into a public web form | Not a category I had thought to look for |
+
+Lesson worth keeping: the first audit read the *code*. This pass drove the
+*browser* — enumerating every form control and asking whether each had an
+accessible name — and that is what surfaced all four.

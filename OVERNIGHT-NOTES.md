@@ -93,6 +93,33 @@ rather it not appear in the history at all.
 
 ---
 
+# 1e. Found in the recheck (after the report was first written)
+
+A second verification pass, driving a real browser rather than re-reading code,
+found four more live problems. All are fixed (`3cca476`), but two of them are
+**legal text you should read before this goes out**:
+
+- **"Kare Plus Rugby Healthcare" was named as the data controller in your
+  privacy policy and as the contracting party in your terms.** That entity does
+  not exist. Both documents now say "Divergent Healthcare Limited, trading as
+  Kare Plus Rugby", matching the CQC register and Companies House.
+- **Your privacy policy and terms were publicly showing
+  `Address: [Your Business Address]`**, and the terms also showed
+  `CQC Registration: [Your CQC Number]`. Unreplaced Bigspring placeholders.
+  Filled in from `config/site.json`.
+- The GDPR data-request form had **seven controls with no label association** —
+  visible labels not tied to any field, on the form for exercising data rights.
+- That form's "Proof of Identity" box **invited people to type a passport
+  number** into a public web form. It now asks how they can prove identity
+  instead.
+
+**Please still have someone check the privacy policy and terms properly.** I
+corrected the entity name and filled the placeholders from verified data, but I
+am not in a position to review whether the rest of those documents is accurate
+for your business.
+
+---
+
 # 2. The headline
 
 **The plan was written against an older version of the site.** A lot of Phase 2,
