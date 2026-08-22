@@ -5,6 +5,28 @@ import Link from "next/link";
 
 const Posts = ({ posts }) => {
   const { blog_folder, summary_length } = config.settings;
+
+  // The template shipped five sample posts, so this never had to cope with an
+  // empty list - it read posts[0].frontmatter unguarded and would throw. Those
+  // posts have been removed, so the empty case is now the normal one.
+  if (!posts || posts.length === 0) {
+    return (
+      <div className="col-12 py-12 text-center">
+        <p className="mx-auto max-w-xl text-lg leading-relaxed text-textMuted">
+          We haven&apos;t published anything here yet. In the meantime, our{" "}
+          <Link href="/faq" className="font-semibold text-primary-700 underline underline-offset-4">
+            frequently asked questions
+          </Link>{" "}
+          cover most of what people ask us, or you can{" "}
+          <Link href="/contact" className="font-semibold text-primary-700 underline underline-offset-4">
+            get in touch
+          </Link>
+          .
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="section row pb-0">
       <div className="col-12 pb-12 lg:pb-24">

@@ -1,4 +1,5 @@
 import site from "@config/site.json";
+import { getSinglePage } from "@lib/contentParser";
 
 /**
  * sitemap.xml
@@ -25,7 +26,6 @@ const ROUTES = [
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/blogs", priority: 0.5, changeFrequency: "weekly" },
   { path: "/privacy-policy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/cookie-policy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/complaints", priority: 0.3, changeFrequency: "yearly" },
@@ -36,7 +36,21 @@ const ROUTES = [
 
 export default function sitemap() {
   const now = new Date();
-  return ROUTES.map((r) => ({
+
+  // Only advertise the blog once something is actually published there.
+  // Listing an empty index is a wasted crawl and a thin page.
+  let posts = [];
+  try {
+    posts = getSinglePage("content/blogs");
+  } catch {
+    posts = [];
+  }
+
+  const routes = posts.length
+    ? [...ROUTES, { path: "/blogs", priority: 0.5, changeFrequency: "weekly" }]
+    : ROUTES;
+
+  return routes.map((r) => ({
     url: `${base}${r.path}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,
