@@ -1,5 +1,6 @@
 import { Container } from "@components/ui/Section";
 import { MapPin, Clock, CalendarDays, Banknote } from "lucide-react";
+import { LOCATIONS } from "@lib/locations";
 
 /**
  * Current vacancies, from content/vacancies/*.md (see lib/vacancies.js).
@@ -50,6 +51,23 @@ const VacancyList = ({ vacancies }) => {
           <article className="flex h-full flex-col rounded-card border border-border bg-white p-6 shadow-card">
             <h3 className="text-xl font-bold text-primary-950">{v.title}</h3>
 
+            {/* Structured locations first - these are what the filter uses, so
+                showing them keeps the card and the filter telling the same
+                story. The free-text `location` line adds the detail ("and
+                surrounding villages") that the chips cannot carry. */}
+            {v.locations.length > 0 && (
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {v.locations.map((id) => (
+                  <li
+                    key={id}
+                    className="rounded-full bg-primary-50 px-3 py-1 text-base font-medium text-primary-800"
+                  >
+                    {LOCATIONS.find((l) => l.id === id)?.label || id}
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <ul className="mt-4 space-y-2">
               <Meta icon={MapPin}>{v.location}</Meta>
               <Meta icon={Clock}>
@@ -81,12 +99,16 @@ const VacancyList = ({ vacancies }) => {
               </p>
             )}
 
+            {/* Phase 2 of RECRUITMENT-SPEC.md moves this to /careers/apply
+                with the role pre-selected. Until that route exists it points at
+                the working form on this page, so no commit ever ships a link
+                to a 404. */}
             <a
               href="#apply"
-              className="mt-6 inline-flex min-h-[44px] items-center justify-center self-start rounded-btn bg-primary-700 px-6 py-3 font-semibold text-white transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+              className="mt-6 inline-flex min-h-[44px] items-center justify-center self-start rounded-btn bg-primary-700 px-7 py-3.5 text-lg font-semibold text-white transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
             >
-              Apply for this role
-              <span className="sr-only">: {v.title}</span>
+              Apply now
+              <span className="sr-only"> for {v.title}</span>
             </a>
           </article>
         </li>

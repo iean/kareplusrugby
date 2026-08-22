@@ -6,7 +6,7 @@ import Card from "@components/ui/Card";
 import ApplicationForm from "@layouts/forms/ApplicationForm";
 import CtaBand from "@layouts/home/CtaBand";
 import site from "@config/site.json";
-import VacancyList from "@layouts/careers/VacancyList";
+import VacancyBrowser from "@layouts/careers/VacancyBrowser";
 import { getVacancies } from "@lib/vacancies";
 import {
   FaCalendarAlt, FaGraduationCap, FaUserFriends, FaRoute,
@@ -148,12 +148,12 @@ const CareersPage = () => {
         <SectionHeading
           eyebrow="Vacancies"
           title="Current openings"
-          subtitle="We recruit continuously across all our roles. If you do not see the right thing, apply anyway — we will keep your details on file."
+          subtitle="We recruit across Coventry, Rugby, Leicester and Northampton. If you do not see the right thing, apply anyway — we will keep your details on file."
           className="mb-8"
         />
         {/* Driven by content/vacancies/*.md - see lib/vacancies.js. Adding a
             markdown file publishes a role; no code change, no admin login. */}
-        <VacancyList vacancies={vacancies} />
+        <VacancyBrowser vacancies={vacancies} />
       </Container>
     </Section>
 
