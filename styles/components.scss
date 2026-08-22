@@ -66,6 +66,36 @@
   }
 }
 
+// Banner carousel pagination.
+//
+// Swiper's default bullet is an 8px dot, which Lighthouse correctly flags as an
+// undersized tap target and which is genuinely hard to hit for anyone with a
+// tremor. The bullet keeps its small *appearance* but gets a 44x44 hit area:
+// transparent padding carries the touch target, and background-clip:content-box
+// keeps the visible dot the size it was.
+.swiper-pagination {
+  .swiper-pagination-bullet {
+    width: 44px;
+    height: 44px;
+    padding: 17px;
+    margin: 0 !important;
+    background-clip: content-box;
+    background-color: rgba(255, 255, 255, 0.45);
+    opacity: 1;
+    border-radius: 9999px;
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: -6px;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #fff;
+    background-clip: content-box;
+  }
+}
+
 //cta link
 .cta-link {
   img {

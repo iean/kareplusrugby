@@ -58,6 +58,8 @@ const HomeBanner = ({ banner }) => {
               aria-hidden="true"
               width={900}
               height={720}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              quality={60}
               priority
               className="h-full w-full object-cover object-center"
             />

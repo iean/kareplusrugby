@@ -55,6 +55,11 @@ const StaffingBanner = () => (
             aria-hidden="true"
             width={1000}
             height={700}
+            // Without `sizes`, next/image assumes this fills the viewport and
+            // hands a phone a desktop-width file. This panel is 60% of the
+            // viewport on large screens and full width below that.
+            sizes="(min-width: 1024px) 60vw, 100vw"
+            quality={60}
             className="h-full w-full object-cover"
             priority
           />

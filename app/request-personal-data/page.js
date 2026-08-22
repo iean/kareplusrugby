@@ -115,11 +115,11 @@ const RequestPersonalDataPage = () => {
                     machine-readable format.
                   </p>
 
-                  <div className="bg-blue-50 p-6 rounded-lg mt-8">
-                    <h4 className="font-semibold text-blue-800 mb-3">
+                  <div className="bg-primary-50 p-6 rounded-lg mt-8">
+                    <h4 className="font-semibold text-primary-900 mb-3">
                       Important Information
                     </h4>
-                    <ul className="text-sm text-blue-700 space-y-2">
+                    <ul className="text-base text-primary-900 space-y-2">
                       <li>• We must respond to your request within 30 days</li>
                       <li>
                         • We may extend this period by up to 2 months for
@@ -136,11 +136,11 @@ const RequestPersonalDataPage = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-yellow-50 p-6 rounded-lg mt-6">
-                    <h4 className="font-semibold text-yellow-800 mb-3">
+                  <div className="bg-warningBg p-6 rounded-lg mt-6">
+                    <h4 className="font-semibold text-warning mb-3">
                       Healthcare Records
                     </h4>
-                    <p className="text-base text-yellow-700">
+                    <p className="text-base text-warning">
                       Please note that healthcare records are subject to
                       specific retention periods under NHS guidelines and may
                       not be deleted even if requested.

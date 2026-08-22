@@ -34,7 +34,7 @@ const CareInfoBanner = ({
             {secondaryButton && (
               <Link
                 href={secondaryButton.href}
-                className="bg-green-500 text-white px-5 py-2 rounded-full font-semibold text-sm hover:opacity-90 transition"
+                className="inline-flex min-h-[44px] items-center bg-primary-700 text-white px-5 py-2 rounded-full font-semibold text-base hover:bg-primary-800 transition"
               >
                 {secondaryButton.text}
               </Link>

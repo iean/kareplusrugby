@@ -209,14 +209,14 @@ const PrivacyPolicyPage = () => {
                   <p className="mb-2">Address: [Your Business Address]</p>
                 </div>
 
-                <div className="mt-8 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-                  <p className="text-base text-blue-800">
+                <div className="mt-8 p-4 bg-primary-50 border-l-4 border-primary-400 rounded">
+                  <p className="text-base text-primary-900">
                     <strong>Supervisory Authority:</strong> You have the right
                     to lodge a complaint with the Information
                     Commissioner&apos;s Office (ICO) at{" "}
                     <a
                       href="https://ico.org.uk"
-                      className="text-blue-600 hover:underline"
+                      className="text-primary-700 underline underline-offset-4 hover:no-underline"
                     >
                       ico.org.uk
                     </a>

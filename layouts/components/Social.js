@@ -40,6 +40,18 @@ import {
  * turned into a 404 (kareplusrugby.co.uk/6a Davy Court,...). It is now a full
  * Google Maps URL.
  */
+/**
+ * Every icon link is given an explicit 44x44 hit area (h-11 w-11). The icons
+ * themselves render at around 18px, so before this the tap target was roughly
+ * a third of the 44x44 minimum - fiddly for anyone, and genuinely hard for
+ * someone with a tremor or reduced dexterity.
+ */
+const ICON_LINK =
+  "inline-flex h-11 w-11 items-center justify-center rounded-full " +
+  "transition-colors hover:bg-white/10 focus-visible:outline-none " +
+  "focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 " +
+  "focus-visible:ring-offset-primary-950";
+
 const Social = ({ source, className }) => {
   const {
     facebook,
@@ -78,6 +90,7 @@ const Social = ({ source, className }) => {
       {facebook && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="Kare Plus Rugby on Facebook (opens in a new tab)"
             href={facebook}
             target="_blank"
@@ -90,6 +103,7 @@ const Social = ({ source, className }) => {
       {twitter && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="twitter"
             href={twitter}
             target="_blank"
@@ -102,6 +116,7 @@ const Social = ({ source, className }) => {
       {instagram && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="Kare Plus Rugby on Instagram (opens in a new tab)"
             href={instagram}
             target="_blank"
@@ -114,6 +129,7 @@ const Social = ({ source, className }) => {
       {youtube && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="youtube"
             href={youtube}
             target="_blank"
@@ -126,6 +142,7 @@ const Social = ({ source, className }) => {
       {linkedin && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="Kare Plus Rugby on LinkedIn (opens in a new tab)"
             href={linkedin}
             target="_blank"
@@ -138,6 +155,7 @@ const Social = ({ source, className }) => {
       {github && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="github"
             href={github}
             target="_blank"
@@ -150,6 +168,7 @@ const Social = ({ source, className }) => {
       {gitlab && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="gitlab"
             href={gitlab}
             target="_blank"
@@ -162,6 +181,7 @@ const Social = ({ source, className }) => {
       {discord && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="discord"
             href={discord}
             target="_blank"
@@ -174,6 +194,7 @@ const Social = ({ source, className }) => {
       {slack && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="slack"
             href={slack}
             target="_blank"
@@ -186,6 +207,7 @@ const Social = ({ source, className }) => {
       {medium && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="medium"
             href={medium}
             target="_blank"
@@ -198,6 +220,7 @@ const Social = ({ source, className }) => {
       {codepen && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="codepen"
             href={codepen}
             target="_blank"
@@ -210,6 +233,7 @@ const Social = ({ source, className }) => {
       {bitbucket && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="bitbucket"
             href={bitbucket}
             target="_blank"
@@ -222,6 +246,7 @@ const Social = ({ source, className }) => {
       {dribbble && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="dribbble"
             href={dribbble}
             target="_blank"
@@ -234,6 +259,7 @@ const Social = ({ source, className }) => {
       {behance && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="behance"
             href={behance}
             target="_blank"
@@ -246,6 +272,7 @@ const Social = ({ source, className }) => {
       {pinterest && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="pinterest"
             href={pinterest}
             target="_blank"
@@ -258,6 +285,7 @@ const Social = ({ source, className }) => {
       {soundcloud && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="soundcloud"
             href={soundcloud}
             target="_blank"
@@ -270,6 +298,7 @@ const Social = ({ source, className }) => {
       {tumblr && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="tumblr"
             href={tumblr}
             target="_blank"
@@ -282,6 +311,7 @@ const Social = ({ source, className }) => {
       {reddit && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="reddit"
             href={reddit}
             target="_blank"
@@ -294,6 +324,7 @@ const Social = ({ source, className }) => {
       {vk && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="vk"
             href={vk}
             target="_blank"
@@ -306,6 +337,7 @@ const Social = ({ source, className }) => {
       {whatsapp && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="Message Kare Plus Rugby on WhatsApp (opens in a new tab)"
             href={whatsapp}
             target="_blank"
@@ -318,6 +350,7 @@ const Social = ({ source, className }) => {
       {snapchat && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="snapchat"
             href={snapchat}
             target="_blank"
@@ -330,6 +363,7 @@ const Social = ({ source, className }) => {
       {vimeo && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="vimeo"
             href={vimeo}
             target="_blank"
@@ -342,6 +376,7 @@ const Social = ({ source, className }) => {
       {tiktok && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="tiktok"
             href={tiktok}
             target="_blank"
@@ -354,6 +389,7 @@ const Social = ({ source, className }) => {
       {foursquare && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="foursquare"
             href={foursquare}
             target="_blank"
@@ -366,6 +402,7 @@ const Social = ({ source, className }) => {
       {skype && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="skype"
             href={skype}
             target="_blank"
@@ -378,6 +415,7 @@ const Social = ({ source, className }) => {
       {website && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="website"
             href={website}
             target="_blank"
@@ -390,6 +428,7 @@ const Social = ({ source, className }) => {
       {rss && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="rss feed"
             href={rss}
             target="_blank"
@@ -401,7 +440,7 @@ const Social = ({ source, className }) => {
       )}
       {email && (
         <li className="inline-block">
-          <a aria-label="Email Kare Plus Rugby" href={`mailto:${email}`}>
+          <a className={ICON_LINK} aria-label="Email Kare Plus Rugby" href={`mailto:${email}`}>
             <IoMail />
           </a>
         </li>
@@ -411,6 +450,7 @@ const Social = ({ source, className }) => {
           {/* Strip spaces: config holds the number in readable form ("01788 422422")
               and a space in a tel: URI is not valid. Same number, no reformatting. */}
           <a
+            className={ICON_LINK}
             aria-label="Call Kare Plus Rugby"
             href={`tel:${String(phone).replace(/\s+/g, "")}`}
           >
@@ -421,6 +461,7 @@ const Social = ({ source, className }) => {
       {address && (
         <li className="inline-block">
           <a
+            className={ICON_LINK}
             aria-label="Find our office on Google Maps (opens in a new tab)"
             href={address}
             target="_blank"

@@ -33,8 +33,21 @@ import "swiper/css/navigation";
  * <button>s in the tab order, and Swiper's A11y module labels the region and
  * announces slide changes.
  */
+/**
+ * Swiper v8 sizes its pagination bullets from CSS custom properties, so a
+ * plain stylesheet rule loses to its defaults. Setting the variables here is
+ * what actually makes the bullets a 44x44 tap target; styles/components.scss
+ * then uses padding + background-clip so the visible dot stays small.
+ */
+const BULLET_VARS = {
+  "--swiper-pagination-bullet-width": "44px",
+  "--swiper-pagination-bullet-height": "44px",
+  "--swiper-pagination-bullet-horizontal-gap": "0px",
+  "--swiper-pagination-bullet-inactive-opacity": "1",
+};
+
 const BannerCarousel = ({ items, ariaLabel }) => (
-  <div className="relative">
+  <div className="relative" style={BULLET_VARS}>
     <Swiper
       modules={[Pagination, Navigation, Keyboard, A11y]}
       // No autoplay. See the note above - this is deliberate, not an omission.

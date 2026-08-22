@@ -260,8 +260,8 @@ const TermsAndConditionsPage = () => {
                   <p className="mb-2">CQC Registration: [Your CQC Number]</p>
                 </div>
 
-                <div className="mt-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
-                  <p className="text-base text-yellow-800">
+                <div className="mt-8 p-4 bg-warningBg border-l-4 border-warning rounded">
+                  <p className="text-base text-warning">
                     <strong>Important:</strong> These terms should be read in
                     conjunction with your individual care plan and service
                     agreement. If you have any questions, please contact us for
