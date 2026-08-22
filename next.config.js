@@ -38,6 +38,10 @@ const nextConfig = {
     return [
       { source: "/pricing", destination: "/faq", permanent: true },
       { source: "/elements", destination: "/", permanent: true },
+      // /domiciliary-care-home rendered an entirely empty <main>: the component
+      // fetched its data and then returned only a meta tag. Nothing linked to
+      // it. Retired to the page that covers the same subject properly.
+      { source: "/domiciliary-care-home", destination: "/domiciliary-care", permanent: true },
     ];
   },
 

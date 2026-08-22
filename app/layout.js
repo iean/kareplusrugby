@@ -37,9 +37,11 @@ export const metadata = {
   authors: [{ name: site.seo.site_name }],
   openGraph: {
     type: "website",
-    // Absolute canonical URL for the share card; without it some scrapers
-    // fall back to whatever URL they were handed, including tracking params.
-    ...(baseUrl ? { url: baseUrl } : {}),
+    // Deliberately NO `url` here. Metadata is inherited, so setting it in the
+    // root layout stamped og:url="<homepage>" onto every page that did not
+    // override it - telling scrapers that every share of any page was really a
+    // share of the homepage. Pages that need one set it themselves; where it is
+    // absent, scrapers correctly fall back to the URL they fetched.
     siteName: site.seo.site_name,
     title: site.seo.default_title,
     description: site.seo.default_description,
