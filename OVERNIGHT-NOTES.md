@@ -78,10 +78,18 @@ same place. **I did not guess.**
 ## 1d. One thing to do before merging
 
 `WEBSITE-WORK-PLAN.md` is sitting in `public/images/`. Next.js serves that
-directory verbatim, so committing it there would publish your internal plan at
-`kareplusrugby.co.uk/images/WEBSITE-WORK-PLAN.md`. **I left it untracked, so
-nothing is exposed** — but please move it out of `public/` rather than commit it
-where it is.
+directory verbatim, so a committed copy there is published at
+`kareplusrugby.co.uk/images/WEBSITE-WORK-PLAN.md`.
+
+**I flagged this at the start and then committed it by accident anyway** — a
+blanket `git add -A` in `26d9d5a` swept it in. I have removed it from the tree
+and gitignored the pattern (`d0a0f0f`), so it is **not** in what would be
+deployed, and the branch has never been pushed, so nothing has been exposed.
+
+It does still exist in this branch's history, in commit `26d9d5a`. That is not
+served, but it would be visible in the PR diff. **Please move the plan out of
+`public/` before opening the PR**, and squash or rewrite that commit if you would
+rather it not appear in the history at all.
 
 ---
 
