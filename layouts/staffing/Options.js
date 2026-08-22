@@ -42,13 +42,13 @@ const StaffingOptions = () => (
 
         <div className="mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-4">
           <Link
-            href="/work-for-us"
+            href="/careers"
             className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             JOIN OUR CARE TEAM
           </Link>
           <Link
-            href="/staff-request"
+            href="/care-home-staffing"
             className="bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold px-6 py-3 rounded-full transition duration-200"
           >
             NEED COMPASSIONATE STAFF?

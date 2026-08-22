@@ -37,7 +37,7 @@ const Domiciliary = async () => {
         primaryButton={{ text: "FIND OUT MORE", href: "/domiciliary" }}
         secondaryButton={{
           text: "OUR CARERS",
-          href: "/domciliary/our-careers",
+          href: "/domiciliary/our-careers",
         }}
       />
     </>

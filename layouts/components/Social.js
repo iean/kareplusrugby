@@ -31,6 +31,15 @@ import {
   IoMail,
 } from "react-icons/io5";
 
+/**
+ * Renders only the networks that carry a value in config/social.json, so an
+ * unused network never produces an empty link.
+ *
+ * Every href here must be absolute. `address` in particular used to be a bare
+ * postal address, which the browser resolved relative to the current page and
+ * turned into a 404 (kareplusrugby.co.uk/6a Davy Court,...). It is now a full
+ * Google Maps URL.
+ */
 const Social = ({ source, className }) => {
   const {
     facebook,
@@ -69,7 +78,7 @@ const Social = ({ source, className }) => {
       {facebook && (
         <li className="inline-block">
           <a
-            aria-label="facebook"
+            aria-label="Kare Plus Rugby on Facebook (opens in a new tab)"
             href={facebook}
             target="_blank"
             rel="noopener noreferrer nofollow"
@@ -93,7 +102,7 @@ const Social = ({ source, className }) => {
       {instagram && (
         <li className="inline-block">
           <a
-            aria-label="instagram"
+            aria-label="Kare Plus Rugby on Instagram (opens in a new tab)"
             href={instagram}
             target="_blank"
             rel="noopener noreferrer nofollow"
@@ -117,7 +126,7 @@ const Social = ({ source, className }) => {
       {linkedin && (
         <li className="inline-block">
           <a
-            aria-label="linkedin"
+            aria-label="Kare Plus Rugby on LinkedIn (opens in a new tab)"
             href={linkedin}
             target="_blank"
             rel="noopener noreferrer nofollow"
@@ -297,7 +306,7 @@ const Social = ({ source, className }) => {
       {whatsapp && (
         <li className="inline-block">
           <a
-            aria-label="whatsapp"
+            aria-label="Message Kare Plus Rugby on WhatsApp (opens in a new tab)"
             href={whatsapp}
             target="_blank"
             rel="noopener noreferrer nofollow"
@@ -392,14 +401,19 @@ const Social = ({ source, className }) => {
       )}
       {email && (
         <li className="inline-block">
-          <a aria-label="email" href={`mailto:${email}`}>
+          <a aria-label="Email Kare Plus Rugby" href={`mailto:${email}`}>
             <IoMail />
           </a>
         </li>
       )}
       {phone && (
         <li className="inline-block">
-          <a aria-label="telephone" href={`tel:${phone}`}>
+          {/* Strip spaces: config holds the number in readable form ("01788 422422")
+              and a space in a tel: URI is not valid. Same number, no reformatting. */}
+          <a
+            aria-label="Call Kare Plus Rugby"
+            href={`tel:${String(phone).replace(/\s+/g, "")}`}
+          >
             <IoCall />
           </a>
         </li>
@@ -407,7 +421,7 @@ const Social = ({ source, className }) => {
       {address && (
         <li className="inline-block">
           <a
-            aria-label="location"
+            aria-label="Find our office on Google Maps (opens in a new tab)"
             href={address}
             target="_blank"
             rel="noopener noreferrer nofollow"
