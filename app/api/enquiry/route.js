@@ -75,6 +75,28 @@ export async function POST(req) {
   }
 
   if (body.consent !== true) errors.consent = "Consent is required.";
+
+  /**
+   * Referrals must carry INITIALS ONLY for the person being referred.
+   *
+   * Enforced server-side, not just as a hint in the UI: a public web form is
+   * not an appropriate channel for identifiable health data about a third
+   * party who has not consented to it being sent that way. Anything longer
+   * than a short initials string is rejected with an explanation rather than
+   * quietly truncated, so the referrer knows it was not sent.
+   */
+  if (body.enquiryType === "referral") {
+    const initials = str(body.clientInitials);
+    if (!initials) {
+      errors.clientInitials = "Please give the initials of the person being referred.";
+    } else if (initials.length > 5) {
+      errors.clientInitials =
+        "Initials only, please — no full names. We will confirm their identity with you by phone.";
+    }
+    if (!str(body.professionalRole)) {
+      errors.professionalRole = "Please tell us your professional role.";
+    }
+  }
   if (!VALID_TYPES.includes(body.enquiryType)) errors.enquiryType = "Unknown enquiry type.";
 
   // Length ceilings so a malicious client cannot post megabytes of text.
@@ -82,6 +104,7 @@ export async function POST(req) {
     ["name", 200], ["email", 320], ["phone", 40], ["organisation", 200],
     ["message", 5000], ["area", 120], ["supportType", 120], ["funding", 120],
     ["contactMethod", 60], ["contactTime", 60], ["who", 120], ["when", 120],
+    ["professionalRole", 120], ["urgency", 120],
   ]) {
     if (str(body[field]).length > max) errors[field] = `${field} is too long.`;
   }
@@ -141,6 +164,9 @@ export async function POST(req) {
         <p><strong>Phone:</strong> ${esc(str(body.phone) || "Not given")}</p>
         ${body.organisation ? `<p><strong>Organisation:</strong> ${esc(body.organisation)}</p>` : ""}
         ${body.who ? `<p><strong>Care is for:</strong> ${esc(body.who)}</p>` : ""}
+        ${body.professionalRole ? `<p><strong>Referrer's role:</strong> ${esc(body.professionalRole)}</p>` : ""}
+        ${body.clientInitials ? `<p><strong>Person referred (initials):</strong> ${esc(body.clientInitials)}</p>` : ""}
+        ${body.urgency ? `<p><strong>Urgency:</strong> ${esc(body.urgency)}</p>` : ""}
         ${body.supportType ? `<p><strong>Support needed:</strong> ${esc(body.supportType)}</p>` : ""}
         ${body.area ? `<p><strong>Postcode / area:</strong> ${esc(body.area)}</p>` : ""}
         ${body.when ? `<p><strong>How soon:</strong> ${esc(body.when)}</p>` : ""}

@@ -5,15 +5,46 @@ import Field from "@components/ui/Field";
 import Button from "@components/ui/Button";
 import { validators, validateAll } from "@lib/formValidation";
 import { SuccessPanel, ErrorPanel, ErrorSummary } from "./FormStatus";
+import { Honeypot, PrivacyNote } from "./FormExtras";
 
 /**
  * Enquiry form, used in four configurations: home-care enquiry, professional
  * referral, care-home staffing request, and general contact.
  *
- * NOTE ON DELIVERY: posts to /api/enquiry, which is a STUB. It validates and
- * logs but does not yet email or store anything. See OVERNIGHT_REPORT.md -
- * an email service and a destination address are needed from the client.
+ * DELIVERY: posts to /api/enquiry, which emails params.contact_email and
+ * stores nothing. (An older comment here called that route a stub; it has not
+ * been one for some time.) It returns 503 when EMAIL_USER / EMAIL_PASS are
+ * unset, and this form shows that as a visible error rather than a false
+ * success.
+ *
+ * TODO: confirm which inbox each variant should reach. All four currently go
+ * to the one business address. A professional referral with a discharge
+ * deadline and a general website enquiry arguably want different destinations.
  */
+
+/**
+ * Extra questions for the professional referral variant.
+ *
+ * NOTE ON CLIENT IDENTITY: this form asks for INITIALS ONLY, never a full
+ * name, date of birth or NHS number. A public web form is not an appropriate
+ * channel for identifiable health data about a third party who has not
+ * consented to it being sent this way. The field is capped and the hint says
+ * so plainly; the referral is then matched up by phone.
+ */
+const REFERRAL_SUPPORT = [
+  "Not yet determined",
+  "Care at home (domiciliary)",
+  "Supported living",
+  "Live-in care",
+  "Respite / short-term cover",
+];
+
+const REFERRAL_URGENCY = [
+  "Urgent — within days",
+  "Within 2 weeks",
+  "Within a month",
+  "Planning ahead / no fixed date",
+];
 
 const VARIANTS = {
   care: {
@@ -103,7 +134,13 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
     phone: "",
     subject: cfg.subjectOptions[0],
     organisation: "",
+    professionalRole: "",
+    clientInitials: "",
+    area: "",
+    supportType: REFERRAL_SUPPORT[0],
+    urgency: REFERRAL_URGENCY[0],
     message: "",
+    website: "", // honeypot - see FormExtras
     consent: false,
   });
   const [errors, setErrors] = useState({});
@@ -124,6 +161,12 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
     ],
     ...(needsOrg
       ? { organisation: [validators.required("Organisation")] }
+      : {}),
+    ...(variant === "referral"
+      ? {
+          professionalRole: [validators.required("Your role")],
+          clientInitials: [validators.required("The person's initials")],
+        }
       : {}),
     consent: [
       validators.checked(
@@ -193,11 +236,19 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-6" id={id}>
+    <form onSubmit={onSubmit} noValidate className="relative space-y-6" id={id}>
       <div>
         <h2 className="text-2xl font-bold text-primary-950">{cfg.heading}</h2>
         <p className="mt-2 leading-relaxed text-textMuted">{cfg.intro}</p>
       </div>
+
+      <PrivacyNote>
+        {variant === "referral"
+          ? "This referral is emailed to our care team and is not stored on this website. Please send initials only — no full names, records or NHS numbers."
+          : "What you send here is emailed to our team so they can reply. It is not stored on this website."}
+      </PrivacyNote>
+
+      <Honeypot value={values.website} onChange={set("website")} />
 
       <ErrorSummary errors={errors} refEl={summaryRef} idFor={fid} />
       {state === "error" && <ErrorPanel>{serverError}</ErrorPanel>}
@@ -249,6 +300,70 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
           onBlur={blur("organisation")}
           error={errors.organisation}
         />
+      )}
+
+      {variant === "referral" && (
+        <>
+          <Field
+            id={fid("professionalRole")}
+            label="Your role"
+            required
+            hint="For example: social worker, discharge coordinator, district nurse, case manager."
+            value={values.professionalRole}
+            onChange={set("professionalRole")}
+            onBlur={blur("professionalRole")}
+            error={errors.professionalRole}
+          />
+
+          {/*
+            Initials only. A public web form is not an appropriate channel for
+            identifiable health data about a third party who has not agreed to
+            it being sent this way, so the field is capped at 5 characters and
+            the hint says why. The referral is matched up by phone afterwards.
+          */}
+          <Field
+            id={fid("clientInitials")}
+            label="Initials of the person being referred"
+            required
+            maxLength={5}
+            className="sm:max-w-[12rem]"
+            hint="Initials only — please do not enter a full name, date of birth or NHS number. We will confirm their identity with you by phone."
+            value={values.clientInitials}
+            onChange={set("clientInitials")}
+            onBlur={blur("clientInitials")}
+            error={errors.clientInitials}
+          />
+
+          <Field
+            id={fid("area")}
+            label="Their postcode or area"
+            hint="So we can tell you immediately whether we cover them."
+            className="sm:max-w-xs"
+            value={values.area}
+            onChange={set("area")}
+          />
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field
+              id={fid("supportType")}
+              as="select"
+              label="Support needed"
+              value={values.supportType}
+              onChange={set("supportType")}
+            >
+              {REFERRAL_SUPPORT.map((o) => <option key={o} value={o}>{o}</option>)}
+            </Field>
+            <Field
+              id={fid("urgency")}
+              as="select"
+              label="Urgency"
+              value={values.urgency}
+              onChange={set("urgency")}
+            >
+              {REFERRAL_URGENCY.map((o) => <option key={o} value={o}>{o}</option>)}
+            </Field>
+          </div>
+        </>
       )}
 
       <Field

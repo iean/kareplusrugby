@@ -21,6 +21,7 @@ const ROUTES = [
   { path: "/care-home-staffing", priority: 0.9, changeFrequency: "monthly" },
   { path: "/supported-living", priority: 0.9, changeFrequency: "monthly" },
   { path: "/careers", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/referrals", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.6, changeFrequency: "monthly" },
