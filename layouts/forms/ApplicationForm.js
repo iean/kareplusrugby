@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Field from "@components/ui/Field";
 import Button from "@components/ui/Button";
+import site from "@config/site.json";
 import {
   validators,
   validateAll,
@@ -10,7 +11,7 @@ import {
   CV_ACCEPT,
   formatBytes,
 } from "@lib/formValidation";
-import { SuccessPanel, ErrorPanel, ErrorSummary } from "./FormStatus";
+import { SuccessPanel, ErrorPanel, ErrorSummary, buildMailto } from "./FormStatus";
 import { Honeypot, PrivacyNote } from "./FormExtras";
 
 /**
@@ -205,7 +206,31 @@ const ApplicationForm = ({ id = "apply" }) => {
       <Honeypot value={values.website} onChange={set("website")} />
 
       <ErrorSummary errors={errors} refEl={summaryRef} />
-      {state === "error" && <ErrorPanel>{serverError}</ErrorPanel>}
+      {state === "error" && (
+        <ErrorPanel
+          mailto={buildMailto({
+            to: site.business.careers_email,
+            subject: `Job application — ${values.firstName} ${values.lastName}`,
+            fields: [
+              ["Name", `${values.firstName} ${values.lastName}`],
+              ["Email", values.email],
+              ["Phone", values.phone],
+              ["Postcode", values.postcode],
+              ["Role", values.role],
+              ["Care experience", values.experienceLevel],
+              ["Availability", AVAILABILITY.filter(([k]) => availability.includes(k)).map(([, l]) => l).join(", ")],
+              ["Right to work in the UK", values.rightToWork],
+              ["Enhanced DBS on update service", values.dbs],
+              ["Driving licence and car", values.driver],
+              ["About my experience", values.experience],
+              ["Anything else", values.anythingElse],
+            ],
+          })}
+          mailtoNote="If you have a CV, please attach it to that email."
+        >
+          {serverError}
+        </ErrorPanel>
+      )}
 
       <fieldset className="space-y-5">
         <legend className="text-lg font-bold text-primary-950">

@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Field from "@components/ui/Field";
 import Button from "@components/ui/Button";
 import { validators, validateAll } from "@lib/formValidation";
-import { SuccessPanel, ErrorPanel, ErrorSummary } from "./FormStatus";
+import { SuccessPanel, ErrorPanel, ErrorSummary, buildMailto } from "./FormStatus";
 import { Honeypot, PrivacyNote } from "./FormExtras";
 import site from "@config/site.json";
 import { Check, ChevronLeft, ChevronRight, Send } from "lucide-react";
@@ -307,7 +307,28 @@ const MultiStepEnquiry = ({ id = "enquiry" }) => {
 
       <div className="mt-6 space-y-5">
         <ErrorSummary errors={errors} refEl={summaryRef} idFor={fid} />
-        {state === "error" && <ErrorPanel>{serverError}</ErrorPanel>}
+        {state === "error" && (
+          <ErrorPanel
+            mailto={buildMailto({
+              to: site.business.email,
+              subject: `Home care enquiry — ${values.name}`,
+              fields: [
+                ["Name", values.name],
+                ["Phone", values.phone],
+                ["Email", values.email],
+                ["Care is for", values.who],
+                ["Postcode / area", values.area],
+                ["Support needed", values.supportType],
+                ["How soon", values.when],
+                ["Likely funding", values.funding],
+                ["Best way to contact me", `${values.contactMethod}, ${values.contactTime}`],
+                ["About the situation", values.message],
+              ],
+            })}
+          >
+            {serverError}
+          </ErrorPanel>
+        )}
 
         {step === 0 && (
           <>

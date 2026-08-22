@@ -10,7 +10,32 @@ import site from "@config/site.json";
  * The error panel always offers the phone number as a fallback. If someone is
  * trying to arrange care and the form breaks, they need another route to us
  * immediately - not a dead end.
+ *
+ * It can also offer a pre-filled email. When the server cannot send - most
+ * likely because no mail transport is configured - the visitor has already
+ * typed everything out, and losing that is the worst part of the failure. The
+ * mailto: link carries their answers into their own email app so they can send
+ * it themselves in one tap. It needs no server, no credentials and no third
+ * party: it is the visitor's own data going from their own device to us.
  */
+
+/**
+ * Build a mailto: URL carrying what the visitor typed.
+ *
+ * Kept well under the ~2000-character ceiling that Outlook and some mobile
+ * clients impose on a mailto URL - past that the link is silently truncated or
+ * ignored, which would be a worse failure than the one we are recovering from.
+ */
+export function buildMailto({ to, subject, fields }) {
+  const body = fields
+    .filter(([, v]) => v && String(v).trim())
+    .map(([label, v]) => `${label}: ${String(v).trim()}`)
+    .join("\n");
+
+  const trimmed = body.length > 1500 ? `${body.slice(0, 1500)}\n\n[message shortened]` : body;
+
+  return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(trimmed)}`;
+}
 
 export const SuccessPanel = ({ title, children }) => (
   <div
@@ -33,7 +58,7 @@ export const SuccessPanel = ({ title, children }) => (
   </div>
 );
 
-export const ErrorPanel = ({ children }) => (
+export const ErrorPanel = ({ children, mailto, mailtoNote }) => (
   <div
     role="alert"
     className="rounded-card border border-danger/40 bg-dangerBg p-5"
@@ -46,7 +71,7 @@ export const ErrorPanel = ({ children }) => (
         <p className="font-bold text-danger">Sorry — we could not send that.</p>
         <p className="mt-1 text-text">{children}</p>
         <p className="mt-2 text-text">
-          Please try again, or call us on{" "}
+          Nothing you typed has been lost. Please try again, or call us on{" "}
           <a
             href={site.business.phone_href}
             className="font-semibold text-primary-700 underline underline-offset-4"
@@ -55,6 +80,22 @@ export const ErrorPanel = ({ children }) => (
           </a>
           .
         </p>
+
+        {mailto && (
+          <div className="mt-4 border-t border-danger/25 pt-4">
+            <a
+              href={mailto}
+              className="inline-flex min-h-[44px] items-center justify-center rounded-btn bg-primary-700 px-6 py-3 font-semibold text-white transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+            >
+              Send it by email instead
+            </a>
+            <p className="mt-2 text-base text-text">
+              This opens your own email app with everything you typed already
+              filled in — just press send.
+              {mailtoNote ? ` ${mailtoNote}` : ""}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   </div>

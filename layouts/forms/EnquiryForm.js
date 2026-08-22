@@ -3,8 +3,9 @@
 import { useRef, useState } from "react";
 import Field from "@components/ui/Field";
 import Button from "@components/ui/Button";
+import site from "@config/site.json";
 import { validators, validateAll } from "@lib/formValidation";
-import { SuccessPanel, ErrorPanel, ErrorSummary } from "./FormStatus";
+import { SuccessPanel, ErrorPanel, ErrorSummary, buildMailto } from "./FormStatus";
 import { Honeypot, PrivacyNote } from "./FormExtras";
 
 /**
@@ -251,7 +252,30 @@ const EnquiryForm = ({ variant = "general", id = "enquiry" }) => {
       <Honeypot value={values.website} onChange={set("website")} />
 
       <ErrorSummary errors={errors} refEl={summaryRef} idFor={fid} />
-      {state === "error" && <ErrorPanel>{serverError}</ErrorPanel>}
+      {state === "error" && (
+        <ErrorPanel
+          mailto={buildMailto({
+            to: site.business.email,
+            subject: `${cfg.heading} — ${values.name}`,
+            fields: [
+              ["Name", values.name],
+              ["Email", values.email],
+              ["Phone", values.phone],
+              ["Organisation", values.organisation],
+              ["Your role", values.professionalRole],
+              // Initials only, exactly as the form collects them.
+              ["Person referred (initials)", values.clientInitials],
+              ["Area", values.area],
+              ["Support needed", variant === "referral" ? values.supportType : ""],
+              ["Urgency", variant === "referral" ? values.urgency : ""],
+              [cfg.subjectLabel, values.subject],
+              [cfg.detailLabel, values.message],
+            ],
+          })}
+        >
+          {serverError}
+        </ErrorPanel>
+      )}
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
