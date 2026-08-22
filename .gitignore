@@ -44,3 +44,7 @@ yarn-error.log*
 # pnpm 11 writes local build approvals here; must never reach the host.
 # Its presence makes Vercel treat this repo as a monorepo and fails the build.
 pnpm-workspace.yaml
+
+# Internal planning docs must never sit under public/ — Next.js serves
+# that directory verbatim, so committing one publishes it.
+public/**/*WORK-PLAN*.md
