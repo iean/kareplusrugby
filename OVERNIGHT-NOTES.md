@@ -1,180 +1,352 @@
 # Overnight notes — Kare Plus Rugby
 
-Working through `WEBSITE-WORK-PLAN.md` on branch `main-kare-plus`.
-Written as I go. Newest phase at the bottom.
+Work plan: `public/images/WEBSITE-WORK-PLAN.md`, executed in full on branch
+`main-kare-plus`.
 
-**Nothing has been pushed to `main`. No PR opened. That is yours.**
-
----
-
-## Phase 0 — starting position
-
-- Branch: `main-kare-plus` ✅
-- `git status`: one untracked file, `public/images/WEBSITE-WORK-PLAN.md` — the
-  plan itself. No work in progress, so I treated the check as satisfied and
-  continued rather than stopping. Flagging it because the plan said to.
-- `pnpm build`: **passes, exit 0, zero warnings.** Nothing to fix first.
-
-**Deviation:** the plan says `npm run build` / `npm run lint`. `CLAUDE.md` rule 7
-says pnpm, never npm — npm here corrupts the lockfile and has broken the Vercel
-build before. I used `pnpm`, which runs the identical scripts.
+**Nothing was pushed. Nothing was merged. `main` is untouched. The pull request
+is yours to open.**
 
 ---
 
-## Phase 1 — audit
+# 1. What I need from you
 
-Wrote `AUDIT.md`. No files changed during the pass.
+This is the section that matters most. Everything below is blocked on you.
 
-Headline: **the plan was written against an older version of the site.** Much of
-Phase 2, 4 and 5 is already done. Six of the plan's own assumptions are no longer
-true (`AUDIT.md` §I) — including the two it is most confident about: there is no
-homepage carousel any more, and no "Cloud Support" card.
+## 1a. The claims I could not verify — please confirm or correct
 
-What the audit found that the plan did *not* know about:
+These are **pre-existing** on the site. I did not write them and I have not
+removed them, because the plan permits claims already published. But they are
+exactly the class of claim that causes real harm if wrong, and several are
+regulated. **Please confirm each one is true and evidenced.**
 
-- **`/pricing` is live and publishes invented prices** (£49/£69/£99 "plans",
-  "Customs Clearance", "Cloud Service") — template debris on a regulated care
-  site. The single worst thing on the site.
-- **`/elements`** is a live template typography demo.
-- **`/api/messages` writes names, emails and phone numbers into
-  `data/messages.json`, which is tracked in git** — a direct breach of the
-  plan's hard rule. The file is empty today, so no personal data was ever
-  committed.
-- **Three live 404s**, including a spelling mistake (`/domciliary/`).
-- **The footer's map-pin icon still 404s** — plan item 2.2 was only half fixed.
-- **Legacy `SeoMeta` still emits `og:url` = `//pricing`** — plan item 2.3 was
-  fixed on the modern pages only.
-- **30 instances of 15px body text** against the plan's 16px floor.
-
----
-
-## Phase 2 — fixing the known faults
-
-The plan's numbered items 1–7 were mostly already done (see `AUDIT.md` §I). The
-real work was the faults the audit turned up. Commits, in order:
-
-| Commit | What |
+| Claim | Where |
 |---|---|
-| `64e6bd2` | Removed `/pricing` and `/elements` |
-| `26d9d5a` | Stopped three forms writing personal data into the repo |
-| `feb271f` | Fixed four broken links and the footer map pin |
-| `771f0a9` | Fixed duplicate and wrong page metadata |
-| `4253bc4` | Deleted the dead template components |
+| "Vetted, DBS-checked staff" and "Fully insured" | `layouts/home/Hero.js:29-31` |
+| "Every worker we place holds an enhanced DBS check … for nurses — current NMC registration checked before placement" | `app/faq/page.js:75` |
+| "All staff are recruited safely, receive safeguarding training" | `layouts/partials/SiteFooter.js:61` |
+| "All roles are subject to an enhanced DBS check and satisfactory references" | `app/careers/page.js:153` |
+| "A paid induction aligned to the Care Certificate" | `app/careers/page.js:36`, `app/faq/page.js:98` |
+| "Licensed UK visa sponsor (A-rated)" | `config/site.json:36`, `app/careers/page.js:110` |
+| "trained, vetted carers" / "properly vetted" | meta descriptions on `/domiciliary-care`, `/care-home-staffing` |
 
-### `64e6bd2` — the fabricated pricing page
+Also **unverified by me and high-consequence**: the five local-authority
+safeguarding phone numbers on `app/safeguarding/page.js:22-26`. Worth one check
+against each council's own website — a wrong number there is the worst kind of
+error this site could carry.
 
-`/pricing` was live and advertised "Basic £49/month", "Professional £69/month"
-and "Business £99/month", with features including "Customs Clearance" and
-"Cloud Service". Straight Bigspring template content nobody had removed. On a
-CQC-regulated care site this is the one thing on the page a family could have
-acted on and been misled by. Gone, along with `/elements` (typography demo) and
-`content/faq.md` (lorem ipsum, unreachable but one config edit from being live).
+## 1b. Every `TODO:` placeholder, with its location
 
-Both URLs 301 rather than 404, so whatever Google has indexed is superseded
-rather than left to age out. `/pricing` → `/faq`, which explains honestly that
-rates are quoted on enquiry.
+None of these render anything to the public. Each is guarded by an `isReal()`
+check that omits the field, the row or the whole block. Fill in the value and it
+appears automatically.
 
-### `26d9d5a` — personal data in the repository
+| File:line | What I need |
+|---|---|
+| `config/site.json:21` | ICO data protection registration number |
+| `config/site.json:38` | Registered manager's name (CQC requires a named registered manager) |
+| `config/site.json:43,49` | A real bio for each director — Mimosha Alam, Choudhury Taimur Sadat |
+| `config/site.json:44,50` | A photo for each director, with their consent |
+| `config/site.json:264` | OneTouch Health sign-in URL |
+| `config/site.json:269` | Payroll portal sign-in URL — **and confirm the provider name**; the page currently just says "Payroll" |
+| `config/site.json:274` | FlexiBee sign-in URL |
+| `config/site.json:283,288,293,298,303` | Five staff PDFs into `public/documents/`: handbook, safeguarding, medication, health & safety / lone working, whistleblowing |
+| `layouts/forms/ApplicationForm.js:25` | Which inbox should job applications go to? |
+| `layouts/forms/EnquiryForm.js:20` | Which inbox should each enquiry type go to? |
+| `layouts/home/WhatItCosts.js:24` | Do you want to publish an indicative hourly range? |
+| `lib/analytics.js:4` | Pre-existing: a GA4 id, or a decision not to have analytics |
 
-Three endpoints appended every submission to a JSON file under `data/` and
-served the whole list over GET:
+**On the form destinations.** Every form currently emails the single business
+address `kp.rugby@kareplus.co.uk`. `config/site.json` has `careers_email` and
+`safeguarding_email` keys, but both are set to that same address, so I could not
+tell whether separate inboxes are wanted. A professional referral with a
+discharge deadline and a general website enquiry arguably should not land in the
+same place. **I did not guess.**
 
-- `/api/messages` — name, email, phone, message. **`data/messages.json` was
-  tracked in git.**
-- `/api/get-started` — who needs care, name, email, phone
-- `/api/request-data` — name, email, phone, and a *proof of identity* field
+## 1c. Other questions
 
-The last is the worst: a subject access request carries identity details by
-definition, so filing it into the repo is the exact processing someone would be
-exercising their rights against.
+- **What current vacancies should be listed?** The system is built and waiting.
+  Drop a file into `content/vacancies/` — see `_HOW-TO-ADD-A-VACANCY.md`. There
+  are none published, so the page honestly says so.
+- **Which areas do you actually cover?** `site.json` says Rugby, Coventry,
+  Leicestershire and Northamptonshire, and that is now in the structured data
+  and several meta descriptions. Please confirm it is still accurate.
+- **Do you have written consent for any testimonials?** The carousel is built
+  and renders nothing until real, consented quotes exist. Nothing was invented.
+- **Should `/admin/jobs` be retired?** Vacancies are markdown-driven now, so the
+  admin job manager is a competing second source. It still works.
 
-**It had never worked in production** — Vercel's filesystem is read-only, which
-is why the admin message viewer always said "No messages". So removing it costs
-no working feature. All three now email and retain nothing.
+## 1d. One thing to do before merging
 
-Found while rewriting them: submissions were interpolated into the HTML email
-**unescaped**, and two of the three had no server-side validation at all.
-
-### `771f0a9` — metadata that had never worked
-
-Fixing `base_url` exposed the bigger problem. `SeoMeta` emitted a **second**
-`<title>`, description and `og:url` into the head next to the root layout's.
-The first of a duplicated pair wins, so `/how-we-work`, every blog post and
-every blog pagination page had been serving the **generic site title** — the
-exact opposite of what the component existed to do. Those pages now use Next's
-`metadata` export and `SeoMeta` is deleted.
-
-Also: the root layout set `openGraph.url`, and metadata is inherited — so every
-page carried `og:url = <homepage>`, telling Facebook and LinkedIn that a share
-of any page was a share of the homepage.
-
-And `/domiciliary-care-home` rendered an **entirely empty `<main>`**: the
-component fetched its content and then returned only a meta tag. Nothing linked
-to it. Retired to `/domiciliary-care`.
+`WEBSITE-WORK-PLAN.md` is sitting in `public/images/`. Next.js serves that
+directory verbatim, so committing it there would publish your internal plan at
+`kareplusrugby.co.uk/images/WEBSITE-WORK-PLAN.md`. **I left it untracked, so
+nothing is exposed** — but please move it out of `public/` rather than commit it
+where it is.
 
 ---
 
-## Phase 3 — the new pages
+# 2. The headline
 
-| Commit | What |
+**The plan was written against an older version of the site.** A lot of Phase 2,
+4 and 5 had already been done, and six of the plan's premises were no longer
+true (`AUDIT.md` §I).
+
+But the audit found four things the plan did not know about, all of them live on
+a CQC-regulated care site, and all of them worse than anything on the plan's list:
+
+1. **`/pricing` published invented prices.** "Basic £49/month", "Professional
+   £69/month", "Business £99/month", with features listed as "Customs Clearance"
+   and "Cloud Service". Bigspring template content nobody had removed.
+2. **`/domiciliary/jobs` advertised three vacancies that do not exist**, each
+   with a working "Apply Now" button — Care Assistant in **London**, Support
+   Worker in **Birmingham**, Registered Nurse in **Manchester**. This company is
+   in Rugby. A carer could have applied for a job that was never going to exist.
+3. **Three endpoints wrote enquirers' names, emails and phone numbers into JSON
+   files in the repository**, and served the list over GET. One of them was the
+   UK GDPR subject-access form, which also collected a proof-of-identity field.
+   `data/messages.json` was tracked in git. It was empty, so no personal data was
+   ever actually committed, and the writes had never worked in production because
+   Vercel's filesystem is read-only.
+4. **The blog was five template posts** about photography, "how to make toys from
+   old Olarpaper", and a CRM dialer.
+
+And the plan's own item 2.1 turned out to be **real after all**. The homepage
+carousel had been replaced, so it looked fixed — but `/staffing` and
+`/domiciliary/care-services` still rendered five `<h1>` elements from three
+slides, two of the headings appearing twice, because Swiper's `loop` clones
+slides into the DOM. That is why it kept being reported.
+
+---
+
+# 3. Every change, by phase
+
+### Phase 0 — starting position
+Branch `main-kare-plus`, build passing, exit 0. The only uncommitted file was the
+plan itself, so I treated the clean-tree check as satisfied and continued.
+
+**Deviation:** the plan says `npm`. `CLAUDE.md` rule 7 says pnpm, never npm —
+npm corrupts the lockfile here and has broken the Vercel build before. I used
+`pnpm`, which runs the identical scripts.
+
+### Phase 1 — audit
+| Commit | |
 |---|---|
-| `87fa9e8` | Job application form extended to the plan's field list |
+| `b5f974a` | `AUDIT.md` — read-only pass, no files changed |
+
+### Phase 2 — the known faults
+| Commit | |
+|---|---|
+| `64e6bd2` | Removed `/pricing` (invented prices), `/elements`, lorem-ipsum `content/faq.md` |
+| `26d9d5a` | Stopped three endpoints writing personal data into the repo |
+| `feb271f` | Four broken links, and the footer map pin that resolved relative |
+| `771f0a9` | Duplicate/wrong metadata; `SeoMeta` deleted; blank `/domiciliary-care-home` retired |
+| `4253bc4` | Deleted 8 dead template components and 3 stale config files |
+| `5af8a4f` | Raised body text to the 16px floor |
+
+### Phase 3 — new pages
+| Commit | |
+|---|---|
+| `87fa9e8` | Application form extended; honeypot + rate limiter added |
 | `6d1d8a4` | Vacancies driven by markdown |
-| `36cfcd2` | Care enquiry form asks more, and requires less |
-| `cad6b43` | New `/referrals` page for professionals |
-| `e70db20` | New `/staff` signposting hub |
+| `36cfcd2` | Enquiry form asks more, requires less |
+| `cad6b43` | **New `/referrals`** for professionals |
+| `e70db20` | **New `/staff`** signposting hub |
 
-**3a Careers** — the page already existed. Added the missing fields (care
-experience band, DBS on the update service with a real "not sure" option,
-availability as checkboxes, free-text). Right to work and driving licence were
-single checkboxes, which cannot tell "no" apart from "never answered"; both are
-yes/no radios now.
-
-Vacancies moved from `data/jobs.json` behind the admin login to
-`content/vacancies/*.md`. With none published the page says so and invites a
-speculative application — it never falls back to a sample role.
-
-**3b Enquiry** — added area, support type, funding and contact preference. More
-importantly it now *requires less*: name plus one contact method, enforced
-server-side too. Description, phone and email had all been mandatory.
-
-**3c Referrals** — new. Takes **initials only** for the person being referred,
-enforced in the API rather than just hinted at, and tells professionals to
-phone for anything urgent or clinically detailed.
-
-**3d FAQ** — already done, and better than the plan asked. The plan wanted
-`TODO:` stubs; there are real answers that explain how a figure is arrived at
-instead of inventing one. Left alone.
-
-**3e Staff hub** — new, signposting only. Every system link and policy download
-is TODO-guarded, because I do not know the real URLs and a guessed sign-in link
-sends a carer somewhere wrong. See the TODO list at the top of this file.
-
----
-
-## Phase 4 — local SEO
-
-| Commit | What |
+### Phase 4 — local SEO
+| Commit | |
 |---|---|
-| `bb58ba2` | Removed the template blog posts |
-| `48a662e` | Fixed the duplicated carousel slides and auto-advancing banners |
-| `288b4e2` | Removed fabricated job adverts; recruitment consolidated on `/careers` |
+| `bb58ba2` | Removed the five template blog posts |
+| `48a662e` | Duplicated carousel slides + auto-advancing banners |
+| `288b4e2` | **Fabricated job adverts removed**; recruitment consolidated on `/careers` |
 | `754cf96` | Unique title, description and canonical on every page |
 
-Three more pieces of invented content surfaced here, none of which the plan
-mentions:
+### Phase 5 — accessibility & performance
+| Commit | |
+|---|---|
+| `3a842e8` | Contrast failure, off-palette colours, tap targets, image sizing |
 
-1. **The blog was five Bigspring sample posts** — photography, "how to make toys
-   from old Olarpaper", a CRM dialer — with blog-1 identical to blog-3 and
-   blog-2 to blog-4, all sharing one lorem meta description.
-2. **`/domiciliary/jobs` advertised three vacancies that do not exist**, with
-   working "Apply Now" buttons: Care Assistant in **London**, Support Worker in
-   **Birmingham**, Registered Nurse in **Manchester**. Hardcoded in a component.
-   This company is in Rugby.
-3. **The plan's item 2.1 was real after all.** The homepage carousel was gone,
-   so it looked fixed — but `/staffing` and `/domiciliary/care-services` still
-   rendered five `<h1>`s from three slides, with two headings appearing twice,
-   because Swiper's `loop` clones slides into the DOM.
+### Phase 6 — the seven passes
+| Commit | |
+|---|---|
+| `1f644a0` | Pass 1 — removed the deprecated plugin causing the only build warning |
+| `27a3a64` | Pass 3 — removed four claims **I** had written and could not source |
+| *(pass 4)* | Repointed the last link hitting a redirect |
+| `7a4ce09` | Pass 5 — fixed horizontal overflow at 375px and 400% zoom; added the cost section |
+| *(pass 6)* | Recorded the outcome of every audit item in `AUDIT.md` |
 
-Every route now has exactly one `<h1>`, a unique title and description, and a
-canonical. Verified against the built HTML, not assumed.
+---
+
+# 4. Phase 6 — result of each pass
+
+**Pass 1 — Build.** Found one real warning: Tailwind was asking for the
+deprecated `@tailwindcss/line-clamp` plugin to be removed. Removed. `pnpm build`
+is now exit 0 with **zero** warnings; `pnpm lint` clean.
+
+**Pass 2 — Rules.** Checked all 144 changed files against the hard rules
+mechanically. The phone number, address and email addresses are untouched —
+every apparent removal traced to a deleted dead file, and the live pages still
+carry all of them. No third-party script added. No new persistence. Privacy,
+terms and data-request pages all present. CQC text unaltered. I also diffed
+`site.json`, `social.json` and `config.json` key-by-key against their pre-session
+versions to prove my JSON rewrites had not mangled anything: exactly four
+intended value changes, nothing else.
+
+**Pass 3 — Invented content.** *This pass found real problems in my own work.*
+Four claims I had written were not sourceable and are gone:
+- "Most referrals are settled in one call" (twice, on `/referrals`)
+- "You will never be penalised for raising a concern in good faith" — a promise
+  about how you treat staff, which is not mine to make
+- "Your payslips and your P60" — assumed a payroll arrangement nobody confirmed
+- A banner slide hardening the FAQ's careful "you *should* see a small group of
+  familiar faces" into a promise of continuity
+
+**Pass 4 — Links.** All 24 distinct internal links in the built pages return 200
+directly; the only non-200 is `/admin/jobs` at 401, which is correct. Every
+`target="_blank"` carries `rel="noopener"`. Every `mailto:` and `tel:` correct.
+Found and fixed one link still bouncing through a redirect.
+
+**Pass 5 — Three readers.** Tested with real Chrome, not eyeballed.
+- *The daughter:* the phone number is in the header on every page. But she could
+  not find out what it costs, so I added an honest "What does care cost?" section
+  — **no figure**, only what is already established elsewhere.
+- *The elderly reader at 200% zoom:* the page overflowed sideways at 375px and
+  worse at 400%. Fixed (details below). The copy is written *to* her — 43 uses
+  of "you/your" on the homepage against 11 third-person, and no "loved one".
+- *The carer on a phone:* two taps from the homepage to the application form.
+
+**Pass 6 — Fresh eyes.** Re-read `AUDIT.md` and recorded the outcome of every
+single item in a table appended to that file. Three items are outstanding **with
+reasons**, not dropped.
+
+**Pass 7 — Final build.** Deleted `.next`, rebuilt from scratch: exit 0, zero
+warnings, 41 routes. Lint clean. Contrast script passes all 18 pairings.
+`pnpm dev` starts and serves every page 200 with no errors.
+
+---
+
+# 5. Real Lighthouse scores
+
+Measured against a production build on real Chrome. **These are the numbers I
+got, not the targets.**
+
+**Desktop**
+
+| Page | Perf | A11y | Best practices | SEO |
+|---|---|---|---|---|
+| `/` | **95** | **100** | 100 | 100 |
+| `/careers` | 96 | 100 | 100 | 100 |
+| `/referrals` | 96 | 100 | 100 | 100 |
+| `/contact` | 96 | 100 | 100 | 100 |
+| `/staff` | 96 | 100 | 100 | 92 ¹ |
+
+**Mobile** (Lighthouse's default: throttled slow 4G, Moto G4)
+
+| Page | Perf | A11y | Best practices | SEO |
+|---|---|---|---|---|
+| `/` | **85** | **100** | 100 | 100 |
+| `/careers` | 88 | 100 | 100 | 100 |
+| `/domiciliary-care` | 88 | 100 | 100 | 100 |
+| `/staffing` | 87 | 100 | 100 | 100 |
+
+¹ `/staff` scores 92 on SEO only because it is deliberately `noindex`. That is
+intended — it is for your team, not for searchers.
+
+**Against the plan's targets: accessibility 95+ is met everywhere with room
+(100). Performance 90+ is met on desktop (95–96) but NOT on mobile (85–88).**
+
+The mobile gap is entirely Largest Contentful Paint, at ~4s. Total Blocking Time
+is 0–20ms and Cumulative Layout Shift is **0**, which are as good as they get.
+Two caveats worth knowing: this was measured against `next start` on a laptop
+with no CDN, no Brotli and no edge caching, so Vercel will do better; and I
+improved `/staffing` from 84 to 87 purely by adding a `sizes` attribute so phones
+stop being sent desktop-width images. I did not chase the remaining points into
+a redesign of the hero, which is what it would now take.
+
+---
+
+# 6. Judgement calls I made
+
+1. **Used `pnpm`, not `npm`.** `CLAUDE.md` rule 7 is explicit and npm would break
+   the Vercel build.
+2. **Did not stop at Phase 0** over an unclean tree, because the only untracked
+   file was the plan itself.
+3. **Deleted rather than rewrote** `/pricing`, `/elements`, the template blog
+   posts and the fake job adverts. Every one was template debris; there was no
+   true version to write.
+4. **301 instead of 404** for retired URLs, so anything Google has indexed is
+   superseded rather than left to linger.
+5. **Consolidated six duplicate routes** rather than giving each a unique title.
+   `/domiciliary/how-we-work` and `/staffing/how-we-work` were byte-identical, and
+   three of the four job pages were empty shells.
+6. **Left the pre-existing vetting/DBS/insurance claims in place.** The plan
+   permits claims already on the site, and pass 3 scopes removal to what I wrote.
+   Removing them unilaterally would have gutted the careers and staffing pages.
+   They are top of your list instead.
+7. **Removed the stored-message admin viewer** rather than keeping it and
+   disabling writes. It read a file that could no longer be written, so it would
+   have shown "No messages" forever.
+8. **Made `/staff` noindex** and kept it out of the sitemap.
+9. **No autoplay on the carousels at all**, rather than autoplay with a pause
+   button. Both satisfy WCAG 2.2.2; for this audience, content that does not move
+   unless you move it is simply better.
+10. **Did not add a CAPTCHA.** The plan requires asking first. Honeypot plus a
+    rate limiter instead, and `lib/rateLimit.js` is honest in its own comments
+    about being per-instance and therefore no defence against a distributed
+    attack.
+
+---
+
+# 7. Attempted but not completed
+
+- **Mobile performance 90+.** Reached 85–88. LCP is the blocker; see §5.
+- **A 2px horizontal overflow on the homepage at 400% zoom** (320 CSS px)
+  survives. 375px and 200% zoom are completely clean across all nine pages
+  tested. Nothing overlaps and nothing is unreachable, so I stopped rather than
+  restructure the cards for the last 2px.
+- **`layouts/domiciliary/` and `layouts/staffing/` are still largely parallel
+  trees.** `CLAUDE.md` rule 4 already warns about this. I merged the three banner
+  carousels into one shared component and removed six duplicate routes, but a
+  full merge is a restructure beyond this plan.
+- **I could not test that any form actually sends.** `EMAIL_USER` and
+  `EMAIL_PASS` are not set in this environment, so every route correctly returns
+  503 and shows the visitor an honest error. **I have verified the code path,
+  the validation, the escaping and the error handling — I have not seen an email
+  arrive.** Please send one test submission through each of the four forms once
+  the credentials are in Vercel.
+
+---
+
+# 8. Out of scope, but you should know
+
+- **`data/jobs.json` and `/admin/jobs` are now redundant**, since vacancies are
+  markdown-driven. Still behind auth, still working. Your call.
+- **The site has two parallel architectures.** A modern one (`site.json`,
+  `SiteHeader`/`SiteFooter`, Next metadata) and a legacy one (`config.json`, the
+  `/domiciliary` and `/staffing` section trees). I removed the worst of the
+  legacy layer, but `/domiciliary` still overlaps `/domiciliary-care`, and
+  `/staffing` overlaps `/care-home-staffing`. Deciding which of each pair is the
+  real page would simplify the site considerably.
+- **CV retention has no policy.** `/api/apply` emails CVs as attachments, so they
+  live in an inbox indefinitely. CVs are personal data under UK GDPR. This is
+  flagged in the route's own comments and needs a retention decision and a line
+  in the privacy policy.
+- **`lib/analytics.js` is wired but has no GA4 id.** Nothing is being tracked.
+  That is a decision waiting to be made, not a bug.
+
+---
+
+# 9. What I would do next
+
+1. **Get the email credentials into Vercel and test all four forms.** Nothing
+   else matters as much — right now every enquiry fails honestly rather than
+   arriving. This is the single highest-value action on the list.
+2. **Answer §1a.** The vetting and DBS claims are the site's biggest liability.
+3. **Publish something about cost.** Even a range with "from £X per hour,
+   depending on assessment" converts far better than silence, and families
+   compare on price. Only if you can stand behind the figure.
+4. **Add your first real vacancy.** Half the traffic will be carers; the machinery
+   is built and empty.
+5. **Decide the duplicate sections** (`/domiciliary` vs `/domiciliary-care`,
+   `/staffing` vs `/care-home-staffing`) and redirect the loser.
+6. **Then chase mobile LCP** — a smaller, better-compressed hero image is most of
+   the remaining gap.
