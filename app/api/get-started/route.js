@@ -1,99 +1,112 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
 import nodemailer from "nodemailer";
 import config from "@config/config.json";
 
-const getStartedFile = path.join(process.cwd(), "data", "get-started.json");
+/**
+ * "Get started" enquiry endpoint.
+ *
+ * NOTHING IS RETAINED. The submission is emailed and then discarded.
+ *
+ * This route used to append every submission — who needs care, their name,
+ * email and phone — to data/get-started.json. That is personal data written
+ * into the repository directory, which must never happen: it would spread to
+ * every clone and sit in the commit history with no retention policy and no
+ * way to honour an erasure request. It also never worked in production, since
+ * Vercel's filesystem is read-only, and the GET that exposed the whole list
+ * has gone with it.
+ *
+ * Email is the only delivery path. A care enquiry silently vanishing is far
+ * worse than an honest error, so a send failure returns an error the visitor
+ * can act on rather than a success.
+ */
 
-async function readGetStarted() {
-  try {
-    const data = await fs.readFile(getStartedFile, "utf8");
-    return JSON.parse(data || "[]");
-  } catch {
-    return [];
-  }
-}
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-async function writeGetStarted(entries) {
-  await fs.mkdir(path.dirname(getStartedFile), { recursive: true });
-  await fs.writeFile(getStartedFile, JSON.stringify(entries, null, 2));
-}
-
-async function sendEmail(formData) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  const html = `
-    <h2>New Get Started Form Submission</h2>
-    <p><strong>Who needs the care:</strong> ${formData.whoNeedsCare}</p>
-    <p><strong>Type of care required:</strong> ${formData.careType}</p>
-    <p><strong>Name:</strong> ${formData.name}</p>
-    <p><strong>Email:</strong> ${formData.email}</p>
-    <p><strong>Phone:</strong> ${formData.phone}</p>
-    <p><strong>Needs:</strong> ${formData.needs || "Not specified"}</p>
-    <p><strong>Submission Date:</strong> ${new Date().toLocaleString()}</p>
-  `;
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    // Single source of truth is params.contact_email in config/config.json
-    // (kp.rugby@kareplus.co.uk). This previously pointed at a hardcoded
-    // address containing an "&", which is illegal in a domain and never
-    // delivered.
-    to: config.params.contact_email,
-    subject: `New Get Started Request - ${formData.name}`,
-    html,
-  });
-}
-
-export async function GET() {
-  const entries = await readGetStarted();
-  return NextResponse.json(entries);
-}
+// Escape before interpolating into the HTML email. Without this a submission
+// containing markup is injected straight into the message staff open.
+const esc = (v) =>
+  String(v ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+  );
 
 export async function POST(req) {
+  let body;
   try {
-    const formData = await req.json();
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
 
-    const entry = {
-      id: Date.now(),
-      whoNeedsCare: formData.whoNeedsCare || "",
-      careType: formData.careType || "",
-      name: formData.name || "",
-      email: formData.email || "",
-      phone: formData.phone || "",
-      needs: formData.needs || "",
-      date: new Date().toISOString(),
-    };
+  const str = (v) => (typeof v === "string" ? v.trim() : "");
 
-    // Save to file
-    const entries = await readGetStarted();
-    entries.push(entry);
-    await writeGetStarted(entries);
+  // Server-side validation, independent of the client.
+  const errors = {};
+  if (!str(body.name)) errors.name = "Name is required.";
+  if (!EMAIL_RE.test(str(body.email))) errors.email = "A valid email address is required.";
+  if (!str(body.phone)) errors.phone = "Phone number is required.";
 
-    // Send email
-    try {
-      await sendEmail(formData);
-    } catch (err) {
-      console.error("Email failed", err);
-      return NextResponse.json(
-        { error: "Form saved but email failed" },
-        { status: 500 },
-      );
-    }
+  for (const [field, max] of [
+    ["name", 200], ["email", 320], ["phone", 40],
+    ["whoNeedsCare", 100], ["careType", 100], ["needs", 5000],
+  ]) {
+    if (str(body[field]).length > max) errors[field] = `${field} is too long.`;
+  }
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Form submission error", error);
+  if (Object.keys(errors).length > 0) {
     return NextResponse.json(
-      { error: "Failed to process form submission" },
-      { status: 500 },
+      { error: "Please check the form and try again.", fields: errors },
+      { status: 400 }
     );
   }
+
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    // Metadata only - never log contact details or message bodies.
+    console.error("[get-started] NOT SENT: EMAIL_USER/EMAIL_PASS unset");
+    return NextResponse.json(
+      { error: "This form is temporarily unavailable. Please call us instead." },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      // Single source of truth is params.contact_email in config/config.json.
+      to: config.params.contact_email,
+      replyTo: str(body.email),
+      subject: `New Get Started request — ${str(body.name)}`,
+      html: `
+        <h2>New Get Started form submission</h2>
+        <p><strong>Who needs the care:</strong> ${esc(body.whoNeedsCare)}</p>
+        <p><strong>Type of care required:</strong> ${esc(body.careType)}</p>
+        <p><strong>Name:</strong> ${esc(body.name)}</p>
+        <p><strong>Email:</strong> ${esc(body.email)}</p>
+        <p><strong>Phone:</strong> ${esc(body.phone)}</p>
+        <p><strong>Needs:</strong> ${esc(str(body.needs) || "Not specified").replace(/\n/g, "<br>")}</p>
+        <hr>
+        <p style="color:#666;font-size:12px">Sent from the Kare Plus Rugby website at ${new Date().toISOString()}</p>
+      `,
+    });
+  } catch (err) {
+    console.error(`[get-started] send failed: ${err.message}`);
+    return NextResponse.json(
+      { error: "We could not send your enquiry. Please call us instead." },
+      { status: 502 }
+    );
+  }
+
+  return NextResponse.json({ success: true });
+}
+
+// There is no stored list to read any more.
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method not allowed." },
+    { status: 405, headers: { Allow: "POST" } }
+  );
 }
