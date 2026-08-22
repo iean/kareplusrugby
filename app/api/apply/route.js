@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { rateLimit } from "@lib/rateLimit";
 
 /**
  * Job application endpoint.
@@ -49,6 +50,20 @@ export async function POST(req) {
     return typeof v === "string" ? v.trim() : "";
   };
 
+  // Honeypot. The field is hidden from sighted users and from screen readers,
+  // so only a bot fills it. Accept and discard, giving the bot no signal.
+  if (get("website")) {
+    return NextResponse.json({ ok: true, delivered: true });
+  }
+
+  const limit = rateLimit(req);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "Too many applications from this connection. Please try again shortly, or call us." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+    );
+  }
+
   const errors = {};
   if (!get("firstName")) errors.firstName = "First name is required.";
   if (!get("lastName")) errors.lastName = "Last name is required.";
@@ -56,11 +71,15 @@ export async function POST(req) {
   if (!get("phone")) errors.phone = "Phone number is required.";
   if (!get("postcode")) errors.postcode = "Postcode is required.";
   if (get("experience").length < 10) errors.experience = "Please tell us a little more.";
+  if (!get("experienceLevel")) errors.experienceLevel = "Please tell us how much experience you have.";
+  if (!get("rightToWork")) errors.rightToWork = "Please tell us whether you have the right to work in the UK.";
   if (get("consent") !== "true") errors.consent = "Consent is required.";
 
   for (const [field, max] of [
     ["firstName", 100], ["lastName", 100], ["email", 320],
     ["phone", 40], ["postcode", 20], ["experience", 5000],
+    ["anythingElse", 5000], ["role", 120], ["availability", 200],
+    ["experienceLevel", 60], ["dbs", 20], ["rightToWork", 10], ["driver", 10],
   ]) {
     if (get(field).length > max) errors[field] = `${field} is too long.`;
   }
@@ -137,11 +156,14 @@ export async function POST(req) {
         <p><strong>Phone:</strong> ${esc(get("phone"))}</p>
         <p><strong>Postcode:</strong> ${esc(get("postcode"))}</p>
         <p><strong>Role:</strong> ${esc(get("role"))}</p>
-        <p><strong>Availability:</strong> ${esc(get("availability"))}</p>
-        <p><strong>Right to work in UK:</strong> ${get("rightToWork") === "true" ? "Yes" : "Not stated"}</p>
-        <p><strong>Driver:</strong> ${get("driver") === "true" ? "Yes" : "Not stated"}</p>
-        <p><strong>Experience:</strong></p>
+        <p><strong>Care experience:</strong> ${esc(get("experienceLevel"))}</p>
+        <p><strong>Availability:</strong> ${esc(get("availability") || "Not specified")}</p>
+        <p><strong>Right to work in UK:</strong> ${esc(get("rightToWork"))}</p>
+        <p><strong>Enhanced DBS on update service:</strong> ${esc(get("dbs") || "Not answered")}</p>
+        <p><strong>Driving licence and car:</strong> ${esc(get("driver") || "Not answered")}</p>
+        <p><strong>About their experience:</strong></p>
         <p>${esc(get("experience")).replace(/\n/g, "<br>")}</p>
+        ${get("anythingElse") ? `<p><strong>Anything else:</strong></p><p>${esc(get("anythingElse")).replace(/\n/g, "<br>")}</p>` : ""}
         <p><strong>CV attached:</strong> ${hasCv ? "Yes" : "No"}</p>
         <hr>
         <p style="color:#666;font-size:12px">Sent from the Kare Plus Rugby website at ${new Date().toISOString()}</p>

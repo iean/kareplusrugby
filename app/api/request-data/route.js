@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { rateLimit } from "@lib/rateLimit";
 
 /**
  * UK GDPR data subject request endpoint.
@@ -38,6 +39,19 @@ export async function POST(req) {
   }
 
   const str = (v) => (typeof v === "string" ? v.trim() : "");
+
+  // Honeypot - hidden field only a bot fills. Accept and discard.
+  if (str(body.website)) {
+    return NextResponse.json({ success: true });
+  }
+
+  const limit = rateLimit(req);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests from this connection. Please try again shortly, or call us." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+    );
+  }
 
   const errors = {};
   if (!str(body.name)) errors.name = "Name is required.";

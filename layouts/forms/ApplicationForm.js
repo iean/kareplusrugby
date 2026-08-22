@@ -11,14 +11,21 @@ import {
   formatBytes,
 } from "@lib/formValidation";
 import { SuccessPanel, ErrorPanel, ErrorSummary } from "./FormStatus";
+import { Honeypot, PrivacyNote } from "./FormExtras";
 
 /**
  * Job application form for carers and nurses.
  *
- * NOTE ON DELIVERY: posts multipart/form-data to /api/apply, which is a STUB.
- * It validates the payload and returns success but does not store the CV or
- * email anyone - there is no file storage or email service configured. See
- * OVERNIGHT_REPORT.md for what needs connecting.
+ * DELIVERY: posts multipart/form-data to /api/apply, which emails the
+ * application to params.contact_email with the CV as an attachment and stores
+ * nothing. (An older comment here called that route a stub; it has not been
+ * one for some time.) It returns 503 if EMAIL_USER / EMAIL_PASS are unset, and
+ * this form surfaces that as a visible error rather than a false success.
+ *
+ * TODO: confirm which inbox job applications should reach. They currently go
+ * to the single business address in config/config.json. config/site.json has a
+ * `careers_email` key, but it is set to that same address, so it is not clear
+ * whether a separate recruitment inbox is wanted.
  *
  * The CV field is optional on purpose: plenty of good care applicants do not
  * have a CV to hand on a phone, and making it mandatory loses them. They can
@@ -35,13 +42,31 @@ const ROLES = [
   "Not sure — happy to be advised",
 ];
 
+/**
+ * Availability is a checkbox group, not a single choice: most carers are
+ * available for more than one of these, and forcing one answer loses that.
+ */
 const AVAILABILITY = [
-  "Full time",
-  "Part time",
-  "Bank / ad-hoc shifts",
-  "Nights only",
-  "Weekends only",
+  ["weekdayMornings", "Weekday mornings"],
+  ["weekdayEvenings", "Weekday evenings"],
+  ["weekends", "Weekends"],
+  ["nights", "Nights"],
+  ["liveIn", "Live-in"],
 ];
+
+const EXPERIENCE_LEVELS = [
+  "None — I am new to care",
+  "Under 1 year",
+  "1–3 years",
+  "3+ years",
+];
+
+/**
+ * "Not sure" is a real answer here. Plenty of applicants hold an enhanced DBS
+ * without knowing whether it is on the update service, and forcing a yes/no
+ * would just produce wrong data.
+ */
+const DBS_OPTIONS = ["Yes", "No", "Not sure"];
 
 const ApplicationForm = ({ id = "apply" }) => {
   const [values, setValues] = useState({
@@ -51,12 +76,16 @@ const ApplicationForm = ({ id = "apply" }) => {
     phone: "",
     postcode: "",
     role: ROLES[0],
-    availability: AVAILABILITY[0],
+    experienceLevel: "",
+    dbs: "",
+    rightToWork: "",
+    driver: "",
     experience: "",
-    rightToWork: false,
-    driver: false,
+    anythingElse: "",
+    website: "", // honeypot - see FormExtras
     consent: false,
   });
+  const [availability, setAvailability] = useState([]);
   const [cv, setCv] = useState(null);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -71,6 +100,8 @@ const ApplicationForm = ({ id = "apply" }) => {
     email: [validators.required("Email address"), validators.email],
     phone: [validators.required("Phone number"), validators.phone],
     postcode: [validators.required("Postcode")],
+    experienceLevel: [validators.required("Care experience")],
+    rightToWork: [validators.required("Right to work in the UK")],
     experience: [
       validators.required("Experience"),
       validators.minLength(10, "Experience"),
@@ -124,6 +155,16 @@ const ApplicationForm = ({ id = "apply" }) => {
     try {
       const fd = new FormData();
       Object.entries(values).forEach(([k, v]) => fd.append(k, String(v)));
+      // Sent as one readable string so the email is legible without the
+      // recipient having to decode five separate boolean fields.
+      fd.append(
+        "availability",
+        availability.length
+          ? AVAILABILITY.filter(([k]) => availability.includes(k))
+              .map(([, label]) => label)
+              .join(", ")
+          : "Not specified",
+      );
       if (cv) fd.append("cv", cv);
 
       const res = await fetch("/api/apply", { method: "POST", body: fd });
@@ -155,7 +196,15 @@ const ApplicationForm = ({ id = "apply" }) => {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-6" id={id}>
+    <form onSubmit={onSubmit} noValidate className="relative space-y-6" id={id}>
+      <PrivacyNote>
+        We use what you send here to consider your application and to contact
+        you about it. It is emailed to our recruitment team and is not stored
+        on this website.
+      </PrivacyNote>
+
+      <Honeypot value={values.website} onChange={set("website")} />
+
       <ErrorSummary errors={errors} refEl={summaryRef} />
       {state === "error" && <ErrorPanel>{serverError}</ErrorPanel>}
 
@@ -203,11 +252,67 @@ const ApplicationForm = ({ id = "apply" }) => {
             value={values.role} onChange={set("role")}>
             {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
           </Field>
-          <Field id="availability" as="select" label="Availability"
-            value={values.availability} onChange={set("availability")}>
-            {AVAILABILITY.map((a) => <option key={a} value={a}>{a}</option>)}
+          <Field
+            id="experienceLevel" as="select" required
+            label="How much care experience do you have?"
+            value={values.experienceLevel} onChange={set("experienceLevel")}
+            onBlur={blur("experienceLevel")} error={errors.experienceLevel}
+          >
+            <option value="">Please choose…</option>
+            {EXPERIENCE_LEVELS.map((e) => <option key={e} value={e}>{e}</option>)}
           </Field>
         </div>
+
+        <Field
+          id="dbs" as="select"
+          label="Do you have a current enhanced DBS on the update service?"
+          hint="If you are not sure, say so — it does not count against you, and we can check for you."
+          className="sm:max-w-md"
+          value={values.dbs} onChange={set("dbs")}
+        >
+          <option value="">Please choose…</option>
+          {DBS_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
+        </Field>
+
+        {/* Availability: a real fieldset with a legend, so screen readers
+            announce what the group of checkboxes is for. */}
+        <fieldset>
+          <legend className="mb-1.5 block text-base font-semibold text-primary-950">
+            When are you available to work?
+          </legend>
+          <p id="availability-hint" className="mb-3 text-base text-textMuted">
+            Tick everything that could work for you. Nothing here is a
+            commitment — it just helps us match you to shifts.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {AVAILABILITY.map(([key, label]) => (
+              <div key={key} className="flex items-start gap-3">
+                <input
+                  id={`availability-${key}`}
+                  name="availabilityOptions"
+                  type="checkbox"
+                  value={label}
+                  checked={availability.includes(key)}
+                  aria-describedby="availability-hint"
+                  onChange={(e) =>
+                    setAvailability((prev) =>
+                      e.target.checked
+                        ? [...prev, key]
+                        : prev.filter((k) => k !== key),
+                    )
+                  }
+                  className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
+                />
+                <label
+                  htmlFor={`availability-${key}`}
+                  className="text-base leading-relaxed text-text"
+                >
+                  {label}
+                </label>
+              </div>
+            ))}
+          </div>
+        </fieldset>
 
         <Field
           id="experience" as="textarea" rows={6} required
@@ -217,23 +322,78 @@ const ApplicationForm = ({ id = "apply" }) => {
           onBlur={blur("experience")} error={errors.experience}
         />
 
-        <div className="space-y-3">
-          {[
-            ["rightToWork", "I have the right to work in the UK"],
-            ["driver", "I have a driving licence and access to a car"],
-          ].map(([field, label]) => (
-            <div key={field} className="flex items-start gap-3">
-              <input
-                id={field} name={field} type="checkbox"
-                checked={values[field]} onChange={set(field)}
-                className="mt-1 h-5 w-5 shrink-0 rounded border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
-              />
-              <label htmlFor={field} className="text-base leading-relaxed text-text">
-                {label}
-              </label>
+        {/* Yes/no as radios rather than a single checkbox. An unticked
+            checkbox cannot distinguish "no" from "did not answer", which
+            matters when the answer changes what we can offer someone. */}
+        {[
+          {
+            name: "rightToWork",
+            legend: "Do you have the right to work in the UK?",
+            required: true,
+          },
+          {
+            name: "driver",
+            legend: "Do you have a driving licence and access to a car?",
+            hint: "Not essential for every role, but it opens up more work.",
+          },
+        ].map((q) => (
+          <fieldset key={q.name}>
+            <legend className="mb-1.5 block text-base font-semibold text-primary-950">
+              {q.legend}
+              {q.required && (
+                <>
+                  <span aria-hidden="true" className="ml-0.5 text-danger">*</span>
+                  <span className="sr-only"> (required)</span>
+                </>
+              )}
+            </legend>
+            {q.hint && (
+              <p id={`${q.name}-hint`} className="mb-3 text-base text-textMuted">
+                {q.hint}
+              </p>
+            )}
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              {["Yes", "No"].map((opt) => (
+                <div key={opt} className="flex items-center gap-3">
+                  <input
+                    id={`${q.name}-${opt}`}
+                    name={q.name}
+                    type="radio"
+                    value={opt}
+                    checked={values[q.name] === opt}
+                    onChange={set(q.name)}
+                    onBlur={q.required ? blur(q.name) : undefined}
+                    aria-invalid={errors[q.name] ? "true" : undefined}
+                    aria-describedby={
+                      [q.hint ? `${q.name}-hint` : null,
+                       errors[q.name] ? `${q.name}-error` : null]
+                        .filter(Boolean).join(" ") || undefined
+                    }
+                    className="h-5 w-5 shrink-0 border-borderStrong text-primary-700 focus:ring-2 focus:ring-primary-600"
+                  />
+                  <label
+                    htmlFor={`${q.name}-${opt}`}
+                    className="text-base leading-relaxed text-text"
+                  >
+                    {opt}
+                  </label>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            {errors[q.name] && (
+              <p id={`${q.name}-error`} role="alert" className="mt-1.5 text-base font-medium text-danger">
+                <span aria-hidden="true">⚠ </span>{errors[q.name]}
+              </p>
+            )}
+          </fieldset>
+        ))}
+
+        <Field
+          id="anythingElse" as="textarea" rows={4}
+          label="Anything else you would like us to know?"
+          hint="Optional. Anything that would help us understand your situation — hours you cannot do, a gap in your CV, adjustments you need at interview."
+          value={values.anythingElse} onChange={set("anythingElse")}
+        />
       </fieldset>
 
       {/* CV upload */}
@@ -241,7 +401,7 @@ const ApplicationForm = ({ id = "apply" }) => {
         <legend className="text-lg font-bold text-primary-950">
           Your CV <span className="font-normal text-textMuted">(optional)</span>
         </legend>
-        <label htmlFor="cv" className="mb-1.5 block text-sm font-semibold text-primary-950">
+        <label htmlFor="cv" className="mb-1.5 block text-base font-semibold text-primary-950">
           Upload a CV
         </label>
         <input
@@ -255,17 +415,17 @@ const ApplicationForm = ({ id = "apply" }) => {
           aria-invalid={errors.cv ? "true" : undefined}
           className="block w-full cursor-pointer rounded-btn border border-borderStrong bg-white text-base text-text file:mr-4 file:cursor-pointer file:border-0 file:bg-primary-50 file:px-5 file:py-3 file:text-base file:font-semibold file:text-primary-800 hover:file:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-primary-600"
         />
-        <p id="cv-hint" className="text-sm text-textMuted">
+        <p id="cv-hint" className="text-base text-textMuted">
           PDF, DOC, DOCX, RTF or ODT. Maximum 5 MB. You can also send it later
           if you don&apos;t have it to hand.
         </p>
         {cv && !errors.cv && (
-          <p role="status" className="flex items-center gap-2 text-sm font-medium text-success">
+          <p role="status" className="flex items-center gap-2 text-base font-medium text-success">
             <span aria-hidden="true">✓</span> {cv.name} ({formatBytes(cv.size)}) ready to send
           </p>
         )}
         {errors.cv && (
-          <p id="cv-error" role="alert" className="text-sm font-medium text-danger">
+          <p id="cv-error" role="alert" className="text-base font-medium text-danger">
             ⚠ {errors.cv}
           </p>
         )}
@@ -288,7 +448,7 @@ const ApplicationForm = ({ id = "apply" }) => {
           </label>
         </div>
         {errors.consent && (
-          <p id="consent-error" role="alert" className="mt-1.5 text-sm font-medium text-danger">
+          <p id="consent-error" role="alert" className="mt-1.5 text-base font-medium text-danger">
             ⚠ {errors.consent}
           </p>
         )}

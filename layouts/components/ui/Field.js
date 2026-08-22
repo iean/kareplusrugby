@@ -22,7 +22,7 @@ const stateCls = (error) =>
 export const Label = ({ htmlFor, children, required }) => (
   <label
     htmlFor={htmlFor}
-    className="mb-1.5 block text-sm font-semibold text-primary-950"
+    className="mb-1.5 block text-base font-semibold text-primary-950"
   >
     {children}
     {required && (
@@ -38,7 +38,7 @@ export const Label = ({ htmlFor, children, required }) => (
 
 export const ErrorText = ({ id, children }) =>
   children ? (
-    <p id={id} role="alert" className="mt-1.5 flex items-start gap-1.5 text-sm font-medium text-danger">
+    <p id={id} role="alert" className="mt-1.5 flex items-start gap-1.5 text-base font-medium text-danger">
       <span aria-hidden="true">⚠</span>
       <span>{children}</span>
     </p>
@@ -46,7 +46,7 @@ export const ErrorText = ({ id, children }) =>
 
 export const Hint = ({ id, children }) =>
   children ? (
-    <p id={id} className="mt-1.5 text-sm text-textMuted">
+    <p id={id} className="mt-1.5 text-base text-textMuted">
       {children}
     </p>
   ) : null;

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { rateLimit } from "@lib/rateLimit";
 
 /**
  * Enquiry endpoint.
@@ -35,8 +36,22 @@ export async function POST(req) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const errors = {};
   const str = (v) => (typeof v === "string" ? v.trim() : "");
+
+  // Honeypot - hidden field only a bot fills. Accept and discard.
+  if (str(body.website)) {
+    return NextResponse.json({ ok: true, delivered: true });
+  }
+
+  const limit = rateLimit(req);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "Too many enquiries from this connection. Please try again shortly, or call us." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+    );
+  }
+
+  const errors = {};
 
   if (!str(body.name)) errors.name = "Name is required.";
   if (!EMAIL_RE.test(str(body.email))) errors.email = "A valid email address is required.";
