@@ -1,22 +1,18 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { sendToBusiness, isMailConfigured, transportName } from "@lib/mailer";
 import { rateLimit } from "@lib/rateLimit";
 
 /**
  * Enquiry endpoint.
  *
- * Sends to params.contact_email (kp.rugby@kareplus.co.uk) via nodemailer.
+ * Delivery goes through lib/mailer.js, which sends to the single business
+ * inbox (kp.rugby@kareplus.co.uk).
  *
- * REQUIRES EMAIL_USER and EMAIL_PASS in the Vercel project's environment.
- * Until those environment variables exist there is no SMTP transport, so this
- * route returns HTTP 503 and the form shows a visible error telling the
- * visitor to phone instead. It deliberately does NOT return success - a care
- * enquiry silently vanishing is far worse than an honest failure.
- *
- * EMAIL_PASS must be a Gmail App Password, not an account password.
- * Consider a transactional provider (Postmark/SendGrid/Resend) for
- * deliverability; Gmail SMTP is rate-limited and easy to get blocked.
+ * Until a transport is configured there is nothing to send with, so this route
+ * returns HTTP 503 and the form shows a visible error telling the visitor to
+ * phone instead. It deliberately does NOT return success - a care enquiry
+ * silently vanishing is far worse than an honest failure.
  *
  * Nothing is written to disk on purpose: data/*.json is tracked in git and
  * runtime writes there make `git pull` conflict, which silently stalls deploys.
@@ -118,10 +114,10 @@ export async function POST(req) {
 
   const to = config.params.contact_email;
 
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  if (!isMailConfigured()) {
     // Metadata only - never log message bodies or contact details.
     console.error(
-      `[enquiry] type=${body.enquiryType} NOT SENT: EMAIL_USER/EMAIL_PASS unset`
+      `[enquiry] type=${body.enquiryType} NOT SENT: no mail transport configured`
     );
     return NextResponse.json(
       {
@@ -145,14 +141,7 @@ export async function POST(req) {
   };
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
+    await sendToBusiness({
       // replyTo means staff can hit reply and reach the enquirer directly.
       // Omitted when no email was given - an empty replyTo breaks some clients.
       ...(hasEmail ? { replyTo: str(body.email) } : {}),

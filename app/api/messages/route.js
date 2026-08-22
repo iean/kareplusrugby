@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { sendToBusiness, isMailConfigured, transportName } from "@lib/mailer";
 
 /**
  * Contact form endpoint (config.params.contact_form_action).
@@ -70,9 +70,9 @@ export async function POST(req) {
     }
   }
 
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  if (!isMailConfigured()) {
     // Metadata only - never log message bodies or contact details.
-    console.error("[contact] NOT SENT: EMAIL_USER/EMAIL_PASS unset");
+    console.error("[contact] NOT SENT: no mail transport configured — set SMTP_HOST or EMAIL_USER");
     return new NextResponse(
       "Our contact form is temporarily unavailable. Please call us instead.",
       { status: 503, headers: { "Cache-Control": "no-store" } },
@@ -80,14 +80,7 @@ export async function POST(req) {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: config.params.contact_email,
+    await sendToBusiness({
       // replyTo means staff can hit reply and reach the enquirer directly.
       replyTo: email,
       subject: get("subject") ? `Contact: ${get("subject")}` : "Contact form message",

@@ -22,10 +22,9 @@ import { Honeypot, PrivacyNote } from "./FormExtras";
  * one for some time.) It returns 503 if EMAIL_USER / EMAIL_PASS are unset, and
  * this form surfaces that as a visible error rather than a false success.
  *
- * TODO: confirm which inbox job applications should reach. They currently go
- * to the single business address in config/config.json. config/site.json has a
- * `careers_email` key, but it is set to that same address, so it is not clear
- * whether a separate recruitment inbox is wanted.
+ * Applications go to kp.rugby@kareplus.co.uk, confirmed by Alif on 2026-08-22
+ * as the address for everything. Set in one place: params.contact_email in
+ * config/config.json, read by lib/mailer.js.
  *
  * The CV field is optional on purpose: plenty of good care applicants do not
  * have a CV to hand on a phone, and making it mandatory loses them. They can

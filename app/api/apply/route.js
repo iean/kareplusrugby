@@ -1,18 +1,18 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { sendToBusiness, isMailConfigured, transportName } from "@lib/mailer";
 import { rateLimit } from "@lib/rateLimit";
 
 /**
  * Job application endpoint.
  *
- * Emails the application to params.contact_email with the CV as an
- * attachment. Nothing is written to disk - the deploy runs `git pull`, so
- * untracked writes into the repo directory cause conflicts that silently
- * stall future deploys.
+ * Emails the application to the business inbox with the CV as an attachment.
+ * Nothing is written to disk.
  *
- * REQUIRES EMAIL_USER and EMAIL_PASS in the environment - without them this
- * returns 503 and the form tells the applicant to call instead.
+ * DELIVERY: goes through lib/mailer.js, which sends to the single business
+ * inbox (kp.rugby@kareplus.co.uk). Configure either SMTP_HOST/SMTP_USER/
+ * SMTP_PASS or EMAIL_USER/EMAIL_PASS; with neither, this returns 503 and the
+ * form tells the applicant to call instead.
  *
  * OUTSTANDING - a CV retention policy. CVs are personal data under UK GDPR.
  * Decide how long they are kept and who can see them, then say so in the
@@ -108,8 +108,8 @@ export async function POST(req) {
     );
   }
 
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error(`[apply] NOT SENT: EMAIL_USER/EMAIL_PASS unset`);
+  if (!isMailConfigured()) {
+    console.error("[apply] NOT SENT: no mail transport configured — set SMTP_HOST or EMAIL_USER");
     return NextResponse.json(
       {
         error:
@@ -125,11 +125,6 @@ export async function POST(req) {
     );
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-    });
-
     // The CV rides along as an attachment rather than being written to disk.
     // The server deploys with `git pull`, so untracked writes into the repo
     // directory cause merge conflicts and silently stall future deploys.
@@ -144,9 +139,7 @@ export async function POST(req) {
       attachments.push({ filename: `${safe}.${ext}`, content: buf });
     }
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: config.params.contact_email,
+    await sendToBusiness({
       replyTo: get("email"),
       subject: `Job application — ${get("firstName")} ${get("lastName")} (${get("role")})`,
       html: `

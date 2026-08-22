@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import config from "@config/config.json";
+import { sendToBusiness, isMailConfigured, transportName } from "@lib/mailer";
 import { rateLimit } from "@lib/rateLimit";
 
 /**
@@ -79,8 +79,8 @@ export async function POST(req) {
   const requestId = `DR-${Date.now()}`;
   const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error("[request-data] NOT SENT: EMAIL_USER/EMAIL_PASS unset");
+  if (!isMailConfigured()) {
+    console.error("[request-data] NOT SENT: no mail transport configured — set SMTP_HOST or EMAIL_USER");
     return NextResponse.json(
       {
         error:
@@ -91,16 +91,8 @@ export async function POST(req) {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    await sendToBusiness({
       // GDPR requests carry a statutory deadline, so they must reach a
-      // monitored inbox. No environment override, so it cannot be diverted.
-      to: config.params.contact_email,
       replyTo: str(body.email),
       subject: `Data request — ${str(body.requestType)} — ${str(body.name)} (${requestId})`,
       html: `

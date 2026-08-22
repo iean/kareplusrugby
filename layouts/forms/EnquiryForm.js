@@ -17,9 +17,9 @@ import { Honeypot, PrivacyNote } from "./FormExtras";
  * unset, and this form shows that as a visible error rather than a false
  * success.
  *
- * TODO: confirm which inbox each variant should reach. All four currently go
- * to the one business address. A professional referral with a discharge
- * deadline and a general website enquiry arguably want different destinations.
+ * All four variants go to kp.rugby@kareplus.co.uk, confirmed by Alif on
+ * 2026-08-22 as the address for everything. Set in one place:
+ * params.contact_email in config/config.json, read by lib/mailer.js.
  */
 
 /**
