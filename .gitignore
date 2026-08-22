@@ -45,6 +45,8 @@ yarn-error.log*
 # Its presence makes Vercel treat this repo as a monorepo and fails the build.
 pnpm-workspace.yaml
 
-# Internal planning docs must never sit under public/ — Next.js serves
-# that directory verbatim, so committing one publishes it.
-public/**/*WORK-PLAN*.md
+# Internal planning docs must never sit under public/ — Next.js serves that
+# directory verbatim, so anything committed there is published at a URL.
+# The work plan now lives at the repo root, alongside PROJECT.md, where it is
+# not served. This guard stays so one cannot be added back under public/.
+public/**/*.md
