@@ -4,26 +4,57 @@ import site from "@config/site.json";
 /**
  * Adult safeguarding contacts for every area Kare Plus Rugby covers.
  *
- * Each number was taken from the council's own published adult-safeguarding
- * page and checked on 20 August 2026. Do not edit these from memory - a wrong
- * number here means someone reporting abuse reaches nobody. Re-check against
- * the source page before changing anything:
- *
- *   Warwickshire   warwickshire.gov.uk/safeguardingadults
- *   Coventry       coventry.gov.uk/safeguarding-adults-1
- *   Leicestershire leicestershire.gov.uk/leisure-and-community/community-safety/report-abuse-of-an-adult
- *   W Northants    westnorthants.gov.uk/adult-social-care-and-wellbeing/reporting-concern-about-adult
- *   N Northants    northnorthants.gov.uk/arranging-care/report-safeguarding-concern-about-adult
+ * Every number below was re-verified on 22 August 2026 against the council's
+ * own website, not from memory. Do not edit these from memory - a wrong number
+ * here means someone reporting abuse reaches nobody. The `source` URL on each
+ * row is where the number came from; re-check there before changing anything.
  *
  * Northamptonshire is two unitary councils, so both are listed - sending
  * someone to the wrong one costs time that a safeguarding report cannot spare.
+ *
+ * 2026-08-22 correction: North Northamptonshire was previously shown as
+ * "Same number" out of hours. It is not. 0300 126 3000 is staffed Monday to
+ * Friday, 9am to 5pm, and the council runs a separate out-of-hours duty team on
+ * 01604 637206. Anyone ringing the daytime number at night would have reached
+ * nobody.
+ *
+ * Note on that number: northnorthants.gov.uk publishes 01604 637206 on its
+ * "contact adult social care" page, which is what is used here. An older
+ * number, 01604 626938, still circulates on third-party sites. If the council
+ * ever changes it, the source URL below is the one to trust.
  */
 const LOCAL_AUTHORITIES = [
-  { area: "Warwickshire (includes Rugby)", phone: "01926 412080", outOfHours: "01926 886922" },
-  { area: "Coventry", phone: "024 7683 3003", outOfHours: "024 7683 2222" },
-  { area: "Leicestershire", phone: "0116 305 0004", outOfHours: "0116 305 0888" },
-  { area: "West Northamptonshire", phone: "0300 126 7000", outOfHours: null },
-  { area: "North Northamptonshire", phone: "0300 126 3000", outOfHours: null },
+  {
+    area: "Warwickshire (includes Rugby)",
+    phone: "01926 412080",
+    outOfHours: "01926 886922",
+    source: "https://www.warwickshire.gov.uk/social-care-health/adult-abuse-concerns",
+  },
+  {
+    area: "Coventry",
+    phone: "024 7683 3003",
+    outOfHours: "024 7683 2222",
+    source: "https://www.coventry.gov.uk/safeguarding-adults-1",
+  },
+  {
+    area: "Leicestershire",
+    phone: "0116 305 0004",
+    outOfHours: "0116 305 0888",
+    source: "https://www.leicestershire.gov.uk/leisure-and-community/community-safety/report-abuse-of-an-adult",
+  },
+  {
+    area: "West Northamptonshire",
+    phone: "0300 126 7000",
+    // The council directs out-of-hours callers to the same number.
+    outOfHours: null,
+    source: "https://www.westnorthants.gov.uk/adult-social-care-and-wellbeing/reporting-concern-about-adult",
+  },
+  {
+    area: "North Northamptonshire",
+    phone: "0300 126 3000",
+    outOfHours: "01604 637206",
+    source: "https://www.northnorthants.gov.uk/arranging-care/report-safeguarding-concern-about-adult",
+  },
 ];
 
 export const metadata = {
@@ -144,7 +175,9 @@ const SafeguardingPage = () => {
       <p>
         Report to the council for the area where the person lives. Office-hours
         number first, out-of-hours emergency duty team second where the council
-        runs a separate one.
+        runs a separate one. Every number was checked against the council&apos;s
+        own website on 22 August 2026 — the area name links to it, so you can
+        always confirm before you call.
       </p>
       <table className="not-prose w-full border-collapse text-base">
         <thead>
@@ -157,7 +190,19 @@ const SafeguardingPage = () => {
         <tbody>
           {LOCAL_AUTHORITIES.map((la) => (
             <tr key={la.area} className="border-b border-border align-top">
-              <td className="py-2.5 pr-4 font-medium text-text">{la.area}</td>
+              <td className="py-2.5 pr-4 font-medium text-text">
+                {/* Linked to the council's own reporting page, so a number that
+                    changes here can always be checked at source. */}
+                <a
+                  href={la.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4"
+                >
+                  {la.area}
+                  <span className="sr-only"> — report a concern on the council website (opens in a new tab)</span>
+                </a>
+              </td>
               <td className="py-2.5 pr-4 text-textMuted">
                 <a href={`tel:${la.phone.replace(/\s/g, "")}`}>{la.phone}</a>
               </td>
