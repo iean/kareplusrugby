@@ -257,3 +257,56 @@ Recording these so the plan is not followed off a cliff:
 `public/` verbatim, so committing it there would publish this internal document
 at `kareplusrugby.co.uk/images/WEBSITE-WORK-PLAN.md`. It is **untracked**, so
 nothing is exposed today. It should not be committed to that directory.
+
+---
+
+# Resolution — Phase 6, pass 6
+
+Every item above, with what happened to it. Nothing dropped silently.
+
+| # | Item | Outcome |
+|---|---|---|
+| A1 | `/pricing` invented prices | **Fixed** `64e6bd2` — deleted, 301 to `/faq` (verified 308→/faq) |
+| A2 | `/elements` template demo | **Fixed** `64e6bd2` — deleted, 301 to `/` |
+| A3 | `content/faq.md` lorem ipsum | **Fixed** `64e6bd2` — deleted |
+| B1 | Personal data written to the repo | **Fixed** `26d9d5a` — all three routes email and retain nothing. `data/` now holds only `jobs.json`, which carries no personal data |
+| B2 | Admin behind auth | Already done — no action |
+| C1 | Three live 404s | **Fixed** `feb271f` |
+| C2 | 404s in dead code | **Fixed** `4253bc4` — file deleted |
+| C3 | Footer map pin relative URL | **Fixed** `feb271f` — now an absolute Maps URL |
+| C4 | `menu.json` `#` placeholders | **Fixed** `4253bc4` — file deleted with its only consumers |
+| D1 | `SeoMeta` broken og tags | **Fixed** `771f0a9` — turned out it emitted a *duplicate* head, so those pages were showing the generic title. Converted to Next metadata; `SeoMeta` deleted |
+| D2 | Modern metadata | Already correct — no action |
+| D3 | sitemap/robots | Already correct. The `/pricing` + `/elements` gap is moot — both deleted. `/blogs` is now listed only when a post exists |
+| E1 | Dead files | **Fixed** `4253bc4`, `288b4e2` — 13 files deleted, all verified importer-free first |
+| E2 | domiciliary/staffing duplication | **Partly addressed.** Three duplicate banners became one `BannerCarousel`, and six duplicate routes were consolidated. The two `layouts/` trees are still largely parallel. **Outstanding** — a restructure beyond this plan's scope |
+| F1 | Body text under 16px | **Fixed** `5af8a4f` — 31 × `text-[15px]`, 42 paragraphs at 14px, plus the 12–13px cases |
+| F2 | Images / alt text | Already correct; carousel `alt="Banner 1"` cases removed with the carousels |
+| F3 | Carousel | **Fixed** `48a662e` — the fault was real, on the section pages rather than the homepage |
+| F4 | Focus / reduced motion | Already correct — no action |
+| G1 | Testimonials / stats | Already cleaned — no action |
+| G2 | Vetting & training claims | **Outstanding — needs Alif.** Pre-existing content, so the plan's rules permit it and pass 3 scopes removal to what I wrote. Top of the questions list |
+| G3 | `[TODO]` in `site.json` | **Outstanding — needs Alif.** All `isReal()`-guarded; none reaches the public |
+| H | Missing pages | **Fixed** — `/referrals` `cad6b43`, `/staff` `e70db20`, markdown vacancies `6d1d8a4` |
+| I | Plan assumptions that were untrue | Recorded. Note that **I.1 was wrong** — the duplicated carousel was real, just not on the homepage |
+| J | Plan file in `public/images/` | **Outstanding by choice** — left untracked so it is not published. Should be moved out of `public/` |
+
+## Found after this audit was written
+
+Three further pieces of invented content the Phase 1 pass missed, all fixed:
+
+| Item | Outcome |
+|---|---|
+| `/domiciliary/jobs` advertised three **fabricated vacancies** (London, Birmingham, Manchester) with working Apply buttons | **Fixed** `288b4e2` |
+| Five Bigspring **template blog posts**, two pairs of them duplicates | **Fixed** `bb58ba2` |
+| Four claims **I had written myself** that I could not source | **Fixed** `27a3a64` (pass 3) |
+| Horizontal overflow at 375px and at 400% zoom | **Fixed** `7a4ce09` (pass 5); 2px residual at 320px recorded |
+
+## Also now outstanding
+
+- **`/api/jobs` and `/admin/jobs` are redundant.** Vacancies are markdown-driven
+  now, so the admin job manager is a second, competing source. It still works
+  and is still behind auth; deleting it is Alif's call.
+- **Safeguarding phone numbers** on `/safeguarding` (five local authorities) are
+  pre-existing and unverified by me. A wrong safeguarding number is
+  high-consequence — worth one check against each council's website.
