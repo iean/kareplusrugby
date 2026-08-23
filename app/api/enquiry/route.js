@@ -39,7 +39,7 @@ export async function POST(req) {
     return NextResponse.json({ ok: true, delivered: true });
   }
 
-  const limit = rateLimit(req);
+  const limit = rateLimit(req, { bucket: "enquiry" });
   if (!limit.allowed) {
     return NextResponse.json(
       { error: "Too many enquiries from this connection. Please try again shortly, or call us." },

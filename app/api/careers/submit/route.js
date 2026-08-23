@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
-import { getApplication, saveStep } from "@lib/recruitment/store";
+import { getApplication } from "@lib/recruitment/store";
 import { query } from "@lib/recruitment/db";
 import { ensureSchema } from "@lib/recruitment/schema";
 import { buildApplicationPdf } from "@lib/recruitment/pdf";
@@ -37,10 +37,9 @@ import { sendReferenceRequest } from "@lib/recruitment/referenceEmails";
 
 export const runtime = "nodejs"; // pdfkit and pg need Node, not the Edge runtime
 
-const MAX_BODY_BYTES = 30 * 1024 * 1024;
 
 export async function POST(req) {
-  const limit = rateLimit(req, { max: 5, windowMs: 60 * 60 * 1000 });
+  const limit = rateLimit(req, { max: 5, windowMs: 60 * 60 * 1000, bucket: "submit-ip" });
   if (!limit.allowed) {
     return NextResponse.json(
       { error: "Too many applications from this connection. Please call us instead." },
@@ -76,6 +75,25 @@ export async function POST(req) {
   }
 
   const a = application.answers || {};
+
+  // Per-email limit as well as per-IP, per RECRUITMENT-SPEC.md Phase 6.
+  if (a.email) {
+    const perEmail = rateLimit(req, {
+      max: 3,
+      windowMs: 24 * 60 * 60 * 1000,
+      subject: String(a.email).trim().toLowerCase(),
+      bucket: "submit-email",
+    });
+    if (!perEmail.allowed) {
+      return NextResponse.json(
+        {
+          error:
+            "We already have recent applications from this email address. Please call us on 01788 422422 rather than applying again.",
+        },
+        { status: 429, headers: { "Retry-After": String(perEmail.retryAfter) } },
+      );
+    }
+  }
 
   /* ---------------------------------------------------------------- *
    * Server-side validation. The client is never trusted.

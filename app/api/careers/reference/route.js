@@ -36,7 +36,7 @@ export const runtime = "nodejs";
  * SMTP server was briefly unreachable — they will not do it.
  */
 export async function POST(req) {
-  const limit = rateLimit(req, { max: 20, windowMs: 60 * 60 * 1000 });
+  const limit = rateLimit(req, { max: 20, windowMs: 60 * 60 * 1000, bucket: "reference-ip" });
   if (!limit.allowed) {
     return NextResponse.json(
       { error: "Too many attempts. Please wait a moment, or call us." },

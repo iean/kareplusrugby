@@ -50,12 +50,27 @@ export async function POST(req) {
     return NextResponse.json({ ok: true });
   }
 
-  const limit = rateLimit(req, { max: 60, windowMs: 10 * 60 * 1000 });
+  // Per IP...
+  const limit = rateLimit(req, { max: 60, windowMs: 10 * 60 * 1000, bucket: "draft-ip" });
   if (!limit.allowed) {
     return NextResponse.json(
       { error: "Too many requests. Please wait a moment and try again." },
       { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
     );
+  }
+
+  // ...and per email address, per RECRUITMENT-SPEC.md Phase 6. A family or an
+  // office shares one IP, so an IP limit alone either throttles innocent
+  // people or is set so loose it stops nothing.
+  const emailForLimit = String(body.email || "").trim().toLowerCase();
+  if (emailForLimit) {
+    const perEmail = rateLimit(req, { max: 120, windowMs: 10 * 60 * 1000, subject: emailForLimit, bucket: "draft-email" });
+    if (!perEmail.allowed) {
+      return NextResponse.json(
+        { error: "Too many saves for this email address. Please wait a moment." },
+        { status: 429, headers: { "Retry-After": String(perEmail.retryAfter) } },
+      );
+    }
   }
 
   if (!isDatabaseConfigured() && process.env.NODE_ENV === "production") {

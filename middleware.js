@@ -102,8 +102,34 @@ function isAuthorised(req) {
   return userOk && passwordOk;
 }
 
+/**
+ * Recruitment routes carry applicants' employment history, referees' contact
+ * details and safeguarding disclosures. RECRUITMENT-SPEC.md Phase 6 requires
+ * them to be HTTPS only.
+ *
+ * Vercel terminates TLS and forwards x-forwarded-proto, so that header is what
+ * to read - req.url is http:// internally even on a secure request. Localhost
+ * is exempt so development still works.
+ */
+const RECRUITMENT_PATHS = ["/careers/apply", "/careers/status", "/reference", "/api/careers"];
+
+function requiresHttps(pathname) {
+  return RECRUITMENT_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
 export function middleware(req) {
   const { pathname } = req.nextUrl;
+
+  if (requiresHttps(pathname)) {
+    const proto = req.headers.get("x-forwarded-proto");
+    const host = req.headers.get("host") || "";
+    const isLocal = host.startsWith("localhost") || host.startsWith("127.0.0.1");
+    if (proto && proto !== "https" && !isLocal) {
+      const url = req.nextUrl.clone();
+      url.protocol = "https:";
+      return NextResponse.redirect(url, 308);
+    }
+  }
 
   if (!needsAuth(pathname, req.method)) {
     return NextResponse.next();
@@ -143,5 +169,9 @@ export const config = {
     "/admin",
     "/api/jobs",
     "/careers/status",
+    // HTTPS enforcement for everything carrying applicant or referee data.
+    "/careers/apply",
+    "/reference/:path*",
+    "/api/careers/:path*",
   ],
 };
