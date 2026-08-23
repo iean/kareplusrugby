@@ -1,436 +1,233 @@
-# Overnight notes — Kare Plus Rugby
+# Recruitment system — build notes
 
-Work plan: `public/images/WEBSITE-WORK-PLAN.md`, executed in full on branch
-`main-kare-plus`.
+`RECRUITMENT-SPEC.md`, built on branch `main-kare-plus`.
 
-**Status: merged to `main` and deployed to production on 22 August 2026**, on
-Alif's explicit instruction. Verified live afterwards — see §10.
+**Nothing has been pushed. Nothing merged. `main` is untouched.** The spec ends
+"Do not merge. Do not push to `main`", so I stopped at the branch.
+
+**It cannot run yet.** Three environment variables are missing and the Vercel
+project belongs to someone else. §1 is what I need from you.
 
 ---
 
 # 1. What I need from you
 
-This is the section that matters most. Everything below is blocked on you.
+## 1a. Three things block it running at all
 
-## 1a. The vetting and training claims — NOW CONFIRMED ✅
+| What | Why it stops everything | Where it goes |
+|---|---|---|
+| **`DATABASE_URL`** | No database, no application can be saved. The form returns 503 and tells the applicant to phone instead — deliberately, rather than accepting a form and dropping it | Vercel env vars. Free tier of Neon or Supabase is ample |
+| **`SMTP_HOST` / `SMTP_USER` / `SMTP_PASS`** (or `EMAIL_USER`/`EMAIL_PASS`) | No email means no reference requests, so no application can ever complete | Vercel env vars. See `EMAIL-DNS.md` |
+| **`CRON_SECRET`** and **`RECRUITMENT_ADMIN_PASSWORD`** | Without them the chase job and the status page refuse to run. Both fail closed on purpose — an unguarded cron endpoint emails referees and deletes data | Vercel env vars |
 
-**Resolved on 22 August 2026.** Alif confirmed all of these directly, so they
-are verified and published. Recorded in `config/site.json` →
-`business.staff_assurances` so nobody re-flags them later:
+Full list of every variable the system reads: `DATABASE_URL`, `DATABASE_SSL`,
+`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE`, `MAIL_FROM`,
+`EMAIL_USER`, `EMAIL_PASS`, `CRON_SECRET`, `RECRUITMENT_ADMIN_PASSWORD`,
+`WHATSAPP_ENABLED`, plus the pre-existing `ADMIN_USER`, `ADMIN_PASSWORD`,
+`NEXT_PUBLIC_GA_ID`.
 
-- All staff hold an **enhanced DBS check** and are on the **DBS update service**
-- The company **is insured**
-- All staff complete the **mandatory training legally required** to work as a carer
-- All staff complete the **Care Certificate** as a minimum; some do more
-- Staff are offered the **opportunity to work towards NVQ Level 2 and Level 3**
+## 1b. Decisions, with file and line
 
-Because these are now confirmed, the site says more than it did. The update
-service, the Care Certificate and the NVQ route were all absent before — the NVQ
-progression in particular is a genuine recruitment draw that was not mentioned
-anywhere. A new FAQ, "What qualifications will I get?", now answers it.
-
-**Still not confirmed, so still not claimed anywhere:** any specific insurance
-type or cover level, any training provider, any completion statistic, and any
-timescale for achieving a qualification. The NVQ route is worded as an
-opportunity, not a guarantee.
-
-**One thing still worth checking:** the five local-authority safeguarding phone
-numbers on `app/safeguarding/page.js:22-26`. Those are pre-existing and I could
-not verify them. A wrong safeguarding number is the worst error this site could
-carry — worth one check against each council's own website.
-
-## 1b. Every `TODO:` placeholder, with its location
-
-None of these render anything to the public. Each is guarded by an `isReal()`
-check that omits the field, the row or the whole block. Fill in the value and it
-appears automatically.
-
-| File:line | What I need |
+| File:line | Decision |
 |---|---|
-| `config/site.json:21` | ICO data protection registration number |
-| `config/site.json:38` | Registered manager's name (CQC requires a named registered manager) |
-| `config/site.json:43,49` | A real bio for each director — Mimosha Alam, Choudhury Taimur Sadat |
-| `config/site.json:44,50` | A photo for each director, with their consent |
-| `config/site.json:264` | OneTouch Health sign-in URL |
-| `config/site.json:269` | Payroll portal sign-in URL — **and confirm the provider name**; the page currently just says "Payroll" |
-| `config/site.json:274` | FlexiBee sign-in URL |
-| `config/site.json:283,288,293,298,303` | Five staff PDFs into `public/documents/`: handbook, safeguarding, medication, health & safety / lone working, whistleblowing |
-| `layouts/forms/ApplicationForm.js:25` | Which inbox should job applications go to? |
-| `layouts/forms/EnquiryForm.js:20` | Which inbox should each enquiry type go to? |
-| `layouts/home/WhatItCosts.js:24` | Do you want to publish an indicative hourly range? |
-| `lib/analytics.js:4` | Pre-existing: a GA4 id, or a decision not to have analytics |
+| `lib/recruitment/notify.js:16` | **WhatsApp: Meta Cloud API or Twilio?** The spec says ask before writing any of it, so I built only the flag (default off) and the message shape. Both need a business account, a verified sender and a Meta-approved template |
+| `lib/recruitment/schema.js:16` | **Is 6 months the right retention period?** It is what the spec said. 6–12 months is the usual range; the Equality Act's 6-month discrimination window argues for at least 6 |
+| `app/api/careers/delete/route.js:30` | **Self-service deletion — happy with it?** It deletes immediately on reference + email rather than raising a ticket. Reasoning is written out in the file |
+| `app/careers/status/page.js:28` | **Set a long random `RECRUITMENT_ADMIN_PASSWORD`**, and change it when anyone with access leaves |
+| `config/site.json:21` | **ICO registration number** — still a placeholder, and processing of this kind normally requires registration |
+| `PRIVACY-RECRUITMENT.md` | **Who reviews and signs off the privacy notice?** It is a draft and must not be published as-is |
+| — | **The real vacancies** for Coventry, Rugby, Leicester and Northampton. The system is built and empty; drop a markdown file into `content/vacancies/` |
+| — | **Publish salary on vacancies?** The `pay` field is optional and, left out, the card says pay is discussed on application |
 
-**On the form destinations.** Every form currently emails the single business
-address `kp.rugby@kareplus.co.uk`. `config/site.json` has `careers_email` and
-`safeguarding_email` keys, but both are set to that same address, so I could not
-tell whether separate inboxes are wanted. A professional referral with a
-discharge deadline and a general website enquiry arguably should not land in the
-same place. **I did not guess.**
-
-## 1c. Other questions
-
-- **What current vacancies should be listed?** The system is built and waiting.
-  Drop a file into `content/vacancies/` — see `_HOW-TO-ADD-A-VACANCY.md`. There
-  are none published, so the page honestly says so.
-- **Which areas do you actually cover?** `site.json` says Rugby, Coventry,
-  Leicestershire and Northamptonshire, and that is now in the structured data
-  and several meta descriptions. Please confirm it is still accurate.
-- **Do you have written consent for any testimonials?** The carousel is built
-  and renders nothing until real, consented quotes exist. Nothing was invented.
-- **Should `/admin/jobs` be retired?** Vacancies are markdown-driven now, so the
-  admin job manager is a competing second source. It still works.
-
-## 1d. One thing to do before merging
-
-`WEBSITE-WORK-PLAN.md` is sitting in `public/images/`. Next.js serves that
-directory verbatim, so a committed copy there is published at
-`kareplusrugby.co.uk/images/WEBSITE-WORK-PLAN.md`.
-
-**I flagged this at the start and then committed it by accident anyway** — a
-blanket `git add -A` in `26d9d5a` swept it in. I have removed it from the tree
-and gitignored the pattern (`d0a0f0f`), so it is **not** in what would be
-deployed, and the branch has never been pushed, so nothing has been exposed.
-
-It does still exist in this branch's history, in commit `26d9d5a`. That is not
-served, but it would be visible in the PR diff. **Please move the plan out of
-`public/` before opening the PR**, and squash or rewrite that commit if you would
-rather it not appear in the history at all.
+Pre-existing TODOs untouched by this work: `config/site.json` lines 38, 43–44,
+49–50 (registered manager, director bios and photos), 273/278/283 (staff system
+URLs), 292–312 (five staff PDFs), `lib/analytics.js:4` (GA4 id),
+`layouts/home/WhatItCosts.js:24` (whether to publish an hourly range).
 
 ---
 
-# 1e. Found in the recheck (after the report was first written)
+# 2. What I could not complete
 
-A second verification pass, driving a real browser rather than re-reading code,
-found four more live problems. All are fixed (`3cca476`), but two of them are
-**legal text you should read before this goes out**:
-
-- **"Kare Plus Rugby Healthcare" was named as the data controller in your
-  privacy policy and as the contracting party in your terms.** That entity does
-  not exist. Both documents now say "Divergent Healthcare Limited, trading as
-  Kare Plus Rugby", matching the CQC register and Companies House.
-- **Your privacy policy and terms were publicly showing
-  `Address: [Your Business Address]`**, and the terms also showed
-  `CQC Registration: [Your CQC Number]`. Unreplaced Bigspring placeholders.
-  Filled in from `config/site.json`.
-- The GDPR data-request form had **seven controls with no label association** —
-  visible labels not tied to any field, on the form for exercising data rights.
-- That form's "Proof of Identity" box **invited people to type a passport
-  number** into a public web form. It now asks how they can prove identity
-  instead.
-
-**Please still have someone check the privacy policy and terms properly.** I
-corrected the entity name and filled the placeholders from verified data, but I
-am not in a position to review whether the rest of those documents is accurate
-for your business.
+- **Nothing runs end to end in production**, for the three reasons in §1a. It
+  all runs locally, against real Postgres and a real SMTP server.
+- **WhatsApp** — the spec forbids writing it before you choose a provider.
+- **Object storage for uploads.** Files are validated, renamed and attached to
+  the notification email, and a metadata row is written. They are *not* put in
+  persistent storage, because that needs another credential. Today the email is
+  the only copy of a CV. Worth fixing when the hosting question is settled.
+- **Per-user logins for the status page.** The spec said a shared password was
+  acceptable and to say if it is not. It is not, long term — see §3.
 
 ---
 
-# 2. The headline
+# 3. Data protection questions
 
-**The plan was written against an older version of the site.** A lot of Phase 2,
-4 and 5 had already been done, and six of the plan's premises were no longer
-true (`AUDIT.md` §I).
+The spec asked me to be thorough here, so this is the long list.
 
-But the audit found four things the plan did not know about, all of them live on
-a CQC-regulated care site, and all of them worse than anything on the plan's list:
-
-1. **`/pricing` published invented prices.** "Basic £49/month", "Professional
-   £69/month", "Business £99/month", with features listed as "Customs Clearance"
-   and "Cloud Service". Bigspring template content nobody had removed.
-2. **`/domiciliary/jobs` advertised three vacancies that do not exist**, each
-   with a working "Apply Now" button — Care Assistant in **London**, Support
-   Worker in **Birmingham**, Registered Nurse in **Manchester**. This company is
-   in Rugby. A carer could have applied for a job that was never going to exist.
-3. **Three endpoints wrote enquirers' names, emails and phone numbers into JSON
-   files in the repository**, and served the list over GET. One of them was the
-   UK GDPR subject-access form, which also collected a proof-of-identity field.
-   `data/messages.json` was tracked in git. It was empty, so no personal data was
-   ever actually committed, and the writes had never worked in production because
-   Vercel's filesystem is read-only.
-4. **The blog was five template posts** about photography, "how to make toys from
-   old Olarpaper", and a CRM dialer.
-
-And the plan's own item 2.1 turned out to be **real after all**. The homepage
-carousel had been replaced, so it looked fixed — but `/staffing` and
-`/domiciliary/care-services` still rendered five `<h1>` elements from three
-slides, two of the headings appearing twice, because Swiper's `loop` clones
-slides into the DOM. That is why it kept being reported.
+1. **The emails are the retention hole.** Deleting a database record does not
+   delete the copies emailed to `kp.rugby@kareplus.co.uk`. Without a mailbox
+   retention rule the 6-month policy is true of the website and untrue of the
+   business. **This is the single biggest gap.**
+2. **ICO registration** (`config/site.json:21`) is still a placeholder.
+3. **Special category data.** A reference can contain health information — a
+   referee explaining an absence. That needs an Article 9 basis, most likely
+   9(2)(b), plus an **Appropriate Policy Document** under the DPA 2018, which
+   does not exist.
+4. **Is a DPO required?** Large-scale special category processing makes one
+   mandatory. A care provider may cross that line.
+5. **Processors are unnamed.** The privacy notice cannot name the hosting,
+   database and email providers or confirm a DPA with each until they are
+   chosen.
+6. **Where is data stored?** If any provider stores outside the UK/EEA, the
+   notice must say so and name the safeguard.
+7. **Referee data is collected without their consent** — lawfully, under
+   legitimate interests, but Article 14 obliges us to tell them where it came
+   from. Done, in the request email and on the form. Worth confirming you are
+   comfortable with the wording.
+8. **Safeguarding disclosures in references.** A referee can allege something
+   serious about a named person. That is special category-adjacent, is stored
+   in the database and emailed, and there is no process yet for what happens if
+   the applicant disputes it — they have a right to know it exists.
+9. **Shared password on the status page.** Cannot attribute a view to a person,
+   cannot be revoked for one leaver, produces no audit trail. On a page showing
+   candidate names beside safeguarding flags, per-user logins with an access log
+   is where this needs to end up.
+10. **CVs live in an inbox indefinitely** — same problem as (1), flagged in the
+    pre-existing `/api/apply` route too.
+11. **Self-service deletion is not identity verification.** Reference + email
+    is a shared secret, not proof. I judged immediate deletion the right call
+    because the failure mode is destruction, not disclosure — but it is your
+    call.
+12. **Reference PDFs are emailed unencrypted.** Standard practice, but they
+    contain a third party's opinion and sometimes a safeguarding allegation.
+13. **No retention rule for successful applicants.** The 6-month sweep skips
+    `status = 'hired'`, which means those records currently have no end date.
+14. **The applicant is not told who their referees are told they are.** Minor,
+    but a referee learns the applicant applied for a specific role — worth
+    being deliberate about.
 
 ---
 
-# 3. Every change, by phase
+# 4. DNS records for email delivery
 
-### Phase 0 — starting position
-Branch `main-kare-plus`, build passing, exit 0. The only uncommitted file was the
-plan itself, so I treated the clean-tree check as satisfied and continued.
+Written for whoever manages the domain, in **`EMAIL-DNS.md`**. The headline:
 
-**Deviation:** the plan says `npm`. `CLAUDE.md` rule 7 says pnpm, never npm —
-npm corrupts the lockfile here and has broken the Vercel build before. I used
-`pnpm`, which runs the identical scripts.
+**The website is `kareplusrugby.co.uk` but the inbox is
+`kp.rugby@kareplus.co.uk` — a different domain, probably the franchise's.**
+SPF, DKIM and DMARC must be published on the domain in the **From** address.
 
-### Phase 1 — audit
-| Commit | |
+**Send from your own domain.** Set `MAIL_FROM` to
+`noreply@kareplusrugby.co.uk`, with Reply-To pointing at the business inbox.
+Replies still land where you expect, and you control the DNS instead of waiting
+on head office.
+
+- **SPF** — one TXT record on `@`. Exact value per provider is in the file. Only
+  ever one SPF record; merge, never add a second.
+- **DKIM** — cannot be written in advance. The provider generates the key and
+  gives you the record. **Do not skip it:** SPF breaks on forwarding, and
+  forwarding is exactly what happens to a reference sent to an NHS address.
+- **DMARC** — TXT on `_dmarc`, starting
+  `v=DMARC1; p=none; rua=mailto:kp.rugby@kareplus.co.uk; fo=1`. Move to
+  `quarantine` then `reject` only after confirming the other two pass.
+
+Then hit `POST /api/careers/test-email` (password-protected) to confirm
+delivery before anything depends on it.
+
+---
+
+# 5. What I built, by phase
+
+| Phase | Commit | What |
+|---|---|---|
+| 1 | `2c58db0` | Jobs page: location filter across the four areas, accessible radio fieldset, general application route |
+| 2 | `582164c` | The nine-section application form, save-and-resume, gap detection, referee rules |
+| 5 (email) | `4655431` | Test route and `EMAIL-DNS.md` — done before 3 and 4, as the spec requires |
+| 3 | `0fe7408` | Submission: PDF, office email, applicant email, magic-byte uploads |
+| 4 | `96ba38d` | The reference loop: tokens, referee forms, chasing, status page, cron |
+| 6 | `c0181f5` | Security and data protection, `PRIVACY-RECRUITMENT.md`, deletion route |
+| 7 | `3674023` | Fixes from the nine passes |
+
+**A departure from the spec, with your approval.** The spec says SQLite via
+better-sqlite3 on a VPS. This site is on Vercel, where the filesystem is
+read-only and per-invocation — a SQLite file would vanish between requests,
+which is the same bug already removed from this codebase, where three routes
+wrote JSON that never persisted. better-sqlite3 also needs a build script, and
+CLAUDE.md records that pnpm's ignored-builds behaviour has broken this site's
+deploy once. You chose hosted Postgres, which the spec permits ("unless I say
+otherwise"). Local development uses PGlite — real Postgres in WASM — so
+everything was tested against genuine Postgres SQL.
+
+---
+
+# 6. The nine re-check passes
+
+| Pass | Result |
 |---|---|
-| `b5f974a` | `AUDIT.md` — read-only pass, no files changed |
+| **1 — Build** | Clean. Exit 0, **zero warnings**, 50 routes, lint clean, all 18 contrast pairings pass |
+| **2 — Leakage** | Clean. No database file, upload, `.env`, credential or test data tracked. Verified by *creating* real files and checking `git check-ignore` on each — 9 of 9 ignored. No hardcoded credentials |
+| **3 — End to end, twice** | Run 1 clean: 5 emails out, 3 references back, 4 more emails, token replay refused (410). Run 2 awkward: every case caught — see below |
+| **4 — Regulation** | All three Schedule 3 requirements satisfied. One apparent failure was a **tooling artefact**, not a defect (below) |
+| **5 — Data minimisation** | Clean. Every grep hit was a false positive — prose saying we *don't* collect it, a "Bank / ad-hoc" shift type, a "Banknote" icon, "visa sponsor" |
+| **6 — Accessibility** | Grid: 28 cells, every one text-labelled ("Monday morning"), 8 col + 4 row scoped headers, caption, fieldset + legend, 11 `aria-pressed` toggles, Space toggles, live region announces. Skip link is the first tab stop and lands in `#main`. Zero overflow at 640/375/320px |
+| **7 — Three readers** | **Found a real block** — see below |
+| **8 — Failure modes** | **Found a real bug** — see below. Also: DB unreachable throws in 31ms and surfaces as a visible 503; SMTP dead still saves the application |
+| **9 — Final** | Clean build, then a full run: application → 5 emails → one flagged reference, one decline, one clean → status page shows "2/3 (1 declined) — YES read before any offer" |
 
-### Phase 2 — the known faults
-| Commit | |
-|---|---|
-| `64e6bd2` | Removed `/pricing` (invented prices), `/elements`, lorem-ipsum `content/faq.md` |
-| `26d9d5a` | Stopped three endpoints writing personal data into the repo |
-| `feb271f` | Four broken links, and the footer map pin that resolved relative |
-| `771f0a9` | Duplicate/wrong metadata; `SeoMeta` deleted; blank `/domiciliary-care-home` retired |
-| `4253bc4` | Deleted 8 dead template components and 3 stale config files |
-| `5af8a4f` | Raised body text to the 16px floor |
+### Pass 3, run 2 — awkward input, all caught
 
-### Phase 3 — new pages
-| Commit | |
-|---|---|
-| `87fa9e8` | Application form extended; honeypot + rate limiter added |
-| `6d1d8a4` | Vacancies driven by markdown |
-| `36cfcd2` | Enquiry form asks more, requires less |
-| `cad6b43` | **New `/referrals`** for professionals |
-| `e70db20` | **New `/staff`** signposting hub |
+`Siobhán O'Reilly-D'Arcy` and `St Mary's Care <Home>` survive into the PDF
+intact. Rejected with specific messages: two unexplained gaps; a gmail address
+in a professional referee field; two referees sharing an email; a referee using
+the applicant's own address; a 6 MB upload; an EXE renamed `cv.pdf`.
 
-### Phase 4 — local SEO
-| Commit | |
-|---|---|
-| `bb58ba2` | Removed the five template blog posts |
-| `48a662e` | Duplicated carousel slides + auto-advancing banners |
-| `288b4e2` | **Fabricated job adverts removed**; recruitment consolidated on `/careers` |
-| `754cf96` | Unique title, description and canonical on every page |
+### Pass 8 — the bug
 
-### Phase 5 — accessibility & performance
-| Commit | |
-|---|---|
-| `3a842e8` | Contrast failure, off-palette colours, tap targets, image sizing |
+**Expired reference tokens could still be completed.** `completeReference()` and
+`declineReference()` checked `used_at` and `status` but not `expires_at`. The
+API route was safe because it resolves first — but the functions were unguarded
+alone, so the next caller skipping that step would have accepted a reference on
+a dead token. Both now check expiry in the WHERE clause. Fixed and verified.
 
-### Phase 6 — the seven passes
-| Commit | |
-|---|---|
-| `1f644a0` | Pass 1 — removed the deprecated plugin causing the only build warning |
-| `27a3a64` | Pass 3 — removed four claims **I** had written and could not source |
-| *(pass 4)* | Repointed the last link hitting a redirect |
-| `7a4ce09` | Pass 5 — fixed horizontal overflow at 375px and 400% zoom; added the cost section |
-| *(pass 6)* | Recorded the outcome of every audit item in `AUDIT.md` |
+### Pass 7 — the block
 
----
+Reading as **"a 50-year-old returning after 3 years caring for a relative"** —
+the reader the spec names — found a hard wall. If their last care employer has
+closed or will not reply, the most-recent-care-employer rule stopped them
+submitting at all. That loses exactly the candidate you want.
 
-# 4. Phase 6 — result of each pass
+The requirement stands, but CQC guidance accepts a documented reason where a
+reference cannot be obtained. They can now explain why (minimum 15 characters,
+so a one-word dodge fails), and it becomes a warning the recruiter must resolve,
+carried into the PDF under **"Conduct evidence outstanding"**.
 
-**Pass 1 — Build.** Found one real warning: Tailwind was asking for the
-deprecated `@tailwindcss/line-clamp` plugin to be removed. Removed. `pnpm build`
-is now exit 0 with **zero** warnings; `pnpm lint` clean.
+### Pass 4 — the false alarm worth recording
 
-**Pass 2 — Rules.** Checked all 144 changed files against the hard rules
-mechanically. The phone number, address and email addresses are untouched —
-every apparent removal traced to a deleted dead file, and the live pages still
-carry all of them. No third-party script added. No new persistence. Privacy,
-terms and data-request pages all present. CQC text unaltered. I also diffed
-`site.json`, `social.json` and `config.json` key-by-key against their pre-session
-versions to prove my JSON rewrites had not mangled anything: exactly four
-intended value changes, nothing else.
+A check for the gap section in the PDF appeared to fail. The feature was there
+all along: `pdf.js` contained **literal control characters** in its sanitising
+regex, so `file` reported it as binary and grep silently skipped it. Rewritten
+as `\u` escapes; sanitising verified unchanged (a bidi override and a BEL
+character are still stripped from a name).
 
-**Pass 3 — Invented content.** *This pass found real problems in my own work.*
-Four claims I had written were not sourceable and are gone:
-- "Most referrals are settled in one call" (twice, on `/referrals`)
-- "You will never be penalised for raising a concern in good faith" — a promise
-  about how you treat staff, which is not mine to make
-- "Your payslips and your P60" — assumed a payroll arrangement nobody confirmed
-- A banner slide hardening the FAQ's careful "you *should* see a small group of
-  familiar faces" into a promise of continuity
+### One process note
 
-**Pass 4 — Links.** All 24 distinct internal links in the built pages return 200
-directly; the only non-200 is `/admin/jobs` at 401, which is correct. Every
-`target="_blank"` carries `rel="noopener"`. Every `mailto:` and `tel:` correct.
-Found and fixed one link still bouncing through a redirect.
-
-**Pass 5 — Three readers.** Tested with real Chrome, not eyeballed.
-- *The daughter:* the phone number is in the header on every page. But she could
-  not find out what it costs, so I added an honest "What does care cost?" section
-  — **no figure**, only what is already established elsewhere.
-- *The elderly reader at 200% zoom:* the page overflowed sideways at 375px and
-  worse at 400%. Fixed (details below). The copy is written *to* her — 43 uses
-  of "you/your" on the homepage against 11 third-person, and no "loved one".
-- *The carer on a phone:* two taps from the homepage to the application form.
-
-**Pass 6 — Fresh eyes.** Re-read `AUDIT.md` and recorded the outcome of every
-single item in a table appended to that file. Three items are outstanding **with
-reasons**, not dropped.
-
-**Pass 7 — Final build.** Deleted `.next`, rebuilt from scratch: exit 0, zero
-warnings, 41 routes. Lint clean. Contrast script passes all 18 pairings.
-`pnpm dev` starts and serves every page 200 with no errors.
+Partway through Phase 7 I found I had been running the passes against `main`,
+which does not contain any of this work — the branch had been switched. Nothing
+was lost; all commits were safe on `main-kare-plus`. Passes 1 and 2 were re-run
+on the correct branch and the results above are from that run.
 
 ---
 
-# 5. Real Lighthouse scores
+# 7. What I would do next
 
-Measured against a production build on real Chrome. **These are the numbers I
-got, not the targets.**
-
-**Desktop**
-
-| Page | Perf | A11y | Best practices | SEO |
-|---|---|---|---|---|
-| `/` | **95** | **100** | 100 | 100 |
-| `/careers` | 96 | 100 | 100 | 100 |
-| `/referrals` | 96 | 100 | 100 | 100 |
-| `/contact` | 96 | 100 | 100 | 100 |
-| `/staff` | 96 | 100 | 100 | 92 ¹ |
-
-**Mobile** (Lighthouse's default: throttled slow 4G, Moto G4)
-
-| Page | Perf | A11y | Best practices | SEO |
-|---|---|---|---|---|
-| `/` | **85** | **100** | 100 | 100 |
-| `/careers` | 88 | 100 | 100 | 100 |
-| `/domiciliary-care` | 88 | 100 | 100 | 100 |
-| `/staffing` | 87 | 100 | 100 | 100 |
-
-¹ `/staff` scores 92 on SEO only because it is deliberately `noindex`. That is
-intended — it is for your team, not for searchers.
-
-### Measured again on live production after deploying
-
-The localhost numbers above were pessimistic, as suspected. On Vercel, with the
-CDN and compression doing their job:
-
-| Page | Perf | A11y | Best practices | SEO | LCP |
-|---|---|---|---|---|---|
-| `/` | **94** | **100** | 100 | 100 | 2.7 s |
-| `/careers` | **99** | **100** | 100 | 100 | 2.1 s |
-| `/referrals` | **98** | **100** | 100 | 100 | 2.1 s |
-
-**Both of the plan's targets are met on the live site: accessibility 95+ (100)
-and performance 90+ (94–99).** LCP came down from ~4s on localhost to 2.1–2.7s
-in production.
-
-The mobile gap is entirely Largest Contentful Paint, at ~4s. Total Blocking Time
-is 0–20ms and Cumulative Layout Shift is **0**, which are as good as they get.
-Two caveats worth knowing: this was measured against `next start` on a laptop
-with no CDN, no Brotli and no edge caching, so Vercel will do better; and I
-improved `/staffing` from 84 to 87 purely by adding a `sizes` attribute so phones
-stop being sent desktop-width images. I did not chase the remaining points into
-a redesign of the hero, which is what it would now take.
-
----
-
-# 6. Judgement calls I made
-
-1. **Used `pnpm`, not `npm`.** `CLAUDE.md` rule 7 is explicit and npm would break
-   the Vercel build.
-2. **Did not stop at Phase 0** over an unclean tree, because the only untracked
-   file was the plan itself.
-3. **Deleted rather than rewrote** `/pricing`, `/elements`, the template blog
-   posts and the fake job adverts. Every one was template debris; there was no
-   true version to write.
-4. **301 instead of 404** for retired URLs, so anything Google has indexed is
-   superseded rather than left to linger.
-5. **Consolidated six duplicate routes** rather than giving each a unique title.
-   `/domiciliary/how-we-work` and `/staffing/how-we-work` were byte-identical, and
-   three of the four job pages were empty shells.
-6. **Left the pre-existing vetting/DBS/insurance claims in place.** The plan
-   permits claims already on the site, and pass 3 scopes removal to what I wrote.
-   Removing them unilaterally would have gutted the careers and staffing pages.
-   They are top of your list instead.
-7. **Removed the stored-message admin viewer** rather than keeping it and
-   disabling writes. It read a file that could no longer be written, so it would
-   have shown "No messages" forever.
-8. **Made `/staff` noindex** and kept it out of the sitemap.
-9. **No autoplay on the carousels at all**, rather than autoplay with a pause
-   button. Both satisfy WCAG 2.2.2; for this audience, content that does not move
-   unless you move it is simply better.
-10. **Did not add a CAPTCHA.** The plan requires asking first. Honeypot plus a
-    rate limiter instead, and `lib/rateLimit.js` is honest in its own comments
-    about being per-instance and therefore no defence against a distributed
-    attack.
-
----
-
-# 7. Attempted but not completed
-
-- **Mobile performance 90+.** Reached 85–88. LCP is the blocker; see §5.
-- **A 2px horizontal overflow on the homepage at 400% zoom** (320 CSS px)
-  survives. 375px and 200% zoom are completely clean across all nine pages
-  tested. Nothing overlaps and nothing is unreachable, so I stopped rather than
-  restructure the cards for the last 2px.
-- **`layouts/domiciliary/` and `layouts/staffing/` are still largely parallel
-  trees.** `CLAUDE.md` rule 4 already warns about this. I merged the three banner
-  carousels into one shared component and removed six duplicate routes, but a
-  full merge is a restructure beyond this plan.
-- **I could not test that any form actually sends.** `EMAIL_USER` and
-  `EMAIL_PASS` are not set in this environment, so every route correctly returns
-  503 and shows the visitor an honest error. **I have verified the code path,
-  the validation, the escaping and the error handling — I have not seen an email
-  arrive.** Please send one test submission through each of the four forms once
-  the credentials are in Vercel.
-
----
-
-# 8. Out of scope, but you should know
-
-- **`data/jobs.json` and `/admin/jobs` are now redundant**, since vacancies are
-  markdown-driven. Still behind auth, still working. Your call.
-- **The site has two parallel architectures.** A modern one (`site.json`,
-  `SiteHeader`/`SiteFooter`, Next metadata) and a legacy one (`config.json`, the
-  `/domiciliary` and `/staffing` section trees). I removed the worst of the
-  legacy layer, but `/domiciliary` still overlaps `/domiciliary-care`, and
-  `/staffing` overlaps `/care-home-staffing`. Deciding which of each pair is the
-  real page would simplify the site considerably.
-- **CV retention has no policy.** `/api/apply` emails CVs as attachments, so they
-  live in an inbox indefinitely. CVs are personal data under UK GDPR. This is
-  flagged in the route's own comments and needs a retention decision and a line
-  in the privacy policy.
-- **`lib/analytics.js` is wired but has no GA4 id.** Nothing is being tracked.
-  That is a decision waiting to be made, not a bug.
-
----
-
-# 9. What I would do next
-
-1. **Get the email credentials into Vercel and test all four forms.** Nothing
-   else matters as much — right now every enquiry fails honestly rather than
-   arriving. This is the single highest-value action on the list.
-2. **Answer §1a.** The vetting and DBS claims are the site's biggest liability.
-3. **Publish something about cost.** Even a range with "from £X per hour,
-   depending on assessment" converts far better than silence, and families
-   compare on price. Only if you can stand behind the figure.
-4. **Add your first real vacancy.** Half the traffic will be carers; the machinery
-   is built and empty.
-5. **Decide the duplicate sections** (`/domiciliary` vs `/domiciliary-care`,
-   `/staffing` vs `/care-home-staffing`) and redirect the loser.
-6. **Then chase mobile LCP** — a smaller, better-compressed hero image is most of
-   the remaining gap.
-
-
----
-
-# 10. Deployed — verified on the live site
-
-Merged `main-kare-plus` into `main` (`ad0b433`) and pushed. Vercel deployed it.
-Checked against `https://www.kareplusrugby.co.uk` afterwards rather than assumed:
-
-**The two that mattered most**
-- `/pricing` → **308 → /faq**. The fabricated £49/£69/£99 plans, "Customs
-  Clearance" and "Cloud Service" are gone from the live site.
-- `/domiciliary/jobs` → **308 → /careers**. The invented London, Birmingham and
-  Manchester vacancies are gone.
-
-**Everything else checked live**
-- All 22 public routes return 200; `/sitemap.xml` and `/robots.txt` serve.
-- All 7 other retired URLs 301 correctly.
-- `/admin` returns 401.
-- `/images/WEBSITE-WORK-PLAN.md` returns **404** — the plan is no longer under
-  `public/`, so it is not published.
-- Privacy policy and terms carry the real entity, address, CQC provider ID and
-  company number, and no longer contain `[Your Business Address]`,
-  `[Your CQC Number]` or "Kare Plus Rugby Healthcare".
-- Phone, email, address and the CQC "not yet inspected" line are all intact on
-  the homepage.
-- Lighthouse on production: accessibility **100**, performance **94–99**.
-
-**Still outstanding and unchanged by the deploy:** everything in §1. The
-DBS/vetting claims are now live exactly as they were before — deploying did not
-verify them. The forms will keep returning an honest 503 until `EMAIL_USER` and
-`EMAIL_PASS` are set in the Vercel project.
+1. **Get `DATABASE_URL` and SMTP set**, then run the test-email route and one
+   real application end to end. Nothing else matters until this works.
+2. **Decide the mailbox retention rule** (§3.1). It is the largest data
+   protection gap and it is a process decision, not a code change.
+3. **Have the privacy notice reviewed** and answer the eight `[DECISION NEEDED]`
+   points in it.
+4. **Add object storage for uploads**, so a CV is not only in an inbox.
+5. **Add the real vacancies** — the machinery is built and empty.
+6. **Move the status page to per-user logins** with an access log before more
+   than two or three people need it.
+7. **Retire `/admin/jobs` and `data/jobs.json`** — vacancies are markdown-driven
+   now, so it is a competing second source.
