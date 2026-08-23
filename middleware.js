@@ -26,7 +26,31 @@ const READ_PROTECTED = [];
 // Public job listings read this; only writing is restricted.
 const WRITE_PROTECTED = ["/api/jobs"];
 
+/**
+ * The recruitment status page lists applicant names alongside safeguarding
+ * flags, so it needs its own password — separate from the site admin one, and
+ * separate again from CRON_SECRET. Fails closed when unset.
+ */
+const RECRUITMENT_PROTECTED = ["/careers/status"];
+
+function recruitmentAuthorised(req) {
+  const password = process.env.RECRUITMENT_ADMIN_PASSWORD;
+  if (!password) return false;
+
+  const header = req.headers.get("authorization") || "";
+  if (!header.startsWith("Basic ")) return false;
+  let decoded;
+  try {
+    decoded = atob(header.slice(6));
+  } catch {
+    return false;
+  }
+  const supplied = decoded.slice(decoded.indexOf(":") + 1);
+  return safeEqual(supplied, password);
+}
+
 function needsAuth(pathname, method) {
+  if (RECRUITMENT_PROTECTED.includes(pathname)) return true;
   if (pathname.startsWith("/admin")) return true;
   if (READ_PROTECTED.includes(pathname)) return method !== "POST";
   if (WRITE_PROTECTED.includes(pathname)) return method !== "GET";
@@ -85,6 +109,18 @@ export function middleware(req) {
     return NextResponse.next();
   }
 
+  // The recruitment status page has its own credential.
+  if (RECRUITMENT_PROTECTED.includes(pathname)) {
+    if (recruitmentAuthorised(req)) return NextResponse.next();
+    return new NextResponse("Authentication required.", {
+      status: 401,
+      headers: {
+        "WWW-Authenticate": 'Basic realm="Kare Plus Rugby recruitment", charset="UTF-8"',
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
   if (isAuthorised(req)) {
     return NextResponse.next();
   }
@@ -106,5 +142,6 @@ export const config = {
     "/admin/:path*",
     "/admin",
     "/api/jobs",
+    "/careers/status",
   ],
 };

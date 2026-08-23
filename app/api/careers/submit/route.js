@@ -9,6 +9,8 @@ import { unexplainedGaps, validateReferees } from "@lib/recruitment/validation";
 import { sendToBusiness, isMailConfigured, MAIL_TO, createTransport, mailFrom } from "@lib/mailer";
 import { rateLimit } from "@lib/rateLimit";
 import { notifyNewApplication } from "@lib/recruitment/notify";
+import { createRefereesForApplication } from "@lib/recruitment/referees";
+import { sendReferenceRequest } from "@lib/recruitment/referenceEmails";
 
 /**
  * Submitting a completed application. RECRUITMENT-SPEC.md Phase 3.
@@ -258,8 +260,37 @@ export async function POST(req) {
   }
 
   /* ---------------------------------------------------------------- *
-   * STEP 6 — reference emails are Phase 4.
+   * STEP 6 — the reference loop.
+   *
+   * The referee rows and their tokens are created regardless of whether email
+   * is working. If the send fails the reference is still requestable: the row
+   * exists, the token is live for 30 days, and the 5-day chaser will try
+   * again. Losing the referee records because SMTP was down would mean the
+   * application could never progress.
    * ---------------------------------------------------------------- */
+  try {
+    const created = await createRefereesForApplication(saved);
+    for (const ref of created) {
+      try {
+        await sendReferenceRequest({
+          referee: ref,
+          applicantName: a.fullName,
+          role: a.role,
+          token: ref.token,
+        });
+      } catch (err) {
+        // Metadata only - never log the token or the referee's address.
+        console.error(
+          `[apply-submit] reference request failed for ${saved.reference} (${ref.kind} ${ref.position}): ${err.message}`,
+        );
+        problems.push(`reference-email-${ref.kind}-${ref.position}`);
+      }
+    }
+  } catch (err) {
+    console.error(`[apply-submit] could not create referees for ${saved.reference}: ${err.message}`);
+    problems.push("referees");
+  }
+
 
   return NextResponse.json({
     ok: true,
