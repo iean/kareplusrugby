@@ -39,7 +39,14 @@ export const emptyReferees = () => [
   blankReferee("character"),
 ];
 
-const References = ({ referees = [], onChange, errors = {}, mostRecentCareEmployer }) => {
+const References = ({
+  referees = [],
+  onChange,
+  errors = {},
+  mostRecentCareEmployer,
+  cannotObtain = "",
+  onCannotObtainChange,
+}) => {
   const list = referees.length === 3 ? referees : emptyReferees();
   const update = (id, patch) =>
     onChange(list.map((r) => (r.id === id ? { ...r, ...patch } : r)));
@@ -188,6 +195,36 @@ const References = ({ referees = [], onChange, errors = {}, mostRecentCareEmploy
           <p className="text-base font-medium text-text">
             <span aria-hidden="true">⚠ </span>{errors.referenceCoverage}
           </p>
+        </div>
+      )}
+
+      {/*
+        The escape hatch. Added after reading this as someone returning to care
+        after time out: if their last care employer has closed or will not
+        respond, a hard block would end the application there. Saying why turns
+        it into something the recruiter resolves rather than a wall.
+      */}
+      {mostRecentCareEmployer && (
+        <div className="rounded-card border border-border bg-surface p-5">
+          <h3 className="text-base font-bold text-primary-950">
+            Cannot get a reference from {mostRecentCareEmployer}?
+          </h3>
+          <p className="mt-2 text-base leading-relaxed text-textMuted">
+            It happens — businesses close, managers move on, and some employers
+            simply do not reply. Tell us what the situation is and we will work
+            it out with you. It will not end your application.
+          </p>
+          <div className="mt-4">
+            <Field
+              id="cannotObtainCareReference"
+              as="textarea"
+              rows={3}
+              label={`Why you cannot get a reference from ${mostRecentCareEmployer}`}
+              hint="A sentence or two. For example: the home closed in 2024 and I have no contact for my old manager."
+              value={cannotObtain}
+              onChange={(e) => onCannotObtainChange?.(e.target.value)}
+            />
+          </div>
         </div>
       )}
     </div>

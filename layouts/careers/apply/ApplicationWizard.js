@@ -168,6 +168,7 @@ const ApplicationWizard = ({ vacancies = [], resumeToken = null }) => {
           referees: refs,
           applicantEmail: answers.email,
           jobs: answers.jobs || [],
+          cannotObtainCareReference: answers.cannotObtainCareReference,
         });
         Object.entries(cross.errors).forEach(([k, v]) => {
           // Map the generic keys onto the specific referee they concern.
@@ -447,6 +448,8 @@ const ApplicationWizard = ({ vacancies = [], resumeToken = null }) => {
             referees={answers.referees}
             onChange={(referees) => set({ referees })}
             errors={errors}
+            cannotObtain={answers.cannotObtainCareReference}
+            onCannotObtainChange={(v) => set({ cannotObtainCareReference: v })}
             mostRecentCareEmployer={
               [...(answers.jobs || [])]
                 .filter((j) => j.start)

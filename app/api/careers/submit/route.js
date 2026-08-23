@@ -113,6 +113,7 @@ export async function POST(req) {
     referees: a.referees || [],
     applicantEmail: a.email,
     jobs: a.jobs || [],
+    cannotObtainCareReference: a.cannotObtainCareReference,
   });
   Object.assign(errors, refCheck.errors);
 
