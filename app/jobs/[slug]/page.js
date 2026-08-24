@@ -7,6 +7,7 @@ import { getLiveJobs, getJobBySlug, buildJobPostingSchema } from "@lib/jobs";
 import { locationLabel } from "@lib/locations";
 import { PAY } from "@lib/pay";
 import { MapPin, Clock, Banknote, CalendarDays } from "lucide-react";
+import { og } from "@lib/seo";
 
 const BASE = (site.seo.base_url || "").replace(/\/$/, "");
 
@@ -36,12 +37,12 @@ export async function generateMetadata({ params }) {
       job.summary ||
       `${job.seoTitle || job.title} vacancy with Kare Plus Rugby in ${where}. Apply online.`,
     alternates: { canonical: `/jobs/${job.slug}` },
-    openGraph: {
+    openGraph: og({
       title: `${job.seoTitle || job.title} — ${where}`,
       description: job.summary,
       url: `/jobs/${job.slug}`,
       type: "article",
-    },
+    }),
   };
 }
 

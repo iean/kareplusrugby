@@ -1,3 +1,4 @@
+import { og } from "@lib/seo";
 import Image from "next/image";
 import PageHeader from "@components/ui/PageHeader";
 import Section, { Container } from "@components/ui/Section";
@@ -17,11 +18,11 @@ export const metadata = {
   title: "Supported Living",
   description:
     "Supported living from Kare Plus Rugby: flexible support for adults with learning disabilities, autism or mental health needs to live independently in their own home.",
-  openGraph: {
+  openGraph: og({
     title: "Supported Living | Kare Plus Rugby",
     description:
       "Support for adults to live independently in their own tenancy, at the level of help they choose.",
-  },
+  }),
   alternates: { canonical: "/supported-living" },
 };
 

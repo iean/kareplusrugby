@@ -1,6 +1,7 @@
 import config from "@config/config.json";
 import PostSingle from "@layouts/PostSingle";
 import { getSinglePage } from "@lib/contentParser";
+import { og } from "@lib/seo";
 const { blog_folder } = config.settings;
 
 // post single layout
@@ -33,12 +34,12 @@ export async function generateMetadata({ params }) {
     title: frontmatter.title,
     description,
     alternates: { canonical: `/blogs/${single}` },
-    openGraph: {
+    openGraph: og({
       title: frontmatter.title,
       description,
       type: "article",
       ...(frontmatter.image ? { images: [{ url: frontmatter.image }] } : {}),
-    },
+    }),
   };
 }
 

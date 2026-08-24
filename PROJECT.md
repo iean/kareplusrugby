@@ -254,6 +254,20 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-24 — Share cards had no image on ten pages
+
+**New:** `lib/seo.js`. **Changed:** the eleven page files that set `openGraph`.
+
+**Why:** found by rechecking the rendered HTML of every live page. Next.js does
+not deep-merge `openGraph` — a page setting any openGraph field replaces the
+whole inherited object, including `images`. The root layout declared a valid
+og:image and the file served 200, yet `/`, the three service pages, `/careers`
+and all five jobs pages rendered no og:image at all. Sharing any of them on
+WhatsApp, Facebook or LinkedIn gave a bare text link with no picture.
+
+Every page now builds openGraph through `og()`, which cannot drop the image.
+Verified: 14/14 pages carry og:image and their own titles are unaffected.
+
 ### 2026-08-24 — Staff pay published
 
 **New:** `lib/pay.js`, and a `business.pay` block in `config/site.json`.

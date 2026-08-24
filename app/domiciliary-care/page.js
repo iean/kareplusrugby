@@ -1,3 +1,4 @@
+import { og } from "@lib/seo";
 import Image from "next/image";
 import PageHeader from "@components/ui/PageHeader";
 import Section, { Container } from "@components/ui/Section";
@@ -18,11 +19,11 @@ export const metadata = {
   title: "Domiciliary Care at Home",
   description:
     "Domiciliary care from Kare Plus Rugby: personal care, medication support, meals, companionship and live-in care, delivered in your own home by trained, vetted carers.",
-  openGraph: {
+  openGraph: og({
     title: "Domiciliary Care at Home | Kare Plus Rugby",
     description:
       "Support in your own home — from a short daily visit to full live-in care.",
-  },
+  }),
   alternates: { canonical: "/domiciliary-care" },
 };
 

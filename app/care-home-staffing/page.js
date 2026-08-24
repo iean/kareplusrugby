@@ -1,3 +1,4 @@
+import { og } from "@lib/seo";
 import Image from "next/image";
 import PageHeader from "@components/ui/PageHeader";
 import Section, { Container } from "@components/ui/Section";
@@ -19,11 +20,11 @@ export const metadata = {
   title: "Care Home Staffing — Nurses & Carers",
   description:
     "Kare Plus Rugby supplies registered nurses, senior carers and care assistants to care homes. Planned rotas, sickness cover and last-minute shifts, from staff who are properly vetted.",
-  openGraph: {
+  openGraph: og({
     title: "Care Home Staffing | Kare Plus Rugby",
     description:
       "Registered nurses, senior carers and care assistants supplied to care homes.",
-  },
+  }),
   alternates: { canonical: "/care-home-staffing" },
 };
 

@@ -13,15 +13,16 @@ import {
   FaHeadset, FaChartLine,
 } from "react-icons/fa";
 import { BadgeCheck } from "lucide-react";
+import { og } from "@lib/seo";
 
 export const metadata = {
   title: "Careers — Carer & Nurse Jobs",
   description:
     "Join Kare Plus Rugby. We recruit care assistants, senior carers, support workers and registered nurses for home care and care home placements. Apply online.",
-  openGraph: {
+  openGraph: og({
     title: "Careers at Kare Plus Rugby",
     description: "Carer, support worker and nurse roles. Apply online in a few minutes.",
-  },
+  }),
   alternates: { canonical: "/careers" },
 };
 
