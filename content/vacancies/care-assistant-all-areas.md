@@ -1,6 +1,14 @@
 ---
 title: "Care Assistant — care homes and home care"
+# seoTitle is what goes into the Google for Jobs structured data. Google wants
+# the job title on its own; a decorated headline gets the posting rejected.
+seoTitle: "Care Assistant"
 draft: false
+datePosted: 2026-08-24
+# closing: YYYY-MM-DD  <- set this when the role has a real closing date.
+# Without it the posting expires automatically after 60 days rather than
+# advertising a job that may already be filled. See lib/jobs.js.
+locations: [coventry, rugby, leicester, northampton]
 location: "Coventry, Rugby, Leicester and Northampton"
 type: "Full time, part time or bank shifts"
 hours: "Days, nights and weekends — tell us what suits you"

@@ -1,5 +1,6 @@
 import site from "@config/site.json";
 import { getSinglePage } from "@lib/contentParser";
+import { getLiveJobs } from "@lib/jobs";
 
 /**
  * sitemap.xml
@@ -22,6 +23,7 @@ const ROUTES = [
   { path: "/care-home-staffing", priority: 0.9, changeFrequency: "monthly" },
   { path: "/supported-living", priority: 0.9, changeFrequency: "monthly" },
   { path: "/careers", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/careers/apply", priority: 0.7, changeFrequency: "monthly" },
   { path: "/referrals", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
@@ -50,10 +52,36 @@ export default function sitemap() {
     ? [...ROUTES, { path: "/blogs", priority: 0.5, changeFrequency: "weekly" }]
     : ROUTES;
 
-  return routes.map((r) => ({
+  /**
+   * Job pages get their own section, per SEO-SPEC.md Phase 1.
+   *
+   * getLiveJobs() filters on validThrough, so an EXPIRED posting drops out of
+   * the sitemap in the same pass that removes it from the site. Google's job
+   * policies require expired postings to be taken down; leaving one in the
+   * sitemap is a direct way to earn a manual action.
+   */
+  const jobs = getLiveJobs();
+  const jobEntries = jobs.length
+    ? [
+        {
+          url: `${base}/jobs`,
+          lastModified: jobs[0].datePosted,
+          changeFrequency: "daily",
+          priority: 0.9,
+        },
+        ...jobs.map((j) => ({
+          url: `${base}/jobs/${j.slug}`,
+          lastModified: j.datePosted,
+          changeFrequency: "weekly",
+          priority: 0.8,
+        })),
+      ]
+    : [];
+
+  return [...jobEntries, ...routes.map((r) => ({
     url: `${base}${r.path}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
-  }));
+  }))];
 }

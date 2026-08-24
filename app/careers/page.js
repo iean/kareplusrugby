@@ -153,6 +153,17 @@ const CareersPage = () => {
         {/* Driven by content/vacancies/*.md - see lib/vacancies.js. Adding a
             markdown file publishes a role; no code change, no admin login. */}
         <VacancyList vacancies={vacancies} />
+
+        {/* A plain link so a crawler with no JavaScript reaches the job pages,
+            which is what Google for Jobs requires. */}
+        <p className="mt-6 text-center text-base text-textMuted">
+          <a
+            href="/jobs"
+            className="font-semibold text-primary-700 underline underline-offset-4"
+          >
+            See all current vacancies and full job details
+          </a>
+        </p>
       </Container>
     </Section>
 
