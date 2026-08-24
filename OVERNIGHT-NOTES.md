@@ -573,3 +573,58 @@ and the page agree — which is what Google's job policies require.
 Client rates — what someone pays *you* for care — are unchanged and still not
 published. Those genuinely vary by package and no rate card has been confirmed.
 This entry is about staff pay only.
+
+---
+
+# 13. Full recheck against production — 2026-08-24
+
+Checked the live site, not the repo. Local `main` is in sync with `origin/main`.
+
+## Working
+
+| | |
+|---|---|
+| All 22 sitemap URLs | 200, with real content |
+| Area pages | all four 200, pay shown |
+| Vacancy + Google for Jobs | `JobPosting` complete, `baseSalary` £12.71/HOUR, `validThrough` 2026-10-23, unknown slug returns a real **404** not a soft one |
+| Pay | live on `/careers`, `/faq`, the vacancy and all four area pages |
+| Legal identity | Divergent Healthcare Limited + 14277673 on privacy, terms and about; zero occurrences of "Kare Plus Rugby Healthcare" |
+| Safeguarding | **re-verified against the councils today**: Warwickshire 01926 412080 / out-of-hours 01926 886922; Coventry 024 7683 3003 / out-of-hours 024 7683 2222. Both correct on the page. |
+| Security | `/admin` 401. `/api/messages`, `/api/get-started`, `/api/request-data` return **405** to GET — the data-returning handler was replaced by a stub, which is stronger than adding auth. |
+| Retired URLs | `/domiciliary/jobs`→`/careers`, `/pricing`→`/faq`, `/elements`→`/`, `/domiciliary-care-home`→`/domiciliary-care`, all 308 |
+| Placeholders | none across all 22 pages |
+| Unmerged work | `/careers/apply/start` and `/api/recruitment/*` correctly 404 — the recruitment system is not deployed |
+| Canonicals | all on `www.kareplusrugby.co.uk`; zero `heartandhaven` references |
+
+## Fixed during this recheck
+
+**Share cards had no image on ten pages** — `/`, the three service pages,
+`/careers` and all five jobs pages. Next.js does not deep-merge `openGraph`, so
+each page that set a title or url silently replaced the inherited `images`. The
+image existed and served 200, so this was invisible from the config; it only
+shows in rendered HTML. Fixed via `lib/seo.js`; now on all 22 pages.
+
+## ⚠️ STILL BROKEN — needs you
+
+**1. The contact forms do not send. This is the biggest problem on the site.**
+
+Tested live: `POST /api/messages` returns **503, "Our contact form is
+temporarily unavailable. Please call us instead."** No mail transport is
+configured in the Vercel environment. **Every enquiry form on the site is
+affected** — contact, get started, apply, enquiry, request-data.
+
+Nobody can reach you through the website right now. Phone, email and WhatsApp
+are on every form page so visitors are not stranded, but anyone who fills in a
+form and expects a reply will not get one.
+
+Fix: set either `SMTP_HOST` + `SMTP_USER` + `SMTP_PASS`, **or** `EMAIL_USER` +
+`EMAIL_PASS`, in the Vercel project's environment variables, then redeploy.
+Needs Vercel access.
+
+**2. Google Form 2 still requires a Google sign-in.** Tested today: returns
+**401** and shows a sign-in wall. Form 1 works (200). The apply page is written
+so Form 1 alone captures enough to contact and hire, so a blocked Form 2 does
+not lose the applicant — but the full application cannot be completed.
+
+Fix, in Google Forms → Settings → Responses: turn off "Restrict to users in
+<organisation>" and "Limit to 1 response".
