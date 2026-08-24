@@ -3,7 +3,6 @@ import Section, { Container } from "@components/ui/Section";
 import SectionHeading from "@components/ui/SectionHeading";
 import FeatureGrid from "@components/ui/FeatureGrid";
 import Card from "@components/ui/Card";
-import ApplicationForm from "@layouts/forms/ApplicationForm";
 import CtaBand from "@layouts/home/CtaBand";
 import site from "@config/site.json";
 import VacancyList from "@layouts/careers/VacancyList";
@@ -51,7 +50,7 @@ const CareersPage = () => {
       title="Care work, done properly"
       intro="We are looking for carers, support workers and nurses who want to do this job well — and to be supported while they do it."
       breadcrumbs={[{ label: "Careers" }]}
-      primary={{ label: "Apply now", href: "#apply" }}
+      primary={{ label: "Apply now", href: "/careers/apply" }}
       secondary={{ label: `Call ${site.business.phone}`, href: site.business.phone_href }}
     />
 
@@ -157,17 +156,44 @@ const CareersPage = () => {
       </Container>
     </Section>
 
-    {/* Application form */}
+    {/*
+      Applying now happens at /careers/apply, which walks people through the two
+      Google Forms already in use.
+
+      The on-page ApplicationForm was removed from here rather than left
+      alongside it. It emails the application, and no SMTP transport is
+      configured, so every submission returned a 503 — a form that visibly fails
+      next to a route that works loses applicants who try the broken one first.
+      The component is still in the codebase for when the built-in system
+      (branch main-kare-plus) has a database and mail credentials.
+    */}
     <Section tone="white" size="lg" id="apply">
       <Container width="narrow">
-        <SectionHeading
-          eyebrow="Apply"
-          title="Apply to join us"
-          subtitle="A few minutes is all it takes. We read every application."
-          align="left"
-          className="mb-8"
-        />
-        <ApplicationForm id="apply-form" />
+        <div className="rounded-card border border-primary-200 bg-primary-50 p-7 text-center">
+          <h2 className="text-2xl font-bold text-primary-950">
+            Ready to apply?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-text">
+            Two short forms, about ten minutes, and you can do it on your phone.
+            You do not need care experience — we train people new to the job.
+          </p>
+          <a
+            href="/careers/apply"
+            className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-btn bg-primary-700 px-8 py-4 text-lg font-semibold text-white transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+          >
+            Start your application
+          </a>
+          <p className="mt-4 text-base text-textMuted">
+            Would rather talk first? Call{" "}
+            <a
+              href={site.business.phone_href}
+              className="font-semibold text-primary-700 underline underline-offset-4"
+            >
+              {site.business.phone}
+            </a>
+            .
+          </p>
+        </div>
       </Container>
     </Section>
 

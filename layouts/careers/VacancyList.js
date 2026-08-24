@@ -33,7 +33,7 @@ const VacancyList = ({ vacancies }) => {
             your area.
           </p>
           <a
-            href="#apply"
+            href="/careers/apply"
             className="mt-5 inline-flex min-h-[44px] items-center justify-center rounded-btn bg-primary-700 px-7 py-3.5 font-semibold text-white transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
           >
             Send a speculative application
@@ -82,7 +82,7 @@ const VacancyList = ({ vacancies }) => {
             )}
 
             <a
-              href="#apply"
+              href="/careers/apply"
               className="mt-6 inline-flex min-h-[44px] items-center justify-center self-start rounded-btn bg-primary-700 px-6 py-3 font-semibold text-white transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
             >
               Apply for this role

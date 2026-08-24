@@ -1,0 +1,27 @@
+{
+  "_comment": "The Google Forms an applicant completes, in order. This is an interim route while the built-in application system waits on a database and SMTP credentials. Keeping the links here rather than hardcoded in the page means Alif can change a form URL without touching code. Verified against the live forms on 24 August 2026 - see `verified` on each.",
+  "replyTo": "kp.rugby@kareplus.co.uk",
+  "forms": [
+    {
+      "id": "screening",
+      "step": 1,
+      "title": "Pre-employment and screening questions",
+      "url": "https://forms.gle/T3yMW7oLg8e2ZNcZ9",
+      "minutes": 5,
+      "summary": "Your name, where you live, how long you have worked in care, whether you drive, and your DBS status.",
+      "requiresGoogleAccount": false,
+      "verified": "2026-08-24: opens publicly, no sign-in required. Title confirmed as 'Pre-employment/ screening questions', 10 questions."
+    },
+    {
+      "id": "second",
+      "step": 2,
+      "title": "Application details",
+      "url": "https://forms.gle/dP64V76qVzG7C2NcA",
+      "minutes": null,
+      "summary": "The second part of your application.",
+      "requiresGoogleAccount": true,
+      "verified": "2026-08-24: redirects to a Google sign-in page. An applicant WITHOUT a Google account cannot open this form at all. TODO (Alif): open this form's settings and turn off whatever forces sign-in - usually 'Restrict to users in your organisation', 'Limit to 1 response', or 'Collect email addresses: Verified'. Set it to 'Responder input' instead, which is what form 1 uses. Once fixed, set requiresGoogleAccount to false and this page stops warning about it.",
+      "_titleNote": "TODO (Alif): 'Application details' is a placeholder. I could not read this form's real title because it is behind sign-in, and I will not invent one. Tell me what it is called and what it asks for, and I will correct it."
+    }
+  ]
+}
