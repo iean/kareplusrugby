@@ -193,7 +193,7 @@ const AreaJobsPage = ({ area }) => {
               {PAY.upliftLabel} holiday pay — {PAY.totalLabel} for every hour you work
             </li>
             <li>Travel time between calls is paid</li>
-            <li>A paid induction and the Care Certificate if you are new to care</li>
+            <li>A full induction and the Care Certificate if you are new to care</li>
             <li>Mandatory training kept up to date, and online training in your own time</li>
             <li>Someone on call out of hours, so you are never stuck on your own</li>
             <li>Support towards NVQ Level 2 and Level 3 if you want it</li>

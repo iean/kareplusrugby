@@ -29,7 +29,7 @@ people, we will train you in the rest.
 
 - **£12.71 an hour plus 12.07% holiday pay** — £14.24 per hour worked
 - **Travel time between calls is paid**
-- A paid induction and the **Care Certificate** if you are new to care
+- A full induction and the **Care Certificate** if you are new to care
 - Mandatory training kept up to date — safeguarding, moving and handling,
   medication, infection control, fire and first aid
 - Online training you can do in your own time through our training platform

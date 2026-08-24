@@ -29,7 +29,7 @@ export const metadata = {
 const BENEFITS = [
   { icon: FaCalendarAlt, title: "Shifts that fit your life", body: "Tell us when you can work. Full time, part time, nights, weekends or bank shifts around study or family." },
   { icon: FaCoins, title: "Pay you can check", body: `${PAY.basicLabel} an hour, which is the National Living Wage, plus ${PAY.upliftLabel} rolled-up holiday pay paid with every wage — ${PAY.totalLabel} for every hour you actually work. Travel time between calls is paid, and the holiday element is a separate line on your payslip so you can see it.` },
-  { icon: FaGraduationCap, title: "Training that counts", body: "A paid induction, the Care Certificate, and all the mandatory training the role requires — kept up to date. If you want to go further we can support you towards an NVQ Level 2 or Level 3." },
+  { icon: FaGraduationCap, title: "Training that counts", body: "A full induction, the Care Certificate, and all the mandatory training the role requires — kept up to date. If you want to go further we can support you towards an NVQ Level 2 or Level 3." },
   { icon: FaUserFriends, title: "A real person to call", body: "You get a named coordinator who knows you — not a different voice on the phone every time." },
   { icon: FaRoute, title: "Work near home", body: "We match you to work close to where you live wherever we can, so you spend less of your day travelling." },
   { icon: FaHeadset, title: "Out-of-hours support", body: "Someone is on call whenever you are working, so you are never on your own with a difficult situation." },
@@ -40,7 +40,7 @@ const STEPS = [
   { n: 1, title: "Apply", body: "Fill in the form below. It takes a few minutes and a CV is optional." },
   { n: 2, title: "A chat", body: "We will call you to talk about what you are looking for and answer your questions." },
   { n: 3, title: "Interview and checks", body: "A face-to-face interview, then enhanced DBS, references and right-to-work checks." },
-  { n: 4, title: "Induction and first shift", body: "Paid induction training, then shadow shifts before you work on your own." },
+  { n: 4, title: "Induction and first shift", body: "Induction training, then shadow shifts before you work on your own." },
 ];
 
 const CareersPage = () => {

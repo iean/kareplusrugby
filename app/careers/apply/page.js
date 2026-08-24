@@ -195,7 +195,7 @@ const ApplyPage = () => {
               "We read your forms and give you a call to talk about what you are looking for.",
               "If it looks like a fit, we invite you in to meet us.",
               "Then the checks — an enhanced DBS, references and right to work — before you start.",
-              "A paid induction and the Care Certificate, then shadow shifts before you work on your own.",
+              "A full induction and the Care Certificate, then shadow shifts before you work on your own.",
             ].map((t, i) => (
               <li key={t} className="flex gap-4">
                 <span
