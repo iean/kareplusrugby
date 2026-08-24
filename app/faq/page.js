@@ -83,7 +83,7 @@ const GROUPS = [
       },
       {
         q: "What training will I get?",
-        a: "A paid induction, then the Care Certificate — every one of our carers completes it — along with all the mandatory training required to work in care, kept up to date. You will shadow experienced carers before working independently. Beyond that, we support carers who want to work towards an NVQ Level 2 or Level 3, and there are routes on to senior roles for people who want them.",
+        a: "A full induction, then the Care Certificate — every one of our carers completes it — along with all the mandatory training required to work in care, kept up to date. You will shadow experienced carers before working independently. Beyond that, we support carers who want to work towards an NVQ Level 2 or Level 3, and there are routes on to senior roles for people who want them.",
       },
       {
         q: "What qualifications will I get?",
