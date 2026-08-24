@@ -46,11 +46,12 @@ function rebuildApplicationForm() {
   // setCollectEmail(true) would force a Google sign-in, which is the exact
   // problem we are solving. Email is asked as a normal validated question
   // instead, so anyone can apply without a Google account.
-  form.setCollectEmail(false);
-  form.setLimitOneResponsePerUser(false);
-  form.setAllowResponseEdits(false);
-  form.setProgressBar(true);
-  form.setShowLinkToRespondAgain(false);
+  safeSet('collectEmail', function () { form.setCollectEmail(false); });
+  safeSet('limitOneResponse', function () { form.setLimitOneResponsePerUser(false); });
+  safeSet('allowResponseEdits', function () { form.setAllowResponseEdits(false); });
+  safeSet('progressBar', function () { form.setProgressBar(true); });
+  safeSet('respondAgainLink', function () { form.setShowLinkToRespondAgain(false); });
+  safeSet('requireLogin', function () { form.setRequireLogin(false); });
 
   form.setTitle('Apply to join Kare Plus Rugby');
   form.setDescription(
@@ -243,4 +244,13 @@ function rebuildApplicationForm() {
   );
 
   Logger.log('Done. Rebuilt "%s" with %s items.', form.getTitle(), form.getItems().length);
+}
+
+/**
+ * Apply a form setting, tolerating the ones a given account or Workspace
+ * configuration will not accept. Without this, one unsupported setting would
+ * abort the whole rebuild and leave the form half-built.
+ */
+function safeSet(label, fn) {
+  try { fn(); } catch (e) { Logger.log('Skipped setting "%s": %s', label, e.message); }
 }
