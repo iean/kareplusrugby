@@ -37,7 +37,18 @@ const LOCAL_AUTHORITIES = [
     source: "https://www.coventry.gov.uk/safeguarding-adults-1",
   },
   {
-    area: "Leicestershire",
+    // Leicester CITY and Leicestershire COUNTY are separate authorities with
+    // separate teams. Sending someone to the wrong one costs time a
+    // safeguarding report cannot spare, so they are listed separately and
+    // labelled, never merged.
+    area: "Leicester (city)",
+    phone: "0116 454 1004",
+    outOfHours: null,
+    hoursNote: "24 hours",
+    source: "https://www.leicester.gov.uk/about-council/report-concerns-about-child-or-adult",
+  },
+  {
+    area: "Leicestershire (county)",
     phone: "0116 305 0004",
     outOfHours: "0116 305 0888",
     source: "https://www.leicestershire.gov.uk/leisure-and-community/community-safety/report-abuse-of-an-adult",
@@ -176,8 +187,14 @@ const SafeguardingPage = () => {
         Report to the council for the area where the person lives. Office-hours
         number first, out-of-hours emergency duty team second where the council
         runs a separate one. Every number was checked against the council&apos;s
-        own website on 22 August 2026 — the area name links to it, so you can
+        own website on 24 August 2026 — the area name links to it, so you can
         always confirm before you call.
+      </p>
+      <p>
+        <strong>These numbers can change.</strong> If anything here does not
+        connect, please check the council&apos;s own website rather than giving
+        up — the area name in the table links straight to it. Leicester city and
+        Leicestershire county are separate authorities with separate teams.
       </p>
       <table className="not-prose w-full border-collapse text-base">
         <thead>
@@ -210,7 +227,7 @@ const SafeguardingPage = () => {
                 {la.outOfHours ? (
                   <a href={`tel:${la.outOfHours.replace(/\s/g, "")}`}>{la.outOfHours}</a>
                 ) : (
-                  "Same number"
+                  la.hoursNote || "Same number"
                 )}
               </td>
             </tr>
