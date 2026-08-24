@@ -254,6 +254,27 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-24 — SEO Phase 3: four candidate-facing area pages
+
+**New:** `lib/areas.js`, `layouts/careers/AreaJobsPage.js`, and four static
+routes under `app/jobs/` — `care-jobs-rugby`, `care-jobs-coventry`,
+`care-jobs-leicester`, `care-jobs-northampton`.
+
+**Changed:** `app/sitemap.js` (area pages added), `app/jobs/page.js` (plain-link
+"Care jobs by area" nav so crawlers reach them without JavaScript).
+
+**Why:** SEO-SPEC.md Phase 3. Four pages rather than the twelve role x area
+combinations the spec's examples imply, because the eight role-specific ones
+could only be written by swapping a job title into otherwise identical text —
+the doorway pages the same spec forbids. Skipped combinations and what would be
+needed to justify them are recorded in OVERNIGHT-NOTES.md §11.
+
+Verified before deploy: pairwise text similarity between the four pages
+25.7-28.4% (doorway territory is >80%), 4/4 unique titles and descriptions,
+BreadcrumbList on each, static segments take precedence over `/jobs/[slug]` so
+the vacancy route and its JobPosting are untouched and an unknown slug still
+returns a real 404.
+
 ### 2026-08-07 — P0 security and contact-form fixes
 
 **Added [middleware.js](middleware.js)** — HTTP Basic Auth (`ADMIN_USER` / `ADMIN_PASSWORD`), fails closed if unset.

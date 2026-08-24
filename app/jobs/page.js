@@ -4,6 +4,7 @@ import Section, { Container } from "@components/ui/Section";
 import site from "@config/site.json";
 import { getLiveJobs } from "@lib/jobs";
 import { LOCATIONS, locationLabel } from "@lib/locations";
+import { AREAS } from "@lib/areas";
 import { MapPin, Clock, ArrowRight } from "lucide-react";
 
 export const metadata = {
@@ -145,6 +146,28 @@ const JobsIndex = ({ searchParams }) => {
               ))}
             </ul>
           )}
+          {/* Plain links to the area pages, so a crawler reaches them without
+              running JavaScript. */}
+          <nav aria-label="Care jobs by area" className="mt-12 border-t border-border pt-8">
+            <h2 className="text-xl font-bold text-primary-950">
+              Care jobs by area
+            </h2>
+            <p className="mt-2 text-base leading-relaxed text-textMuted">
+              What the work is actually like in each of the places we recruit.
+            </p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {AREAS.map((a) => (
+                <li key={a.slug}>
+                  <Link
+                    href={`/jobs/${a.slug}`}
+                    className="flex min-h-[44px] items-center rounded-card border border-border bg-white px-5 py-3 text-base font-semibold text-primary-800 shadow-card transition hover:border-primary-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+                  >
+                    Care jobs in {a.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </Container>
       </Section>
     </>

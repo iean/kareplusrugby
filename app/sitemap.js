@@ -1,6 +1,7 @@
 import site from "@config/site.json";
 import { getSinglePage } from "@lib/contentParser";
 import { getLiveJobs } from "@lib/jobs";
+import { AREAS } from "@lib/areas";
 
 /**
  * sitemap.xml
@@ -60,6 +61,14 @@ export default function sitemap() {
    * policies require expired postings to be taken down; leaving one in the
    * sitemap is a direct way to earn a manual action.
    */
+  // Area pages are permanent: they rank when there is nothing live to show.
+  const areaEntries = AREAS.map((a) => ({
+    url: `${base}/jobs/${a.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
   const jobs = getLiveJobs();
   const jobEntries = jobs.length
     ? [
@@ -78,7 +87,7 @@ export default function sitemap() {
       ]
     : [];
 
-  return [...jobEntries, ...routes.map((r) => ({
+  return [...jobEntries, ...areaEntries, ...routes.map((r) => ({
     url: `${base}${r.path}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,

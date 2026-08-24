@@ -434,3 +434,75 @@ Checked against `https://www.kareplusrugby.co.uk` afterwards rather than assumed
 DBS/vetting claims are now live exactly as they were before — deploying did not
 verify them. The forms will keep returning an honest 503 until `EMAIL_USER` and
 `EMAIL_PASS` are set in the Vercel project.
+
+---
+
+# 11. SEO Phase 3 — area pages (2026-08-24)
+
+## What I built — four pages, not twelve
+
+| URL | Title | Live vacancies shown |
+|---|---|---|
+| `/jobs/care-jobs-rugby` | Care Jobs in Rugby | filtered to Rugby |
+| `/jobs/care-jobs-coventry` | Care Jobs in Coventry | filtered to Coventry |
+| `/jobs/care-jobs-leicester` | Care Jobs in Leicester and Leicestershire | filtered to Leicester |
+| `/jobs/care-jobs-northampton` | Care Jobs in Northampton and Northamptonshire | filtered to Northampton |
+
+Content lives in [lib/areas.js](lib/areas.js); the shared shell is
+[layouts/careers/AreaJobsPage.js](layouts/careers/AreaJobsPage.js).
+
+## What I skipped, and why
+
+The spec's examples imply one page per **role × area** — care assistant,
+healthcare assistant, support worker across four areas, so twelve pages. It also
+says: *"Do not generate twelve near-identical pages by swapping the town name.
+Doorway pages are a Google violation and they will not rank."* Those two pull in
+opposite directions, so I chose the second.
+
+**Skipped: all eight role-specific combinations.** No
+`/jobs/care-assistant-jobs-coventry`, `/jobs/healthcare-assistant-jobs-coventry`,
+`/jobs/support-worker-jobs-coventry`, and the same for the other three areas.
+
+The reason is that I can write honestly distinct content for an **area** — where
+the office is, which council covers safeguarding, how far apart the calls are,
+whether you need to drive — because those facts genuinely differ. I cannot write
+honestly distinct content for "healthcare assistant in Coventry" versus "care
+assistant in Coventry". The roles overlap almost entirely, and the truthful page
+for one is the page for the other with the job title swapped. That is the doorway
+page the spec forbids.
+
+**If you want those pages, they need facts I do not have** — what actually
+differs between the roles in practice: different pay bands, different clients,
+different shift patterns, whether a healthcare assistant role requires clinical
+tasks a care assistant one does not. Give me that and the pages become
+justifiable. Until then, the four area pages carry the same keywords in their
+body text without the duplication risk.
+
+## Phase 6 passes on these pages
+
+| Pass | Result |
+|---|---|
+| 1 — build, lint, contrast | compiled clean, `✔ No ESLint warnings or errors`, all contrast checks pass |
+| 2 — structured data | `BreadcrumbList` on all four, parses; 4/4 unique titles, 4/4 unique descriptions, exactly one `<h1>` each, all indexable, all canonical |
+| 3 — crawlability | all four in `/sitemap.xml`; all four reachable from `/jobs` by plain `<a href>`, no JavaScript needed |
+| 4 — **doorway check** | pairwise text similarity **25.7%–28.4%**. A doorway page pair runs >80%. Pass. |
+| 5 — no route collision | static segments win over `/jobs/[slug]`: `/jobs/care-jobs-rugby` 200, `/jobs/care-assistant-all-areas` 200 with its `JobPosting` intact, `/jobs/does-not-exist` **404** (not a soft 404) |
+| 6 — honesty | no pay figures, no market claims, no client/home counts, no "guaranteed", no "outstanding". Every fact traces to `config/site.json`, `/safeguarding`, or what you confirmed. |
+| 7 — a11y / mobile | headings in order, both `<nav>` landmarks labelled, all 5 icons `aria-hidden`, every tap target ≥44px (buttons are 52px) |
+
+## Judgement calls in the content
+
+- **Rugby** leads on the office being walk-in-able — it is the one thing no other
+  area page can say.
+- **Coventry** leads on it being a separate unitary authority from Warwickshire,
+  which catches out carers who have worked in the county.
+- **Leicester** leads on the city/county split being two separate councils with
+  separate safeguarding numbers.
+- **Northampton** leads on distance being real, and on Northamptonshire being two
+  unitary councils since the county council was abolished.
+- The "what you get" block is deliberately **short** and links to `/careers`
+  rather than repeating the full training list four times. Four copies of a long
+  identical section would drown the local content and push the similarity score
+  up — the opposite of the point.
+- **No pay anywhere.** Still unconfirmed. Still the single biggest thing you
+  could give me for Google for Jobs.
