@@ -7,8 +7,9 @@ import CtaBand from "@layouts/home/CtaBand";
 import site from "@config/site.json";
 import VacancyList from "@layouts/careers/VacancyList";
 import { getVacancies } from "@lib/vacancies";
+import { PAY } from "@lib/pay";
 import {
-  FaCalendarAlt, FaGraduationCap, FaUserFriends, FaRoute,
+  FaCalendarAlt, FaCoins, FaGraduationCap, FaUserFriends, FaRoute,
   FaHeadset, FaChartLine,
 } from "react-icons/fa";
 import { BadgeCheck } from "lucide-react";
@@ -26,6 +27,7 @@ export const metadata = {
 
 const BENEFITS = [
   { icon: FaCalendarAlt, title: "Shifts that fit your life", body: "Tell us when you can work. Full time, part time, nights, weekends or bank shifts around study or family." },
+  { icon: FaCoins, title: "Pay you can check", body: `${PAY.basicLabel} an hour, which is the National Living Wage, plus ${PAY.upliftLabel} rolled-up holiday pay paid with every wage — ${PAY.totalLabel} for every hour you actually work. Travel time between calls is paid, and the holiday element is a separate line on your payslip so you can see it.` },
   { icon: FaGraduationCap, title: "Training that counts", body: "A paid induction, the Care Certificate, and all the mandatory training the role requires — kept up to date. If you want to go further we can support you towards an NVQ Level 2 or Level 3." },
   { icon: FaUserFriends, title: "A real person to call", body: "You get a named coordinator who knows you — not a different voice on the phone every time." },
   { icon: FaRoute, title: "Work near home", body: "We match you to work close to where you live wherever we can, so you spend less of your day travelling." },

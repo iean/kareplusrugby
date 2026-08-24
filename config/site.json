@@ -133,7 +133,17 @@
       "further_qualifications": "Staff are offered the opportunity to work towards NVQ Level 2 and Level 3. An opportunity, not a guarantee - do not word it as one.",
       "_still_unverified": "NOT confirmed and still must not be claimed: any specific insurance type or cover level, any training provider name, any completion statistic, any timescale for achieving a qualification."
     },
-    "_legal_name_note": "CONFIRMED BY ALIF 2026-08-24: the legal entity is Divergent Healthcare Limited (company 14277673), trading as Kare Plus Rugby. WEBSITE-CONTENT-UPDATE.md Part 1 says 'Legal/trading name: Kare Plus Rugby', which is the TRADING name only. Legal documents - the privacy policy and the terms - must name the registered company, and did not until 2026-08-22. Do not 'simplify' this back to Kare Plus Rugby."
+    "_legal_name_note": "CONFIRMED BY ALIF 2026-08-24: the legal entity is Divergent Healthcare Limited (company 14277673), trading as Kare Plus Rugby. WEBSITE-CONTENT-UPDATE.md Part 1 says 'Legal/trading name: Kare Plus Rugby', which is the TRADING name only. Legal documents - the privacy policy and the terms - must name the registered company, and did not until 2026-08-22. Do not 'simplify' this back to Kare Plus Rugby.",
+    "pay": {
+      "_comment": "CONFIRMED BY THE BUSINESS OWNER (Alif) on 2026-08-24, with the four legal conditions for rolled-up holiday pay each confirmed by him: (1) all carers are on irregular-hours/zero-hours contracts, (2) travel time between calls is paid, (3) the holiday element is itemised as its own line on the payslip, (4) basic is at or above the National Minimum Wage. Rolled-up holiday pay is lawful ONLY for irregular-hours and part-year workers, for leave years beginning on or after 1 April 2024. If the business ever puts a carer on fixed regular hours, rolled-up holiday pay becomes UNLAWFUL for that person and this block must change.",
+      "basic_hourly": 12.71,
+      "holiday_uplift_percent": 12.07,
+      "total_hourly": 14.24,
+      "currency": "GBP",
+      "effective_from": "2026-04-01",
+      "_nmw_warning": "12.71 is EXACTLY the National Living Wage for age 21+ from 1 April 2026. There is no headroom. The NLW rises every April, so on 1 April 2027 this figure becomes below the legal minimum unless it is raised. REVIEW BY 2027-04-01. Change it here only - every page reads this one block.",
+      "_holiday_uplift_note": "12.07% is the statutory accrual rate: 5.6 weeks statutory leave divided by the 46.4 working weeks in a year. Do not round it to 12%."
+    }
   },
   "nav": {
     "primary": [

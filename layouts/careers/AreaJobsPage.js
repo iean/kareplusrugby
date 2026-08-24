@@ -4,6 +4,7 @@ import Section, { Container } from "@components/ui/Section";
 import site from "@config/site.json";
 import { AREAS } from "@lib/areas";
 import { getLiveJobs } from "@lib/jobs";
+import { PAY } from "@lib/pay";
 import { MapPin, Clock, ArrowRight, Car, ShieldAlert } from "lucide-react";
 
 /**
@@ -187,6 +188,11 @@ const AreaJobsPage = ({ area }) => {
             What you get, wherever you work with us
           </h2>
           <ul className="mt-4 list-disc space-y-2 pl-5 text-base leading-relaxed text-textMuted">
+            <li>
+              <strong className="font-semibold text-text">{PAY.basicLabel} an hour</strong>, plus{" "}
+              {PAY.upliftLabel} holiday pay — {PAY.totalLabel} for every hour you work
+            </li>
+            <li>Travel time between calls is paid</li>
             <li>A paid induction and the Care Certificate if you are new to care</li>
             <li>Mandatory training kept up to date, and online training in your own time</li>
             <li>Someone on call out of hours, so you are never stuck on your own</li>

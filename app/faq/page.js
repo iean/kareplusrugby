@@ -3,6 +3,7 @@ import Section, { Container } from "@components/ui/Section";
 import CtaBand from "@layouts/home/CtaBand";
 import Accordion from "@components/ui/Accordion";
 import site from "@config/site.json";
+import { PAY } from "@lib/pay";
 
 export const metadata = {
   title: "Frequently Asked Questions",
@@ -15,9 +16,13 @@ export const metadata = {
  * FAQ content.
  *
  * Answers describe how the service works in general terms. Where a specific
- * figure has not been verified - hourly rates, pay bands, notice periods - the
- * answer says how the number is arrived at and points the reader at us, rather
- * than inventing one. CQC details come from config/site.json so the registered
+ * figure has not been verified - client rates, notice periods - the answer says
+ * how the number is arrived at and points the reader at us, rather than
+ * inventing one.
+ *
+ * STAFF PAY IS THE EXCEPTION and is published in full, from config/site.json
+ * via lib/pay.js. Client rates are still not published: those genuinely do vary
+ * by package, and no rate card has been confirmed. CQC details come from config/site.json so the registered
  * entity and provider ID cannot drift out of sync with the register.
  */
 const GROUPS = [
@@ -91,7 +96,7 @@ const GROUPS = [
       },
       {
         q: "What do you pay?",
-        a: "Pay depends on the role, your experience and whether the shifts are weekdays, weekends or nights. Tell us which role you are interested in and we will give you the current rate for it, along with holiday, pension and mileage, before you decide whether to apply.",
+        a: `${PAY.basicLabel} an hour, which is the National Living Wage, plus ${PAY.upliftLabel} holiday pay on top — ${PAY.totalLabel} for every hour you actually work. Because your hours vary week to week we pay the holiday element with every wage rather than making you wait until you book time off, and it shows as its own line on your payslip. Travel time between calls is paid, you get mileage, and you are enrolled in the workplace pension. Some nursing and specialist shifts carry a different rate and we will tell you the figure before you decide.`,
       },
     ],
   },

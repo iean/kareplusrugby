@@ -5,6 +5,7 @@ import Section, { Container } from "@components/ui/Section";
 import site from "@config/site.json";
 import { getLiveJobs, getJobBySlug, buildJobPostingSchema } from "@lib/jobs";
 import { locationLabel } from "@lib/locations";
+import { PAY } from "@lib/pay";
 import { MapPin, Clock, Banknote, CalendarDays } from "lucide-react";
 
 const BASE = (site.seo.base_url || "").replace(/\/$/, "");
@@ -127,9 +128,17 @@ const JobPage = ({ params }) => {
               <Banknote aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-primary-600" />
               <div>
                 <dt className="text-base font-semibold text-text">Pay</dt>
-                {/* No figure has been confirmed, so none is shown or marked up. */}
+                {/* Both figures, always. The markup carries the BASIC rate --
+                    the uplift is holiday pay, not base salary. */}
                 <dd className="text-base text-textMuted">
-                  {job.pay || "Discussed on application"}
+                  {job.pay || (
+                    <>
+                      <span className="font-semibold text-text">{PAY.basicLabel}</span> an hour
+                      <span className="block">
+                        plus {PAY.upliftLabel} holiday pay — {PAY.totalLabel} per hour worked
+                      </span>
+                    </>
+                  )}
                 </dd>
               </div>
             </div>

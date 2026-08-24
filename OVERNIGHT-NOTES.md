@@ -506,3 +506,70 @@ body text without the duplication risk.
   up — the opposite of the point.
 - **No pay anywhere.** Still unconfirmed. Still the single biggest thing you
   could give me for Google for Jobs.
+
+---
+
+# 12. Pay is now published (2026-08-24)
+
+## What went live
+
+**£12.71 an hour, plus 12.07% holiday pay — £14.24 for every hour worked.**
+
+Shown on `/careers`, the vacancy page, all four area pages and the FAQ. One
+source: `business.pay` in [config/site.json](config/site.json), read through
+[lib/pay.js](lib/pay.js). **Change the numbers there and nowhere else.**
+
+## Why the split is always shown, and never just "£14.24 an hour"
+
+£14.24 is not an hourly wage. £12.71 is the wage; £1.53 is holiday pay — money
+you would otherwise hand over when the carer books leave, brought forward and
+paid with each wage instead. Advertising the combined figure as "the hourly
+rate" overstates what a carer earns for the hour, and it is the practice the
+care sector gets criticised for. Every page shows both numbers and says which
+is which. It also reads better: it looks like an employer with nothing to hide.
+
+## What I checked before publishing
+
+| Point | Finding |
+|---|---|
+| Is £12.71 really the minimum wage? | Yes — National Living Wage for 21+, from 1 April 2026 |
+| Is rolled-up holiday pay legal? | Yes, **since 1 April 2024**, for irregular-hours and part-year workers only. It was unlawful 2006–2024, so older guidance online still says you cannot do it. |
+| Is 12.07% the right figure? | Yes — 5.6 weeks statutory leave ÷ 46.4 working weeks. Not 12%. |
+| Must basic independently meet NMW? | Yes. The uplift is paid *in addition to* normal pay; it does not count towards NMW. |
+| Must it be itemised on the payslip? | Yes — you confirmed it is. |
+
+You confirmed all four conditions on 2026-08-24: everyone is on irregular
+hours, travel between calls is paid, the holiday element is its own payslip
+line, and basic meets NMW.
+
+## ⚠️ Two things you need to know
+
+**1. REVIEW BY 1 APRIL 2027.** £12.71 is *exactly* the National Living Wage —
+not a penny above it. The NLW rises every April. On 1 April 2027 this figure
+becomes **below the legal minimum** unless you raise it, and the website would
+then be advertising an unlawful rate. This is a diary entry, not a maybe. The
+warning is also recorded in `config/site.json` next to the number.
+
+**2. Zero headroom means any unpaid working time is an instant breach.** With
+basic sitting on the floor, if any working time goes unpaid the effective rate
+drops below NMW and HMRC can act — they name and shame care providers. The
+usual culprit in home care is travel between calls, which legally counts as
+working time. You have confirmed you pay it, so you are compliant; the point is
+that you have no margin for error, so if anything changes about how time is
+recorded, check it against NMW before it goes live.
+
+The build now refuses to compile if `basic + uplift` stops equalling the
+published total, so the two figures cannot silently drift apart.
+
+## In the Google for Jobs markup
+
+`baseSalary` carries **£12.71**, not £14.24. Base salary means base; the uplift
+is a leave entitlement, not reward for the hour. Marking up the higher number
+would overstate the rate to Google. The page explains the split, so the markup
+and the page agree — which is what Google's job policies require.
+
+## Not published
+
+Client rates — what someone pays *you* for care — are unchanged and still not
+published. Those genuinely vary by package and no rate card has been confirmed.
+This entry is about staff pay only.

@@ -27,6 +27,8 @@ people, we will train you in the rest.
 
 ## What you get
 
+- **£12.71 an hour plus 12.07% holiday pay** — £14.24 per hour worked
+- **Travel time between calls is paid**
 - A paid induction and the **Care Certificate** if you are new to care
 - Mandatory training kept up to date — safeguarding, moving and handling,
   medication, infection control, fire and first aid
@@ -51,7 +53,19 @@ your registration details when we call.
 
 ## Pay
 
-Pay depends on the role, your experience, and whether the shifts are weekdays,
-weekends or nights. Tell us what you are looking for and we will give you the
-rate for it — along with holiday, pension and mileage — before you decide
-whether to go ahead.
+**£12.71 an hour, plus 12.07% holiday pay — £14.24 for every hour you work.**
+
+We would rather show you how that works than quote you one big number:
+
+- **£12.71** is your basic hourly rate. That is the National Living Wage.
+- **12.07%** on top is your holiday pay. Because your hours vary week to week,
+  we pay it with every wage instead of making you wait until you book time off.
+  It appears as its own line on your payslip, so you can always see it.
+- Together that is **£14.24 for each hour you actually work**.
+
+**Travel time between calls is paid.** Not every provider does this, and it
+makes a real difference to what you take home over a week.
+
+You are also paid mileage, and enrolled in the workplace pension. If a role
+carries a different rate — some nursing and specialist shifts do — we will tell
+you the figure before you decide whether to go ahead.

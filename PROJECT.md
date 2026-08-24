@@ -254,6 +254,30 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-24 — Staff pay published
+
+**New:** `lib/pay.js`, and a `business.pay` block in `config/site.json`.
+
+**Changed:** `lib/jobs.js` (emits `baseSalary`), `app/jobs/[slug]/page.js`,
+`layouts/careers/AreaJobsPage.js`, `app/careers/page.js`, `app/faq/page.js`,
+`content/vacancies/care-assistant-all-areas.md`.
+
+**Why:** Alif confirmed the pay structure — £12.71 basic (National Living Wage)
+plus 12.07% rolled-up holiday pay = £14.24 per hour worked — and asked for it to
+be published only if legally sound. Checked: rolled-up holiday pay has been
+lawful since 1 April 2024 for irregular-hours and part-year workers, 12.07% is
+the statutory accrual rate, and basic must independently meet NMW. Alif
+confirmed all four conditions (irregular hours throughout, travel time between
+calls paid, holiday itemised on the payslip, basic at NMW).
+
+**The split is always shown**; the bare £14.24 never appears as "the hourly
+rate", because £1.53 of it is holiday pay rather than reward for the hour.
+`baseSalary` in the JobPosting markup carries £12.71 for the same reason.
+
+**⚠️ REVIEW BY 2027-04-01.** £12.71 is exactly the NLW with no headroom. It
+falls below the legal minimum when the NLW rises next April. `lib/pay.js` fails
+the build if basic + uplift stops equalling the published total.
+
 ### 2026-08-24 — SEO Phase 3: four candidate-facing area pages
 
 **New:** `lib/areas.js`, `layouts/careers/AreaJobsPage.js`, and four static
