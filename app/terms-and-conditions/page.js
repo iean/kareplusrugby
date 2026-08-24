@@ -221,8 +221,9 @@ const TermsAndConditionsPage = () => {
                   10.2 Intellectual Property
                 </h3>
                 <p className="mb-6">
-                  All content on our website is owned by Kare Plus Rugby
-                  Healthcare and protected by copyright laws.
+                  All content on our website is owned by Divergent Healthcare
+                  Limited, trading as Kare Plus Rugby, and protected by
+                  copyright laws.
                 </p>
 
                 <h2 className="text-2xl font-bold text-primary mb-6">
