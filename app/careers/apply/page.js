@@ -93,6 +93,14 @@ const ApplyPage = () => {
                     page — an applicant without a Google account cannot open it.
                     Remove this by fixing the form's settings, not the page.
                   */}
+                  {f.essential && (
+                    <p className="mt-3 rounded-card border border-success/30 bg-successBg p-4 text-base leading-relaxed text-text">
+                      <strong>This is the important one.</strong> Once you have
+                      sent this, we have your details and we will be in touch —
+                      you are in the process.
+                    </p>
+                  )}
+
                   {f.requiresGoogleAccount && (
                     <div className="mt-4 flex items-start gap-3 rounded-card border border-warning/40 bg-warningBg p-4">
                       <AlertTriangle
@@ -101,8 +109,11 @@ const ApplyPage = () => {
                       />
                       <p className="text-base leading-relaxed text-text">
                         This form currently asks you to sign in with a Google
-                        account. If you do not have one, or it will not let you
-                        in, do not worry — call us on{" "}
+                        account. <strong>If it will not let you in, that does not
+                        end your application</strong> — as long as you have sent
+                        form 1 we have your details and we will call you, and we
+                        can take the rest over the phone. If you would rather
+                        sort it now, call{" "}
                         <a
                           href={site.business.phone_href}
                           className="font-semibold text-primary-800 underline underline-offset-4"
@@ -145,6 +156,10 @@ const ApplyPage = () => {
               Google does not tell us the moment you submit, so please send us a
               quick message so we know to look for your forms. One line is
               plenty.
+            </p>
+            <p className="mt-2 text-base leading-relaxed text-text">
+              If you managed form 1 but not form 2, say so — that is completely
+              fine and we will pick it up with you.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               <a
