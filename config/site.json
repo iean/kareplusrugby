@@ -39,7 +39,7 @@
     "cqc_location_url": "https://www.cqc.org.uk/location/1-19892028472",
     "cqc_status": "Registered — not yet inspected",
     "sponsor_licence": "Licensed UK visa sponsor (A-rated)",
-    "registered_manager": "[TODO: ADD REGISTERED MANAGER NAME]",
+    "registered_manager": "Iulia Larisa Lazar",
     "directors": [
       {
         "name": "Mimosha Alam",
@@ -147,7 +147,10 @@
       "effective_from": "2026-04-01",
       "_nmw_warning": "12.71 is EXACTLY the National Living Wage for age 21+ from 1 April 2026. There is no headroom. The NLW rises every April, so on 1 April 2027 this figure becomes below the legal minimum unless it is raised. REVIEW BY 2027-04-01. Change it here only - every page reads this one block.",
       "_holiday_uplift_note": "12.07% is the statutory accrual rate: 5.6 weeks statutory leave divided by the 46.4 working weeks in a year. Do not round it to 12%."
-    }
+    },
+    "_registered_manager_note": "Verified against the CQC public register on 2026-08-25 for location 1-19892028472 (Kare Plus Rugby). CQC records the name as 'Ms Iulia Larisa Lazar' - note IULIA, not Julia. WEBSITE-CONTENT-UPDATE.md spells it 'Julia Lazar'; the CQC spelling is used here because it is the regulatory record. If she goes by Julia day to day, ask before changing it - the registered manager's name should match the register.",
+    "nominated_individual": "Choudhury Taimur Sadat",
+    "_nominated_individual_note": "Also on the CQC register for this location, as the Nominated Individual (responsible person). Same person as the director of the same name."
   },
   "nav": {
     "primary": [

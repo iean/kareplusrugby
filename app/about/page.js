@@ -110,6 +110,10 @@ const AboutPage = () => (
               ["Companies House number", `${site.business.companies_house_number} (incorporated ${site.business.incorporated})`],
               ["CQC provider", site.business.cqc_provider_name],
               ["CQC provider ID", site.business.cqc_provider_id],
+              ["CQC registered location", site.business.cqc_location_name],
+              ["CQC location ID", site.business.cqc_location_id],
+              ["Registered manager", site.business.registered_manager],
+              ["Nominated individual", site.business.nominated_individual],
               ["CQC status", site.business.cqc_status],
               ["ICO registration", site.business.ico_registration],
             ]
@@ -129,7 +133,7 @@ const AboutPage = () => (
             These details are taken from the Companies House and CQC public
             registers. You can check our CQC registration yourself at{" "}
             <a
-              href={site.business.cqc_profile_url}
+              href={site.business.cqc_location_url}
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-primary-700 underline underline-offset-4"

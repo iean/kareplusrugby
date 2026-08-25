@@ -628,3 +628,58 @@ not lose the applicant — but the full application cannot be completed.
 
 Fix, in Google Forms → Settings → Responses: turn off "Restrict to users in
 <organisation>" and "Limit to 1 response".
+
+---
+
+# 14. A condition on your CQC registration vs what the website advertises (2026-08-25)
+
+Found while verifying the registered manager's name.
+
+## The condition, word for word
+
+From the CQC register for location 1-19892028472 (Kare Plus Rugby):
+
+> "The registered provider must not provide Personal care in a specialist
+> service to people whose presenting need for care or support is as a direct
+> result of the person's learning disability and or autism at or from Kare Plus
+> Rugby."
+
+## What the website currently says
+
+| Where | Wording |
+|---|---|
+| `/supported-living` heading | "Support for adults with learning disabilities, autism, or mental health needs to live independently" |
+| `/supported-living` meta description | "flexible support for adults with learning disabilities, autism or mental health needs" |
+| Homepage services block | "Support for adults with learning disabilities, autism or mental health needs" |
+| Staffing service cards | "Experienced carers for learning disability, mental health and community support" |
+
+## What I am NOT saying
+
+The condition does **not** say you can never support anyone who has a learning
+disability or autism. It restricts providing personal care **in a specialist
+service** where that is the person's presenting need. Supporting someone in a
+general service who happens to be autistic is a different thing.
+
+## Why it still needs your attention
+
+Three of those four places lead with learning disabilities and autism as the
+headline description of the supported living service. That reads as advertising
+a specialist service for exactly the group the condition names. Whether it
+actually is one depends on what you deliver, which only you know.
+
+**I have not changed any of it** — narrowing how you describe a service is a
+commercial decision with revenue attached, and guessing would be worse than
+asking.
+
+## Three options
+
+1. **Leave it.** Correct if these are general supported living and domiciliary
+   services, and LD/autism is listed as one of several groups you support
+   rather than a specialism.
+2. **Reword it.** Keep mental health and general supported living up front and
+   drop LD/autism from the headline. Safest, costs you some search traffic.
+3. **Apply to CQC to remove the condition**, if you genuinely want to run a
+   specialist service. That is a variation application, not a website change.
+
+Tell me which and I will do it. If you are unsure, option 2 is reversible and
+option 1 is not, if a CQC inspector reads the site first.

@@ -254,6 +254,30 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-25 — Registered manager published
+
+**Changed:** `config/site.json`, `app/about/page.js`.
+
+The registered manager was a `[TODO]` placeholder, hidden by the about page's
+filter. Verified against the CQC public register for location 1-19892028472 and
+published: **Iulia Larisa Lazar**, registered manager, and **Choudhury Taimur
+Sadat**, nominated individual (the same person as the director of that name).
+The registered location and location ID are now shown too, and the "check it
+yourself" link goes to the location page rather than the provider page.
+
+**Note the spelling: Iulia, not Julia.** WEBSITE-CONTENT-UPDATE.md says "Julia
+Lazar". The CQC spelling is used because a registered manager's name should
+match the register. Recorded in `_registered_manager_note`.
+
+**Flagged, not changed — a condition of registration:** CQC's record for this
+location carries the condition *"The registered provider must not provide
+Personal care in a specialist service to people whose presenting need for care
+or support is as a direct result of the person's learning disability and or
+autism at or from Kare Plus Rugby."* The supported living page, the homepage
+services block and the staffing service cards all currently lead with support
+for "learning disabilities, autism or mental health needs". Awaiting Alif's
+decision — see OVERNIGHT-NOTES.md §14.
+
 ### 2026-08-25 — The 2022 comma, and the CQC link
 
 **Changed:** `layouts/components/ui/StatCounter.js`,
