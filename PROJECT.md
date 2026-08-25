@@ -254,6 +254,29 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-25 — New /paying-for-care page (competitor gap)
+
+**New:** `lib/funding.js`, `app/paying-for-care/page.js`. **Changed:**
+`app/sitemap.js`, `config/site.json` (footer nav), the two client service pages.
+
+**Why:** competitor review of Home Instead, Bluebird Care, Right at Home and
+Helping Hands. None of them explains how care funding actually works — Helping
+Hands has a thin "funding options" page and the rest have nothing. It is high
+intent search traffic ("will the council pay for my mum's care") that nobody in
+this market is answering properly.
+
+Every figure verified against GOV.UK on 2026-08-25 and sourced on the page:
+capital limits £23,250/£14,250, tariff income £1 per £250, Minimum Income
+Guarantee £241.45 (pension age) and £120.40 (under, 25+), Attendance Allowance
+£76.70/£114.60 and not means-tested, home value disregarded for care at home.
+
+**⚠️ REVIEW EVERY APRIL.** The rates change. `lib/funding.js` carries the
+checked-on date and the review date. A care site quoting a stale benefit rate is
+worse than one quoting none, because people plan around it.
+
+Also confirmed by the review: **not publishing client prices is normal.** All
+four competitors decline to publish rates. That choice needs no change.
+
 ### 2026-08-25 — Registered manager published
 
 **Changed:** `config/site.json`, `app/about/page.js`.

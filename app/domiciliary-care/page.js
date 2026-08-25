@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { og } from "@lib/seo";
 import Image from "next/image";
 import PageHeader from "@components/ui/PageHeader";
@@ -171,7 +172,8 @@ const DomiciliaryCarePage = () => (
           className="mb-8"
         />
         <MultiStepEnquiry id="care-enquiry" />
-      </Container>
+              <p className="mt-6 rounded-card border border-primary-200 bg-primary-50 p-5 text-base leading-relaxed text-text"><strong className="font-semibold text-primary-950">Worried about the cost?</strong>{" "}The council pays towards care at home for a lot more people than realise it, and Attendance Allowance is not means-tested at all.{" "}<Link href="/paying-for-care" className="font-semibold text-primary-700 underline underline-offset-4">See how paying for care works</Link>.</p>
+        </Container>
     </Section>
 
     <AreasWeCover tone="surface" compact />
