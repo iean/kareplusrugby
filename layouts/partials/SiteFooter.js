@@ -176,6 +176,11 @@ const SiteFooter = () => {
         provider "Divergent Healthcare Limited", provider ID 1-18444576596,
         status "not yet inspected". The previous version named the wrong legal
         entity and carried a placeholder ID; both are now correct.
+
+        The button links to the LOCATION page, not the provider page. CQC titles
+        the location "Kare Plus Rugby"; the provider page is titled with the
+        legal entity, "Divergent Healthcare Limited", which is not the name
+        anyone is looking for when they click through to check us.
         Deliberately NOT claimed: any rating, any inspection outcome, or a
         registered manager's name (unverified — see the About page TODO).
       */}
@@ -200,7 +205,11 @@ const SiteFooter = () => {
                     {b.trading_name} — {b.address.locality}
                   </strong>
                 </p>
-                <p className="mt-1.5">Provider ID: {b.cqc_provider_id}</p>
+                <p className="mt-1.5">
+                  Provider ID: {b.cqc_provider_id}
+                  <span className="mx-1.5 text-white/40" aria-hidden="true">·</span>
+                  Location ID: {b.cqc_location_id}
+                </p>
                 <p className="mt-1.5 text-primary-100">
                   We haven&apos;t inspected this service yet.
                 </p>
@@ -208,13 +217,15 @@ const SiteFooter = () => {
             </div>
 
             <a
-              href={b.cqc_profile_url}
+              href={b.cqc_location_url}
               target="_blank"
               rel="noopener noreferrer"
               className="shrink-0 rounded-btn bg-white px-5 py-2.5 text-center font-semibold text-primary-800 transition-colors hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-950"
             >
-              See registration details
-              <span className="sr-only"> on the CQC website (opens in a new tab)</span>
+              See our CQC registration
+              <span className="sr-only">
+                {" "}for {b.cqc_location_name} on the CQC website (opens in a new tab)
+              </span>
             </a>
           </div>
         </Container>

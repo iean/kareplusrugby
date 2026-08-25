@@ -13,6 +13,9 @@ import { useEffect, useRef, useState } from "react";
  *     shows "0" forever on failure, which on a stats section is worse than no
  *     animation at all.
  *  2. Under prefers-reduced-motion it jumps straight to the value.
+ *  3. It groups thousands ONLY if the value it was given was already written
+ *     that way. "2022" is a year and must stay "2022"; toLocaleString turned it
+ *     into "2,022" on the homepage. If you want grouping, write "1,200".
  *
  * It uses requestAnimationFrame with an eased curve rather than setInterval,
  * so it stays smooth and stops cleanly when the tab is backgrounded.
@@ -22,6 +25,8 @@ const StatCounter = ({ value, duration = 1600, className = "" }) => {
   const match = String(value).match(/^([^\d-]*)([\d.,]+)(.*)$/);
   const prefix = match?.[1] ?? "";
   const numeric = match ? Number(match[2].replace(/,/g, "")) : NaN;
+  // Only group thousands if the author wrote it grouped. Years must not be.
+  const grouped = match ? match[2].includes(",") : false;
   const suffix = match?.[3] ?? "";
   const animatable = match && Number.isFinite(numeric);
 
@@ -47,9 +52,10 @@ const StatCounter = ({ value, duration = 1600, className = "" }) => {
           // easeOutExpo - fast then settling, reads as confident rather than laboured
           const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
           const current = numeric * eased;
+          const whole = Math.round(current);
           const rounded =
             numeric % 1 === 0
-              ? Math.round(current).toLocaleString("en-GB")
+              ? (grouped ? whole.toLocaleString("en-GB") : String(whole))
               : current.toFixed(1);
           setDisplay(`${prefix}${rounded}${suffix}`);
           if (t < 1) raf = requestAnimationFrame(tick);
@@ -64,7 +70,7 @@ const StatCounter = ({ value, duration = 1600, className = "" }) => {
       io.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [animatable, numeric, prefix, suffix, duration]);
+  }, [animatable, numeric, grouped, prefix, suffix, duration]);
 
   return (
     <span ref={ref} className={className}>

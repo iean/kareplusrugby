@@ -254,6 +254,27 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-25 — The 2022 comma, and the CQC link
+
+**Changed:** `layouts/components/ui/StatCounter.js`,
+`layouts/partials/SiteFooter.js`, `config/site.json`.
+
+**The comma.** The homepage stat read "2,022". `StatCounter` parsed the year as
+a number and ran it through `toLocaleString("en-GB")`, which groups thousands.
+It only showed once the count-up animation ran, so the server-rendered HTML
+looked fine. Grouping now follows how the value was written: "2022" stays
+"2022", and anything that genuinely wants a separator is written "1,200".
+
+**The CQC link.** It pointed at the provider page, which CQC titles "Divergent
+Healthcare Limited" — the legal entity, not the name anyone clicking through is
+looking for. CQC registers the provider and each location separately, and the
+location page is titled "Kare Plus Rugby". The footer button now goes there
+(`1-19892028472`), and both IDs are shown. Verified against cqc.org.uk on
+2026-08-25: name, address, phone and "not yet inspected" all match.
+
+The CQC statement itself still names Divergent Healthcare Limited as the
+regulated provider, because that is the required wording and it is accurate.
+
 ### 2026-08-24 — Share cards had no image on ten pages
 
 **New:** `lib/seo.js`. **Changed:** the eleven page files that set `openGraph`.
