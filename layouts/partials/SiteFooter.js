@@ -18,6 +18,8 @@ import social from "@config/social.json";
  * The CQC block is now verified against the CQC public register: provider
  * "Divergent Healthcare Limited", ID 1-18444576596, not yet inspected.
  */
+const isReal = (v) => typeof v === "string" && v && !v.includes("[TODO");
+
 const SiteFooter = () => {
   const { logo_text } = config.site;
   const b = site.business;
@@ -210,6 +212,14 @@ const SiteFooter = () => {
                   <span className="mx-1.5 text-white/40" aria-hidden="true">·</span>
                   Location ID: {b.cqc_location_id}
                 </p>
+                {isReal(b.registered_manager) && (
+                  <p className="mt-1.5">
+                    Registered Manager:{" "}
+                    <strong className="font-semibold text-white">
+                      {b.registered_manager}
+                    </strong>
+                  </p>
+                )}
                 <p className="mt-1.5 text-primary-100">
                   We haven&apos;t inspected this service yet.
                 </p>

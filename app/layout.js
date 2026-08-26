@@ -106,6 +106,20 @@ const orgSchema = {
         },
       }
     : {}),
+  /**
+   * The CQC registered manager, named because CQC publishes it on the public
+   * register for this location. Regulators and search engines both treat a
+   * named accountable person as a credibility signal.
+   */
+  ...(isReal(b.registered_manager)
+    ? {
+        employee: {
+          "@type": "Person",
+          name: b.registered_manager,
+          jobTitle: "Registered Manager",
+        },
+      }
+    : {}),
   // Real areaServed entries help local search far more than a prose string.
   areaServed: b.areas.map((a) => ({
     "@type": "AdministrativeArea",

@@ -68,6 +68,17 @@ const ContactPage = () => {
             <h2 className="text-2xl font-bold text-primary-950">
               How to reach us
             </h2>
+            {/* Naming the accountable person. CQC publishes it on the public
+                register, and people arranging care for a relative want to know
+                who is actually responsible. */}
+            <p className="mt-4 rounded-card border border-border bg-surface p-4 text-base leading-relaxed text-textMuted">
+              Our service is run by{" "}
+              <strong className="font-semibold text-text">
+                {site.business.registered_manager}
+              </strong>
+              , our CQC Registered Manager. If something is not right, you can ask for her by
+              name.
+            </p>
             <ul className="mt-6 space-y-6">
               {DETAILS.map((d) => {
                 const Icon = d.icon;
