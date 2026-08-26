@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CARE_TYPES } from "@lib/careTypes";
 import { og } from "@lib/seo";
 import Image from "next/image";
 import PageHeader from "@components/ui/PageHeader";
@@ -173,6 +174,24 @@ const DomiciliaryCarePage = () => (
         />
         <MultiStepEnquiry id="care-enquiry" />
               <p className="mt-6 rounded-card border border-primary-200 bg-primary-50 p-5 text-base leading-relaxed text-text"><strong className="font-semibold text-primary-950">Worried about the cost?</strong>{" "}The council pays towards care at home for a lot more people than realise it, and Attendance Allowance is not means-tested at all.{" "}<Link href="/paying-for-care" className="font-semibold text-primary-700 underline underline-offset-4">See how paying for care works</Link>.</p>
+                <nav aria-label="Kinds of care we provide" className="mt-10 border-t border-border pt-8">
+          <h2 className="text-2xl font-bold text-primary-950">Support for particular situations</h2>
+          <p className="mt-2 text-base leading-relaxed text-textMuted">
+            What each of these actually involves, including what we cannot do.
+          </p>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            {CARE_TYPES.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/${c.slug}`}
+                  className="flex min-h-[44px] items-center rounded-card border border-border bg-white px-5 py-3 text-base font-semibold text-primary-800 shadow-card transition hover:border-primary-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+                >
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
         </Container>
     </Section>
 

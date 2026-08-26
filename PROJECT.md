@@ -254,6 +254,35 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-08-26 — Five condition pages, and the registered manager named site-wide
+
+**New:** `lib/careTypes.js`, `layouts/services/CareTypePage.js`, and five routes:
+`/dementia-care-at-home`, `/palliative-care-at-home`, `/stroke-care-at-home`,
+`/respite-care`, `/live-in-care`.
+
+**Changed:** `app/sitemap.js`, `config/site.json` (footer nav),
+`app/domiciliary-care/page.js`, `layouts/partials/SiteFooter.js`,
+`app/contact/page.js`, `app/layout.js`.
+
+**Why:** the competitor review found Home Instead and Bluebird each run a dozen
+condition pages and we had three service pages total. Alif confirmed on
+2026-08-26 that all five services are genuinely provided.
+
+**Two constraints these pages respect.** Alif said they do not have many
+customers yet, so nothing claims volume, years of experience or a track record.
+And every page carries a "what we cannot do" block with the same visual weight
+as "what we do" — a carer is not a nurse, live-in care is not waking night
+care, we do not manage syringe drivers. No competitor does this. It is the most
+useful thing on the pages and it heads off the complaint that starts "nobody
+told us".
+
+Verified: pairwise similarity 14.2–16.7% (doorway territory is >80%), no
+unsupportable claims, every external charity link resolves.
+
+**Registered manager** Iulia Larisa Lazar now appears in the footer (so on every
+page), on contact, and in the LocalBusiness structured data as an employee with
+the job title Registered Manager.
+
 ### 2026-08-25 — New /paying-for-care page (competitor gap)
 
 **New:** `lib/funding.js`, `app/paying-for-care/page.js`. **Changed:**

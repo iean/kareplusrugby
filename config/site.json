@@ -221,6 +221,26 @@
           "url": "/supported-living"
         },
         {
+          "text": "Dementia Care",
+          "url": "/dementia-care-at-home"
+        },
+        {
+          "text": "End of Life Care",
+          "url": "/palliative-care-at-home"
+        },
+        {
+          "text": "Stroke Recovery",
+          "url": "/stroke-care-at-home"
+        },
+        {
+          "text": "Respite Care",
+          "url": "/respite-care"
+        },
+        {
+          "text": "Live-in Care",
+          "url": "/live-in-care"
+        },
+        {
           "text": "Paying for Care",
           "url": "/paying-for-care"
         }
