@@ -3,7 +3,7 @@ import Section, { Container } from "@components/ui/Section";
 import Card from "@components/ui/Card";
 import ContactTabs from "@layouts/forms/ContactTabs";
 import site from "@config/site.json";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaPhoneAlt, FaMobileAlt, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import LocationMap from "@components/ui/LocationMap";
 
 export const metadata = {
@@ -22,7 +22,24 @@ const ContactPage = () => {
       label: "Telephone",
       value: b.phone,
       href: b.phone_href,
-      note: "Office hours, with an on-call line outside them",
+      note: "Our office landline — Monday to Friday, 9am to 5pm",
+    },
+    /* The site promises 24/7 on-call in a dozen places. Until now it never
+       said what to actually dial. This is that number. */
+    {
+      icon: FaMobileAlt,
+      label: "Out of hours",
+      value: b.mobile,
+      href: b.mobile_href,
+      note: "Evenings, weekends and bank holidays — answered 24/7",
+    },
+    {
+      icon: FaWhatsapp,
+      label: "WhatsApp",
+      value: b.mobile,
+      href: b.whatsapp_href,
+      external: true,
+      note: "Same number — message us if you would rather not call",
     },
     { icon: FaEnvelope, label: "Email", value: b.email, href: b.email_href, note: "We aim to reply within one working day" },
     {
@@ -97,6 +114,9 @@ const ContactPage = () => {
                       {d.href ? (
                         <a
                           href={d.href}
+                          {...(d.external
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
                           className="mt-1 block text-lg font-semibold text-primary-700 underline-offset-4 hover:underline"
                         >
                           {d.value}

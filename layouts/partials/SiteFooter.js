@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaMobileAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import config from "@config/config.json";
 import site from "@config/site.json";
 import { Container } from "@components/ui/Section";
@@ -104,6 +104,26 @@ const SiteFooter = () => {
                   <span>
                     <span className="sr-only">Telephone: </span>
                     {b.phone}
+                    <span className="ml-2 text-sm text-white/60">Mon–Fri, 9–5</span>
+                  </span>
+                </a>
+              </li>
+              {/* The on-call number, on every page. The site promises 24/7
+                  support throughout; this is the number that promise refers
+                  to, and someone needing it at 11pm should not have to hunt
+                  for the contact page to find it. */}
+              <li>
+                <a
+                  href={b.mobile_href}
+                  className="flex items-center gap-3 text-white hover:underline"
+                >
+                  <FaMobileAlt aria-hidden="true" className="text-primary-300" />
+                  <span>
+                    <span className="sr-only">Out-of-hours and WhatsApp: </span>
+                    {b.mobile}
+                    <span className="ml-2 text-sm text-white/60">
+                      Out of hours &amp; WhatsApp
+                    </span>
                   </span>
                 </a>
               </li>

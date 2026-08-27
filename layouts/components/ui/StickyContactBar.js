@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Phone, MessageCircle, Mail } from "lucide-react";
 import site from "@config/site.json";
 
@@ -18,21 +19,57 @@ import site from "@config/site.json";
  *    last of the footer content.
  */
 const StickyContactBar = () => {
-  const { phone, phone_href, whatsapp_href } = site.business;
+  const { phone, phone_href, mobile, mobile_href, whatsapp_href } =
+    site.business;
+
+  /**
+   * Out of hours, the landline rings an empty office — which is precisely the
+   * moment someone is most likely to be tapping this. So after mount we point
+   * "Call" at the on-call mobile instead.
+   *
+   * Deliberately behind a mounted flag: the server has no idea what time it is
+   * where the visitor is, so SSR always emits the office number and the swap
+   * happens on the client. Computing this during render instead would produce
+   * different HTML on each side and trip a hydration mismatch.
+   *
+   * Office hours are Monday–Friday, 9am–5pm, matching opening_hours.office and
+   * the ContactPoint hours published in app/layout.js.
+   */
+  const [outOfHours, setOutOfHours] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      const now = new Date();
+      const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+      const weekday = day >= 1 && day <= 5;
+      const inHours = weekday && now.getHours() >= 9 && now.getHours() < 17;
+      setOutOfHours(!inHours);
+    };
+    check();
+    // Someone can sit on a page across 5pm; re-check so the button does not
+    // go stale on an open tab.
+    const t = setInterval(check, 60_000);
+    return () => clearInterval(t);
+  }, []);
+
+  const callHref = outOfHours ? mobile_href : phone_href;
+  const callNumber = outOfHours ? mobile : phone;
 
   const items = [
     {
-      href: phone_href,
+      href: callHref,
       icon: Phone,
-      label: "Call",
-      sr: `Call us on ${phone}`,
+      label: outOfHours ? "On-call" : "Call",
+      sr: outOfHours
+        ? `Call our out-of-hours line on ${callNumber}`
+        : `Call us on ${callNumber}`,
       className: "bg-primary-700 text-white hover:bg-primary-800",
     },
     {
       href: whatsapp_href,
       icon: MessageCircle,
       label: "WhatsApp",
-      sr: "Message us on WhatsApp (opens in a new tab)",
+      sr: `Message us on WhatsApp on ${mobile} (opens in a new tab)`,
       external: true,
       // WhatsApp brand green is 4.14:1 on white, which fails AA for the small
       // label. Darkened to #118578 (4.52:1) - still unmistakably WhatsApp.

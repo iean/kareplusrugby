@@ -150,7 +150,7 @@ Status key: **Keep** (leave alone) · **Redesign** (same topic, better looks) ·
 | Available Jobs | `/staffing/available-jobs` | _TBD_ |
 | Contact Us | `/staffing/contact-us` | _TBD_ |
 
-### Admin (⚠️ **completely unprotected** — see §7 P0)
+### Admin (behind Basic Auth in [middleware.js](middleware.js) — returns 401 until `ADMIN_USER`/`ADMIN_PASSWORD` are set in Vercel)
 
 | Page | Route |
 |---|---|
@@ -253,6 +253,51 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 ## 6. Work Log
 
 Newest first. Every session adds an entry.
+
+### 2026-08-27 — Production audit, and the out-of-hours number published
+
+**Changed:** `config/site.json`, `app/layout.js`, `app/contact/page.js`,
+`layouts/partials/SiteFooter.js`, `layouts/components/ui/StickyContactBar.js`.
+
+**Full production audit first.** All 42 public routes return 200. Every internal
+link across 33 crawled pages resolves — zero dead `#` links. Every page carries
+exactly one `<h1>`, a canonical on `www.kareplusrugby.co.uk`, a meta description
+and an `og:image`. Security headers (HSTS, nosniff, SAMEORIGIN, referrer and
+permissions policy) are all present, apex redirects to `www` over HTTPS,
+`/admin` and `/admin/jobs` return 401, `GET /api/messages` returns 405, and
+`node scripts/check-contrast.mjs` passes all 18 pairings. Both Google Forms
+open publicly — the earlier "form 2 is blocked" reading was a user-agent
+artifact; they return 200 to a browser UA and 401 only to bare curl.
+
+**The one real finding, now fixed.** Alif gave the two numbers: `01788 422422`
+is the office landline, `07563 247176` is the out-of-hours line and is also the
+WhatsApp number. The site promised 24/7 on-call in a dozen places — Hero,
+Stats, TrustSignals, the FAQ, careers, both Banners — and **never once said what
+to dial**. `business.mobile` had been sitting in `config/site.json` unused by
+any component.
+
+- **Structured data was actively wrong.** `app/layout.js` published the landline
+  as a ContactPoint answered 00:00–23:59, seven days. That tells Google the
+  office number is staffed at 3am. Now two ContactPoints: the landline on
+  Monday–Friday 09:00–17:00, and the mobile as a 24/7 `emergency` line.
+- **`/contact`** gained an "Out of hours" row and a WhatsApp row, and its
+  telephone note now names the real hours instead of the vague "office hours,
+  with an on-call line outside them".
+- **The footer** carries the on-call number on every page, labelled
+  "Out of hours & WhatsApp".
+- **`StickyContactBar`** — the mobile Call button dialled the landline, so a tap
+  at 11pm rang an empty office, which is exactly when someone taps it. It now
+  switches to the on-call line outside office hours, behind a mounted flag so
+  SSR still emits the office number and hydration cannot mismatch.
+
+Verified: `pnpm build` and `pnpm lint` clean, rendered locally on :3111 —
+both numbers appear with correct `tel:` hrefs and the two ContactPoints appear
+in the JSON-LD.
+
+**Known duplication, not fixed here:** `config/social.json` holds its own copy
+of the phone number, and `layouts/components/Social.js` builds `tel:01788422422`
+from it (valid, but not E.164 like everywhere else). Two sources of truth for
+one number that can drift. Logged in §7 P1.
 
 ### 2026-08-26 — Five condition pages, and the registered manager named site-wide
 
@@ -480,36 +525,43 @@ Earlier entries in this file claimed the site was on Netlify, inferred from `net
 
 ### P0 — Security & data protection
 
-Code fixes are done (2026-08-07). **The remaining items are Alif's to do — the fixes are not live until they are.**
+**Re-verified against production on 2026-08-27.** Everything in this section
+that described the VPS is obsolete — the site is on Vercel behind HTTPS, and
+the VPS at `46.252.193.48` was never reachable. Those items are struck rather
+than deleted so the history stays readable.
 
-- [x] **`/admin` had no authentication** — now behind Basic Auth in [middleware.js](middleware.js)
-- [x] **`GET /api/messages` exposed every contact submission** — now authenticated
-- [x] **`GET /api/get-started` and `GET /api/request-data` exposed personal data** — now authenticated. Found during the fix; not in the original audit.
-- [x] **`POST /api/jobs` was unauthenticated** — now authenticated
-- [x] **Get Started + GDPR emails never sent** (`createTransporter` typo) — fixed
-- [x] **Contact form redirect threw / email failed silently** — fixed
-- [ ] **Set `ADMIN_USER` and `ADMIN_PASSWORD` on the VPS.** Until then `/admin` returns 401 for everyone, Alif included. Long random password — this guards patient-adjacent data.
-- [ ] **The site has no HTTPS.** It serves plain HTTP on `46.252.193.48:3000`. Contact forms carrying names, phone numbers and health details are sent unencrypted, and Basic Auth credentials cross the wire in base64 — trivially readable. **The admin password is only as safe as the connection.** Fix: nginx/Caddy reverse proxy on 80/443 with a Let's Encrypt certificate.
-- [ ] **The domain does not resolve.** `heartandhavencare.co.uk` is NXDOMAIN, yet appears in site content. Register/repoint it, then wire it to the VPS.
-- [ ] **Read `data/messages.json` on the server** (`/var/www/healthcare/data/`). The filesystem is persistent, so real enquiries have been accumulating there — and were publicly downloadable until today. Anyone who fetched that URL got the lot. Assess whether disclosure notification is needed.
-- [ ] **Confirm `EMAIL_USER` / `EMAIL_PASS` are set** on the VPS. If Get Started never worked, they may never have been configured.
-- [ ] **Test all three forms end-to-end** — contact, get-started, request-personal-data. Confirm an email actually arrives.
-- [ ] **Replace `params.contact_email`** (`masud.official@gmail.com`) with a real Heart & Haven address — all three forms now send there.
-- [ ] **Untrack `data/*.json`.** They are committed *and* written at runtime. As soon as the server's copy differs, `git pull` refuses to merge and **every future deploy silently stops updating the site** — the workflow has no `set -e`, so it still reports success. Add to `.gitignore` and `git rm --cached`.
-- [ ] **Add `set -e` to the deploy workflow** so a failed build fails the run instead of showing a green tick.
-- [ ] **Make the server use pnpm**, or drop `pnpm-lock.yaml`. Right now the server runs `npm install` and ignores the committed lockfile, so production versions can drift from local.
-- [x] **Build and runtime verification** — done 2026-08-07, see §6
+- [x] **`/admin` had no authentication** — Basic Auth in [middleware.js](middleware.js). Confirmed 401 in production 2026-08-27.
+- [x] **`GET /api/messages` exposed every contact submission** — confirmed 405 in production 2026-08-27.
+- [x] **`GET /api/get-started` and `GET /api/request-data` exposed personal data** — authenticated.
+- [x] **`POST /api/jobs` was unauthenticated** — authenticated.
+- [x] **Get Started + GDPR emails never sent** (`createTransporter` typo) — fixed.
+- [x] **Contact form redirect threw / email failed silently** — fixed.
+- [x] ~~The site has no HTTPS~~ — **obsolete.** Vercel serves HTTPS with HSTS (`max-age=63072000`); `http://` and the apex both 308/307 to `https://www.`.
+- [x] ~~The domain does not resolve~~ — **obsolete.** `www.kareplusrugby.co.uk` resolves and serves.
+- [x] ~~Replace `params.contact_email` (`masud.official@gmail.com`)~~ — done; it is `kp.rugby@kareplus.co.uk` everywhere.
+- [x] ~~Add `set -e` to the deploy workflow~~ / ~~make the server use pnpm~~ — **obsolete**, the workflow was deleted. Vercel builds from `main`.
+- [x] ~~Read `data/messages.json` on the server~~ — **obsolete.** No VPS ever served traffic, so nothing accumulated there. `data/messages.json` is not tracked; Vercel's filesystem is ephemeral.
+- [ ] **Set `ADMIN_USER` and `ADMIN_PASSWORD` in the Vercel project environment.** Still outstanding — `/admin` returns 401 to everyone including Alif until they are set. [middleware.js](middleware.js) fails closed by design. Use a long random password.
+- [ ] **Confirm `EMAIL_USER` / `EMAIL_PASS` are set in Vercel** and test all three forms end-to-end (contact, get-started, request-personal-data) — confirm an email actually arrives. Not verifiable from outside; needs Alif.
+- [ ] **`ico_registration` is still `[TODO]`** in `config/site.json`. A care provider handling health data should be ICO-registered and say so. The `isReal()` guard hides the field, so nothing broken renders — but the gap is real.
+- [x] **Build and runtime verification** — done 2026-08-07, re-done 2026-08-27.
 
 ### P1 — Broken and wrong content
 
-- [ ] **`/supported-living` is in the main nav but does not exist** — [config/menu.json](config/menu.json) links to it, there's no `app/supported-living/` and no content file. Live 404 from the primary navigation.
-- [ ] **Footer is Lorem ipsum.** `params.footer_content` in [config/config.json](config/config.json) is still template filler on a production site.
-- [ ] **Contact email is a developer's personal Gmail** — `masud.official@gmail.com`. Should be a Heart & Haven business address.
-- [ ] **Footer menu is full of dead `#` links** — "Quick Start", "Features", "Platform", and — worse — **"Privacy Policy" and "Terms & Conditions" point at `#`** even though `/privacy-policy` and `/terms-and-conditions` exist. Legal pages that don't open are a compliance risk.
-- [ ] **Footer links to `/pricing` and `/faq`** — leftover template pages. Confirm with Alif whether a care business should show these at all.
-- [ ] **Duplicate About pages.** `/domiciliary/about` (in the menu) and `/domiciliary/about-us` (orphaned) both render, with different sections. Duplicate content, and confusing. Pick one, redirect the other.
-- [ ] Possible duplicate: `/domiciliary/jobs` vs `/domiciliary/available-jobs` — verify and consolidate.
-- [ ] `metadata.meta_image` is empty — social shares will have no preview image.
+**Re-verified 2026-08-27.** Most of this section was written against the old
+Heart & Haven site and was no longer true; corrected below.
+
+- [x] ~~`/supported-living` is in the main nav but does not exist~~ — **false now.** The page exists, returns 200, and is in the sitemap.
+- [x] ~~Footer is Lorem ipsum~~ — **false now.** `footer_content` is real copy. No "lorem ipsum" appears on any live page.
+- [x] ~~Contact email is a developer's personal Gmail~~ — **false now.** `kp.rugby@kareplus.co.uk`.
+- [x] ~~Footer menu is full of dead `#` links~~ — **false now.** A crawl of 33 live pages found **zero** `href="#"` links; the legal pages link correctly.
+- [x] ~~`metadata.meta_image` is empty~~ — **false now.** `/images/og-default.png`, and `og:image` is present on every page checked.
+- [x] ~~Possible duplicate `/domiciliary/jobs` vs `/domiciliary/available-jobs`~~ — neither route exists.
+- [ ] **The orphaned `/domiciliary/*` and `/staffing/*` sections are still live and indexable.** Ten pages, all `robots: index, follow`, all self-canonical, none in the sitemap and none linked from the main nav or footer — they only link to each other. They duplicate the real pages: `/domiciliary` competes with `/domiciliary-care`, `/staffing` with `/care-home-staffing`, and `/domiciliary/about` and `/domiciliary/about-us` carry the *same `<h1>`* as each other. Content is correctly rebranded (Kare Plus, right phone), so this is purely an SEO/duplication problem, not a public-embarrassment one. **Decision needed from Alif:** 301 them to the canonical pages, or `noindex` them. Recommend redirecting.
+- [ ] **`config/social.json` is a second source of truth for the phone number.** It holds its own `"phone": "01788 422422"`, and `layouts/components/Social.js` builds `tel:01788422422` from it — valid, but the only non-E.164 `tel:` on the site. Point it at `site.business` instead.
+- [ ] **`/how-we-work` is indexable and linked from every page but is not in `app/sitemap.js`.** Minor inconsistency — either add it or decide it is deliberate. (`/staff` is correctly `noindex` and correctly excluded.)
+- [ ] **`content/_index.md` is orphaned template debris** — still full of lorem ipsum, referenced by no route (verified by grep). It renders nowhere, so nothing is exposed, but it should be deleted.
+- [ ] **Two title tags exceed ~60 chars** and will truncate in search results: `/paying-for-care` (82) and `/jobs` (73).
 
 ### P2 — Design & polish (the actual redesign)
 
@@ -523,8 +575,9 @@ Code fixes are done (2026-08-07). **The remaining items are Alif's to do — the
 ### P3 — Housekeeping
 
 - [ ] **30+ stale `codex/*` branches** on the remote. Delete the merged ones.
-- [ ] `.DS_Store` files are committed in `app/`, `content/`, and `layouts/`. Remove from tracking.
-- [ ] `content/elements.md` is a template demo page — delete if unused.
+- [x] ~~`.DS_Store` files are committed~~ — **false now**, `git ls-files` finds none (verified 2026-08-27).
+- [x] ~~`content/elements.md` is a template demo page~~ — already deleted.
+- [ ] **The `/admin` job form almost certainly cannot work on Vercel.** [app/api/jobs/route.js](app/api/jobs/route.js) does `fs.writeFile` to `data/jobs.json` under `process.cwd()`. Vercel's serverless filesystem is read-only outside `/tmp`, so `POST /api/jobs` should throw — and even if it wrote, the change would vanish on the next invocation. Not verified end-to-end because `/admin` is locked (no `ADMIN_USER` set), so this is reasoning from the code, not an observed failure. The vacancy that *is* live (`/jobs/care-assistant-all-areas`) comes from Markdown in `content/vacancies/`, which is the path that actually works. Either drop the admin job form in favour of Markdown, or move storage to a real datastore.
 - [ ] `README.md` is still Themefisher's template readme; replace with real project docs.
 - [ ] `eslint-config-next` is pinned to 13.0.6 while Next is 14.2 — mismatched.
 

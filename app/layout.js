@@ -140,13 +140,36 @@ const orgSchema = {
       closes: "17:00",
     },
   ],
-  // The 24/7 on-call line, stated as what it actually is: a phone number that
-  // is answered at any hour, not a building that is open.
+  /**
+   * Two lines, described as what each one actually is.
+   *
+   * The office landline is answered Monday to Friday, 9 to 5 - so it is
+   * published with those hours. Claiming it is answered at any hour (which
+   * this block used to do) sends someone ringing an empty office at 2am
+   * during exactly the emergency the on-call line exists for.
+   *
+   * The out-of-hours mobile is the 24/7 line, and is the same number as
+   * WhatsApp, so it carries the contactOption for that too.
+   */
   contactPoint: [
     {
       "@type": "ContactPoint",
       telephone: b.phone,
       contactType: "customer service",
+      areaServed: "GB",
+      availableLanguage: "English",
+      hoursAvailable: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "17:00",
+      },
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: b.mobile,
+      contactType: "emergency",
+      name: "Out-of-hours on-call line",
       areaServed: "GB",
       availableLanguage: "English",
       hoursAvailable: {
