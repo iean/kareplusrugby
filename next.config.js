@@ -65,12 +65,46 @@ const nextConfig = {
       // byte-identical component tree to each other. Three URLs for one page.
       { source: "/domiciliary/how-we-work", destination: "/how-we-work", permanent: true },
       { source: "/staffing/how-we-work", destination: "/how-we-work", permanent: true },
+
+      /**
+       * The rest of the old /domiciliary/* and /staffing/* sections, retired
+       * 2026-08-27.
+       *
+       * These ten pages were orphans: indexable and self-canonical, but in no
+       * sitemap, in neither nav, and linked only to each other. Their content
+       * was correctly rebranded, so this was never a public-embarrassment
+       * problem - it was cannibalisation. /domiciliary competed with
+       * /domiciliary-care for the same query, /staffing with
+       * /care-home-staffing, and /domiciliary/about and /domiciliary/about-us
+       * shared a single <h1> between them, which is two URLs arguing over one
+       * page.
+       *
+       * Each goes to the page that now owns its subject rather than to the
+       * homepage: a 301 only passes signal if the destination is actually
+       * about the same thing.
+       */
+      { source: "/domiciliary", destination: "/domiciliary-care", permanent: true },
+      { source: "/domiciliary/care-services", destination: "/domiciliary-care", permanent: true },
+      { source: "/domiciliary/about", destination: "/about", permanent: true },
+      { source: "/domiciliary/about-us", destination: "/about", permanent: true },
+      { source: "/domiciliary/contact-us", destination: "/contact", permanent: true },
+      // The Get Started form lived here and nowhere else. /contact carries the
+      // maintained enquiry flow (ContactTabs), so that is where this goes.
+      // app/api/get-started/ is left in place but is now unreferenced.
+      { source: "/domiciliary/get-started", destination: "/contact", permanent: true },
+      { source: "/staffing", destination: "/care-home-staffing", permanent: true },
+      { source: "/staffing/care-services", destination: "/care-home-staffing", permanent: true },
+      { source: "/staffing/about-us", destination: "/about", permanent: true },
+      { source: "/staffing/contact-us", destination: "/contact", permanent: true },
     ];
   },
 
   // Long-lived caching for static assets, and baseline security headers.
-  // The site is served over plain HTTP today, so HSTS is deliberately NOT set
-  // here - enabling it before TLS exists would make the site unreachable.
+  // HSTS is not set here because Vercel already sends it
+  // (strict-transport-security: max-age=63072000, verified in production
+  // 2026-08-27). The old comment here said the site was plain HTTP and TLS did
+  // not exist - that was true of the VPS that never served traffic, not of
+  // the live site.
   async headers() {
     return [
       {

@@ -124,31 +124,32 @@ Status key: **Keep** (leave alone) · **Redesign** (same topic, better looks) ·
 | Request Personal Data | `/request-personal-data` | GDPR subject access | _TBD_ |
 | 404 | `not-found.js` | Error page | _TBD_ |
 
-### Domiciliary section (own nav — `config/menu-domiciliary.json`)
+### Retired: the old `/domiciliary/*` and `/staffing/*` sections
 
-| Page | Route | Status |
-|---|---|---|
-| Domiciliary Home | `/domiciliary` | _TBD_ |
-| About Us | `/domiciliary/about` | _TBD_ — **in the menu** |
-| About Us (orphan) | `/domiciliary/about-us` | **Remove** — duplicate, not in menu, still public |
-| Care Services | `/domiciliary/care-services` | _TBD_ |
-| How We Work | `/domiciliary/how-we-work` | _TBD_ |
-| Available Jobs | `/domiciliary/available-jobs` | _TBD_ |
-| Our Careers | `/domiciliary/our-careers` | _TBD_ |
-| Contact Us | `/domiciliary/contact-us` | _TBD_ |
-| Get Started | `/domiciliary/get-started` | _TBD_ |
-| Jobs | `/domiciliary/jobs` | _TBD_ — possible duplicate of available-jobs |
+**All gone as of 2026-08-27.** These were the template's two parallel
+mini-sites, each with its own nav. Every page is now a 301 in
+[next.config.js](next.config.js); the routes and the layout trees that only
+they used are deleted. `config/menu-domiciliary.json` and
+`config/menu-staffing.json` no longer exist either.
 
-### Staffing section (own nav — `config/menu-staffing.json`)
+| Retired route | Now redirects to |
+|---|---|
+| `/domiciliary` | `/domiciliary-care` |
+| `/domiciliary/care-services` | `/domiciliary-care` |
+| `/domiciliary/about` | `/about` |
+| `/domiciliary/about-us` | `/about` |
+| `/domiciliary/contact-us` | `/contact` |
+| `/domiciliary/get-started` | `/contact` |
+| `/domiciliary/jobs`, `/domiciliary/available-jobs`, `/domiciliary/our-careers` | `/careers` |
+| `/domiciliary/how-we-work` | `/how-we-work` |
+| `/staffing` | `/care-home-staffing` |
+| `/staffing/care-services` | `/care-home-staffing` |
+| `/staffing/about-us` | `/about` |
+| `/staffing/contact-us` | `/contact` |
+| `/staffing/available-jobs` | `/careers` |
+| `/staffing/how-we-work` | `/how-we-work` |
 
-| Page | Route | Status |
-|---|---|---|
-| Staffing Home | `/staffing` | _TBD_ |
-| About Us | `/staffing/about-us` | _TBD_ |
-| Staffing Services | `/staffing/care-services` | _TBD_ |
-| How We Work | `/staffing/how-we-work` | _TBD_ |
-| Available Jobs | `/staffing/available-jobs` | _TBD_ |
-| Contact Us | `/staffing/contact-us` | _TBD_ |
+The main site in the table above is now the whole site.
 
 ### Admin (behind Basic Auth in [middleware.js](middleware.js) — returns 401 until `ADMIN_USER`/`ADMIN_PASSWORD` are set in Vercel)
 
@@ -160,7 +161,7 @@ Status key: **Keep** (leave alone) · **Redesign** (same topic, better looks) ·
 
 ### API routes
 
-`/api/messages` · `/api/jobs` · `/api/get-started` · `/api/request-data`
+`/api/messages` · `/api/jobs` · `/api/enquiry` · `/api/apply` · `/api/request-data` · `/api/get-started` (**unreferenced** since `/domiciliary/get-started` was retired on 2026-08-27 — the route still exists but no page posts to it)
 
 ### Markdown content
 
@@ -253,6 +254,43 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 ## 6. Work Log
 
 Newest first. Every session adds an entry.
+
+### 2026-08-27 — The old /domiciliary and /staffing sections retired
+
+**Changed:** [next.config.js](next.config.js). **Deleted:** `app/domiciliary/`,
+`app/staffing/`, `layouts/domiciliary/`, `layouts/staffing/`,
+`layouts/domiciliary-care-home/`, `layouts/Contact.js`,
+`layouts/partials/{HomeBanner,HomeFeatures,CareInfoBanner,GetStartedForm}.js`
+— 44 files.
+
+**Why.** The audit earlier today found these ten pages live, `index, follow`
+and self-canonical, but in no sitemap, in neither nav, and linked only to each
+other. Their content was correctly rebranded, so this was never a
+public-embarrassment problem — it was cannibalisation. `/domiciliary` competed
+with `/domiciliary-care` for the same query, `/staffing` with
+`/care-home-staffing`, and `/domiciliary/about` and `/domiciliary/about-us`
+shared a single `<h1>` between them, which is two URLs arguing over one page.
+
+Each redirect goes to the page that now owns its subject rather than to the
+homepage — a 301 only passes signal if the destination is about the same
+thing. Alif approved on 2026-08-27.
+
+**One deliberate loss.** `/domiciliary/get-started` was the only page rendering
+`GetStartedForm`, so the Get Started flow is gone; `/contact` carries the
+maintained enquiry form (`ContactTabs`). `app/api/get-started/route.js` is left
+in place but is now unreferenced — noted in §3 so nobody assumes it is wired up.
+
+**`PageHero` was kept** — it looked orphaned but `/privacy-policy`,
+`/terms-and-conditions` and `/request-personal-data` still use it.
+
+Also corrected the stale comment above `headers()` in next.config.js, which
+claimed the site was plain HTTP and TLS did not exist. Vercel sends HSTS
+(`max-age=63072000`); that comment described the VPS that never served traffic.
+
+Verified: `pnpm build` and `pnpm lint` clean, the ten routes gone from the
+build output, and all 15 redirects (the ten new plus the five that already
+existed) return 308 and resolve to a 200 — checked locally on :3112 and again
+in production.
 
 ### 2026-08-27 — Production audit, and the out-of-hours number published
 
@@ -557,7 +595,7 @@ Heart & Haven site and was no longer true; corrected below.
 - [x] ~~Footer menu is full of dead `#` links~~ — **false now.** A crawl of 33 live pages found **zero** `href="#"` links; the legal pages link correctly.
 - [x] ~~`metadata.meta_image` is empty~~ — **false now.** `/images/og-default.png`, and `og:image` is present on every page checked.
 - [x] ~~Possible duplicate `/domiciliary/jobs` vs `/domiciliary/available-jobs`~~ — neither route exists.
-- [ ] **The orphaned `/domiciliary/*` and `/staffing/*` sections are still live and indexable.** Ten pages, all `robots: index, follow`, all self-canonical, none in the sitemap and none linked from the main nav or footer — they only link to each other. They duplicate the real pages: `/domiciliary` competes with `/domiciliary-care`, `/staffing` with `/care-home-staffing`, and `/domiciliary/about` and `/domiciliary/about-us` carry the *same `<h1>`* as each other. Content is correctly rebranded (Kare Plus, right phone), so this is purely an SEO/duplication problem, not a public-embarrassment one. **Decision needed from Alif:** 301 them to the canonical pages, or `noindex` them. Recommend redirecting.
+- [x] **The orphaned `/domiciliary/*` and `/staffing/*` sections** — retired 2026-08-27. All ten 301 to the page that owns the subject; routes and their layout trees deleted. See the §6 entry.
 - [ ] **`config/social.json` is a second source of truth for the phone number.** It holds its own `"phone": "01788 422422"`, and `layouts/components/Social.js` builds `tel:01788422422` from it — valid, but the only non-E.164 `tel:` on the site. Point it at `site.business` instead.
 - [ ] **`/how-we-work` is indexable and linked from every page but is not in `app/sitemap.js`.** Minor inconsistency — either add it or decide it is deliberate. (`/staff` is correctly `noindex` and correctly excluded.)
 - [ ] **`content/_index.md` is orphaned template debris** — still full of lorem ipsum, referenced by no route (verified by grep). It renders nowhere, so nothing is exposed, but it should be deleted.
