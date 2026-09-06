@@ -4,9 +4,11 @@ import SectionHeading from "@components/ui/SectionHeading";
 import FeatureGrid from "@components/ui/FeatureGrid";
 import Card from "@components/ui/Card";
 import CtaBand from "@layouts/home/CtaBand";
+import Link from "next/link";
 import site from "@config/site.json";
 import VacancyList from "@layouts/careers/VacancyList";
 import { getVacancies } from "@lib/vacancies";
+import { AREAS } from "@lib/areas";
 import { PAY } from "@lib/pay";
 import {
   FaCalendarAlt, FaCoins, FaGraduationCap, FaUserFriends, FaRoute,
@@ -142,6 +144,35 @@ const CareersPage = () => {
         opportunity — we welcome applications from everyone, regardless of
         background.
       </p>
+    </Section>
+
+    {/* Where we recruit. Links the four location pages directly from the
+        careers page — the highest-authority applicant page on the site — so a
+        candidate can jump straight to their own town, and so the location
+        pages that target "care jobs in <town>" searches get an internal link
+        from here rather than only being reachable two hops away via /jobs.
+        Plain <Link>s, so a crawler with no JavaScript follows them. */}
+    <Section tone="white" size="md">
+      <Container width="narrow">
+        <SectionHeading
+          eyebrow="Where we are hiring"
+          title="Find care jobs near you"
+          subtitle="We recruit across four areas. Each page explains what the work is actually like there — the distances, the shifts, whether you need to drive."
+          className="mb-8"
+        />
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {AREAS.map((a) => (
+            <li key={a.slug}>
+              <Link
+                href={`/jobs/${a.slug}`}
+                className="flex min-h-[44px] items-center rounded-card border border-border bg-white px-5 py-3 text-base font-semibold text-primary-800 shadow-card transition hover:border-primary-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+              >
+                Care jobs in {a.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Container>
     </Section>
 
     {/* Current vacancies */}
