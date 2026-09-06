@@ -164,6 +164,23 @@ const JobPage = ({ params }) => {
             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
           />
 
+          {/* Standing caveats, in one place so every job page carries them and
+              no single markdown file has to repeat them. The pay-review line
+              only shows for roles on the standard carer rate (baseHourly set) —
+              it would read oddly under a nursing role, which is paid well above
+              the National Living Wage. The shift/assignment line applies to
+              every role: we are an agency, so hours and placements genuinely do
+              depend on availability and what the homes and clients need. */}
+          <div className="mt-8 rounded-card border border-border bg-surface p-5 text-sm leading-relaxed text-textMuted">
+            {job.baseHourly != null && <p>{PAY.reviewNote}</p>}
+            <p className={job.baseHourly != null ? "mt-2" : ""}>
+              Shifts, hours and which home or client you are assigned to depend
+              on availability and the needs of the care homes and people we
+              support, so they can vary from week to week. We will always be
+              clear with you about what is available before you commit.
+            </p>
+          </div>
+
           <div className="mt-10 rounded-card border border-primary-200 bg-primary-50 p-6 text-center">
             <h2 className="text-xl font-bold text-primary-950">
               Interested? Two short forms and you are done

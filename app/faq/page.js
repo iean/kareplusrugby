@@ -96,7 +96,7 @@ const GROUPS = [
       },
       {
         q: "What do you pay?",
-        a: `${PAY.basicLabel} an hour, which is the National Living Wage, plus ${PAY.upliftLabel} holiday pay on top — ${PAY.totalLabel} for every hour you actually work. Because your hours vary week to week we pay the holiday element with every wage rather than making you wait until you book time off, and it shows as its own line on your payslip. Travel time between calls is paid, you get mileage, and you are enrolled in the workplace pension. Some nursing and specialist shifts carry a different rate and we will tell you the figure before you decide.`,
+        a: `${PAY.basicLabel} an hour, which is the National Living Wage, plus ${PAY.upliftLabel} holiday pay on top — ${PAY.totalLabel} for every hour you actually work. Because your hours vary week to week we pay the holiday element with every wage rather than making you wait until you book time off, and it shows as its own line on your payslip. Travel time between calls is paid, you get mileage, and you are enrolled in the workplace pension. ${PAY.reviewNote} Some nursing and specialist shifts carry a different rate and we will tell you the figure before you decide.`,
       },
     ],
   },

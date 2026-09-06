@@ -109,7 +109,7 @@ const CareersPage = () => {
         Pay depends on the role, your experience and whether the shifts are
         weekdays, weekends or nights. Tell us which role you are interested in
         and we will give you the rate for it — along with holiday, pension and
-        mileage — before you decide whether to apply.
+        mileage — before you decide whether to apply. {PAY.reviewNote}
       </p>
     </Section>
 

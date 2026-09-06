@@ -46,6 +46,7 @@ that you are calm, observant and dependable.
 
 - **National Living Wage plus 12.07% rolled-up holiday pay**, paid every
   payday — the exact rate is at the top of this page
+- **Mileage paid** on any home-care visits you pick up to top up your hours
 - A named coordinator who knows you, and **someone on call all night**
 - Support towards **NVQ Level 2 and 3** if you want to go further
 - The full list of what we offer is on our [careers page](/careers)
