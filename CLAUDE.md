@@ -17,7 +17,7 @@ Ongoing goal: improve the design and change content/topics as Alif directs, acro
 3. **For topic/content changes, update the §3 site map first**, then do the work.
 4. **Reuse before creating.** Search `layouts/` first. There is already heavy duplication between `layouts/domiciliary/` and `layouts/staffing/`; don't add more.
 5. **Security work in §7 P0 comes before cosmetic work.** `/admin` and `GET /api/messages` are currently unauthenticated on a live healthcare site, exposing real contact details.
-6. **Never commit `.env`** — it holds a GitHub token. It's in `.git/info/exclude`, not `.gitignore`, so `git add .env` would still work. Don't.
+6. **Never commit `.env`.** As of 2026-09-06 it is in `.gitignore` (line 36), so `git add .env` is now refused. It previously relied on `.git/info/exclude`, which is empty — that guard had silently gone. There is currently no `.env` in the repo at all; real secrets live in the Vercel project environment.
 7. **Use pnpm**, never npm or yarn.
 8. **Pushing to `main` deploys to production immediately** via Vercel. Pushing to `main-kare-plus` alone only builds a Preview. There is no staging. Alif granted standing permission (2026-08-07) so you needn't ask — but **build and test locally before you push**, because the users see it seconds later. Force-pushes, branch deletion, and history rewrites still need a check-in. Other contributors work here, so pull first.
 9. **If you can't verify a change, say so.** Don't claim something works when you haven't seen it run.

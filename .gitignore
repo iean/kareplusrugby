@@ -29,6 +29,11 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
+# .env itself, not just the .local variants. CLAUDE.md rule 6 says a .env is
+# never committed because Next.js auto-loads it into the server environment -
+# but that rule relied on .git/info/exclude, which is now empty, so `git add
+# .env` would have worked. It is listed here instead, where it cannot be lost.
+.env
 .env.local
 .env.development.local
 .env.test.local
