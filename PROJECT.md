@@ -255,6 +255,62 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-06 — Full security review
+
+**Changed:** `package.json`, `pnpm-lock.yaml` (Next 14.2.30 → 14.2.35).
+
+A whole-site security pass, code and live. **The application code is in good
+shape** — the earlier P0 work holds up. What I checked and what it found:
+
+**Auth & endpoints (all good).**
+- `/admin` and `/admin/jobs` → 401; `POST /api/jobs` without auth → 401; `GET
+  /api/jobs` returns `[]`, no data leak. [middleware.js](middleware.js) fails
+  closed on an unset password and uses a constant-time credential compare.
+- Every form endpoint validates server-side, escapes all interpolated output,
+  and uses a honeypot. `/api/apply` re-checks CV type/size and generates the
+  attachment filename server-side (no path from the client).
+- [lib/mailer.js](lib/mailer.js) hardcodes the `to:` address — no open relay,
+  no per-request override — and the email regex rejects newlines, so no header
+  injection via `replyTo`.
+- Nothing is persisted: no submission is written to disk, so there is no stored
+  personal data to leak. `data/messages.json` is gone.
+
+**Live hardening (all good).** HSTS, `X-Content-Type-Options`, `X-Frame-Options:
+SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy` all present; no
+`x-powered-by`. Every sensitive path probed (`/.env`, `/.git/config`,
+`/data/*.json`, `/config/site.json`, `/package.json`, `/middleware.js`) → 404.
+
+**Findings, in priority order:**
+
+1. **`/api/messages` has no rate limiting** — the other five form endpoints all
+   call `rateLimit()`; this one (the contact form on /how-we-work) does not.
+   Low severity (honeypot still applies, nothing is stored) but it is the one
+   inconsistency in the form layer. *Not yet fixed.*
+2. **No Content-Security-Policy header.** The only notable gap in the live
+   headers. Adding one to a Next app needs care (inline JSON-LD scripts, Next's
+   own inline runtime) so it is a tested change, not a one-liner. *Not yet
+   fixed — recommend a nonce-based or `unsafe-inline`-scoped CSP.*
+3. **`pnpm audit`: 84 advisories (1 critical, 45 high).** Far less alarming than
+   the count suggests: ~half are build-time tooling (minimatch, brace-expansion,
+   js-yaml, glob, lodash, sharp — `dev:true`, never in the production bundle) and
+   most of the runtime ones are transitive DoS advisories under Next's own
+   toolchain. The **critical** is `swiper` 8 (prototype pollution, needs a v11
+   major; client-only carousel, needs attacker-controlled config to exploit).
+   The remaining **runtime** ones of note are Next (mostly DoS/SSRF in features
+   this site does not use — Server Actions, attacker-controlled rewrites — and
+   Vercel mitigates platform-level) and nodemailer's addressparser DoS.
+
+**Fixed here:** Next → 14.2.35, clearing the image-optimization cache/content
+CVEs, the middleware redirect bug and two Server-Component DoS advisories — the
+ones with a fix inside the 14.x line. Build, lint, forms and `/admin` auth all
+verified before push.
+
+**Recommended next, each a tested change of its own (needs Alif's go-ahead):**
+- Add rate limiting to `/api/messages` (quick, low-risk).
+- Add a CSP header.
+- `swiper` 8 → 11 (major) to clear the one critical.
+- `next` 14 → 15 (major) to clear the rest of the Next advisories.
+
 ### 2026-09-06 — Git auth moved to SSH, and .env actually ignored
 
 **Changed:** `.gitignore`, `CLAUDE.md` (rule 6). **Environment, not the repo:**
