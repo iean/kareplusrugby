@@ -255,6 +255,38 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-06 — Git auth moved to SSH, and .env actually ignored
+
+**Changed:** `.gitignore`, `CLAUDE.md` (rule 6). **Environment, not the repo:**
+`~/.ssh/id_ed25519_github`, `~/.ssh/config`, and the `origin` remote.
+
+**The token was expiring.** Alif had an email about it and asked me to check.
+The classic PAT (`ghp_`, `repo` scope, user `rakibalif1`) in the macOS keychain
+was due to expire **2026-09-06 at 21:13 UTC**, about six hours after we looked.
+Nothing was at risk — the tree was clean, nothing unpushed, and the live site
+was unaffected either way, because **Vercel deploys through its own GitHub App
+integration and never used that token**. Only `git push`/`fetch` from Alif's
+Mac would have started failing.
+
+**Fixed by switching to SSH**, which does not expire, so this cannot recur. A
+new ed25519 key was generated (no passphrase, matching the convenience the
+keychain PAT gave), `~/.ssh/config` pins it to github.com with
+`IdentitiesOnly yes`, and `origin` is now
+`git@github.com:iean/kareplusrugby.git`. Verified: `ssh -T` authenticates as
+rakibalif1 using that exact fingerprint, and fetch and push both succeed.
+
+**The `.env` guard had silently gone.** CLAUDE.md rule 6 said a `.env` is never
+committed and that `.git/info/exclude` enforced it. That file is empty, and
+`.gitignore` only listed the `.env.local` variants — so `git add .env` would
+have worked, and Next.js auto-loads `.env` into the server environment. There
+is no `.env` in the repo, so **nothing was ever exposed**; the rule had just
+stopped being enforced by anything. `.env` is now in `.gitignore` and rule 6
+says so.
+
+**Still Alif's to do:** revoke the old PAT at github.com/settings/tokens. It is
+no longer used by anything and expires today regardless, but revoking is tidier
+than letting it lapse.
+
 ### 2026-08-27 — The old /domiciliary and /staffing sections retired
 
 **Changed:** [next.config.js](next.config.js). **Deleted:** `app/domiciliary/`,
