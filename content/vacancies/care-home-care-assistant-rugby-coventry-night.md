@@ -8,7 +8,7 @@ datePosted: 2026-09-06
 # closing: YYYY-MM-DD  <- set this when the role has a real closing date.
 locations: [rugby, coventry]
 location: "Rugby and Coventry"
-type: "Full time, part time or bank shifts"
+type: "Zero-hours contract — full time, part time or bank shifts"
 hours: "Waking nights across the week"
 summary: "Waking-night care assistant work in care homes across Rugby and Coventry. Daytime home-care visits also available if you want to top up your hours. Training provided."
 ---

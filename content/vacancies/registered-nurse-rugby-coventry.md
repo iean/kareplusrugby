@@ -7,13 +7,13 @@ datePosted: 2026-09-06
 # closing: YYYY-MM-DD  <- set this when the role has a real closing date.
 locations: [rugby, coventry]
 location: "Rugby and Coventry"
-type: "Full time, part time or bank shifts"
+type: "Zero-hours contract — full time, part time or bank shifts"
 hours: "Days, nights and bank shifts — tell us what suits you"
 # Free-text pay: nursing is paid above the carer rate and we do not publish a
 # single fixed figure, so this is stated honestly rather than as a number. This
 # also stops the JobPosting structured data from asserting the £12.71 carer
 # rate as a nurse's salary — see lib/jobs.js (baseHourly).
-pay: "A nursing rate that reflects your registration and experience, confirmed with you before you start"
+pay: "Agreed at interview — the nursing rate depends on the placement, because different homes and clients pay different rates"
 summary: "Registered nurse (RGN or RMN) shifts in care homes across Rugby and Coventry. Adult and mental health nurses welcome — we match you to placements that suit your registration. Valid NMC PIN required."
 ---
 
@@ -38,11 +38,12 @@ fits — rather than sending you somewhere that does not.
 
 ## Pay
 
-Nursing shifts are paid **above our care-assistant rate**, at a figure that
-reflects your registration and experience. Because it varies with the shift and
-the setting, we confirm the exact rate with you before you accept anything — you
-will never be asked to commit without knowing what you will be paid. Some
-specialist shifts carry a higher rate again.
+**The rate is agreed at interview**, and it depends on the placement. Unlike our
+care-assistant work, which is on a fixed hourly rate, nursing rates vary from one
+home or client to another — so we cannot quote a single figure that would hold
+for every shift. What we can promise is that we confirm the exact rate with you
+before you accept anything: you will never be asked to commit to a shift without
+knowing what it pays.
 
 ## What you get
 

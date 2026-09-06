@@ -6,7 +6,7 @@ datePosted: 2026-09-06
 # closing: YYYY-MM-DD  <- set this when the role has a real closing date.
 locations: [northampton, leicester]
 location: "Northampton and Leicestershire"
-type: "Full time, part time or bank shifts"
+type: "Zero-hours contract — full time, part time or bank shifts"
 hours: "Waking nights across the week"
 summary: "Waking-night care assistant work in care homes across Northampton and Leicestershire. Daytime home-care visits also available to top up hours. Training provided."
 ---

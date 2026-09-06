@@ -9,7 +9,7 @@ datePosted: 2026-09-06
 # Without it the posting expires automatically after 60 days. See lib/jobs.js.
 locations: [rugby, coventry]
 location: "Rugby and Coventry"
-type: "Full time, part time or bank shifts"
+type: "Zero-hours contract — full time, part time or bank shifts"
 hours: "Daytime shifts across the week"
 summary: "Day-shift care assistant work in care homes across Rugby and Coventry. Home-care visits also available to top up your hours. No experience needed — we train you."
 ---

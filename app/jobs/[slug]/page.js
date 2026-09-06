@@ -172,8 +172,13 @@ const JobPage = ({ params }) => {
               every role: we are an agency, so hours and placements genuinely do
               depend on availability and what the homes and clients need. */}
           <div className="mt-8 rounded-card border border-border bg-surface p-5 text-sm leading-relaxed text-textMuted">
-            {job.baseHourly != null && <p>{PAY.reviewNote}</p>}
-            <p className={job.baseHourly != null ? "mt-2" : ""}>
+            <p>
+              This is a <strong>zero-hours contract</strong>: you tell us your
+              availability and pick up the shifts that suit you, with no
+              obligation to accept a set number of hours.
+            </p>
+            {job.baseHourly != null && <p className="mt-2">{PAY.reviewNote}</p>}
+            <p className="mt-2">
               Shifts, hours and which home or client you are assigned to depend
               on availability and the needs of the care homes and people we
               support, so they can vary from week to week. We will always be
