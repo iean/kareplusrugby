@@ -255,6 +255,32 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-06 — Nurse vacancy, mileage, and pay/shift caveats
+
+**Changed:** the four care-home vacancies, `content/vacancies/registered-nurse-rugby-coventry.md` (new), `lib/jobs.js`, `lib/pay.js`, `app/jobs/[slug]/page.js`, `app/faq/page.js`, `app/careers/page.js`.
+
+Three requests from Alif: (1) say mileage is paid on home-care calls — added to
+the four care-home posts; (2) add a Registered Nurse (RGN/RMN) vacancy for Rugby
+& Coventry only (not Northampton/Leicestershire, which do not need nurses now);
+(3) make pay wording legally forward-looking and add variability caveats.
+
+The nurse post forced a real fix: `buildJobPostingSchema` hardcoded baseSalary
+to the £12.71 carer rate for every role, so a nurse posting would have
+advertised the carer wage to Google. baseSalary is now emitted only for
+standard-rate roles; a role with free-text `pay` (nursing) emits none.
+
+`PAY.reviewNote` states the basic rate is the NLW, reviewed each April in line
+with the legal minimum — shown on careers, the FAQ and standard-rate job pages.
+Every job page carries a standing caveat that shifts/hours/assignments depend on
+availability and the homes' and clients' needs and can vary.
+
+**Legal items I flagged to Alif that need him/a professional, not code:** ICO
+registration still `[TODO]` in config (a care provider processing health data
+must register); rolled-up holiday pay is lawful ONLY for irregular-hours workers
+(config warns it becomes unlawful if anyone moves to fixed hours); £12.71 is
+exactly the April-2026 NLW with no headroom and becomes unlawful on 2027-04-01
+unless raised. I do not and cannot certify overall legal compliance.
+
 ### 2026-09-06 — Applicant SEO: four real job listings + funnel fixes
 
 **Changed:** `content/vacancies/` (removed the all-areas post, added four),
