@@ -255,6 +255,17 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-06 — Rate-limited the contact form
+
+**Changed:** [app/api/messages/route.js](app/api/messages/route.js).
+
+Closed finding #1 from the security review the same day. `/api/messages` was
+the only public form endpoint not calling `rateLimit()`; it now uses the shared
+limiter (5 / 10 min / IP), checked after the honeypot so a caught bot cannot
+spend a real visitor's allowance on a shared IP. Verified live: five submissions
+pass, the sixth and seventh return 429, a different IP is unaffected. The live
+check used deliberately-invalid bodies so nothing reached the inbox.
+
 ### 2026-09-06 — Full security review
 
 **Changed:** `package.json`, `pnpm-lock.yaml` (Next 14.2.30 → 14.2.35).
@@ -285,7 +296,7 @@ SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy` all present; no
 1. **`/api/messages` has no rate limiting** — the other five form endpoints all
    call `rateLimit()`; this one (the contact form on /how-we-work) does not.
    Low severity (honeypot still applies, nothing is stored) but it is the one
-   inconsistency in the form layer. *Not yet fixed.*
+   inconsistency in the form layer. **Fixed 2026-09-06.**
 2. **No Content-Security-Policy header.** The only notable gap in the live
    headers. Adding one to a Next app needs care (inline JSON-LD scripts, Next's
    own inline runtime) so it is a tested change, not a one-liner. *Not yet
@@ -306,7 +317,7 @@ ones with a fix inside the 14.x line. Build, lint, forms and `/admin` auth all
 verified before push.
 
 **Recommended next, each a tested change of its own (needs Alif's go-ahead):**
-- Add rate limiting to `/api/messages` (quick, low-risk).
+- ~~Add rate limiting to `/api/messages`~~ — **done 2026-09-06**, see the entry above.
 - Add a CSP header.
 - `swiper` 8 → 11 (major) to clear the one critical.
 - `next` 14 → 15 (major) to clear the rest of the Next advisories.
