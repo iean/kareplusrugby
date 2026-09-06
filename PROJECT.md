@@ -255,6 +255,23 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-06 — All vacancies marked zero-hours; nurse pay set to interview-agreed
+
+**Changed:** all five vacancy files (type field), `app/jobs/[slug]/page.js`,
+`content/vacancies/registered-nurse-rugby-coventry.md`.
+
+Alif: (1) all five roles are zero-hours — now stated in each vacancy's type
+field (shows on careers cards and each job's facts box) and explained once in
+the job-page template. This also publicly reinforces the irregular/zero-hours
+condition that makes the carers' rolled-up holiday pay lawful. (2) Nurse pay is
+now "agreed at interview, depends on the placement" because nursing rates vary
+~£20–£30/hr by client and cannot be fixed like the carer rate. Still free text,
+so no baseSalary is asserted. The £20–£30 range was NOT published — Alif framed
+it as something they cannot fix, so it is kept off the page (could be added as a
+salary range later if he wants the SEO benefit).
+
+Verified live on all five job pages and the careers cards.
+
 ### 2026-09-06 — Nurse vacancy, mileage, and pay/shift caveats
 
 **Changed:** the four care-home vacancies, `content/vacancies/registered-nurse-rugby-coventry.md` (new), `lib/jobs.js`, `lib/pay.js`, `app/jobs/[slug]/page.js`, `app/faq/page.js`, `app/careers/page.js`.
