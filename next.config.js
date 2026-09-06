@@ -5,6 +5,26 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  /**
+   * Bundle the vacancy markdown into the serverless functions that read it at
+   * request time.
+   *
+   * /jobs is a dynamic route (it reads searchParams for the no-JavaScript
+   * location filter), so it runs as a serverless function and reads
+   * content/vacancies/*.md at REQUEST time via lib/contentParser. Vercel's
+   * output tracer only bundles files it can see are imported; a runtime
+   * readdirSync of a directory is invisible to it, so those files were left out
+   * of the function and getLiveJobs() came back empty — /jobs showed "No
+   * vacancies" in production while the build-time sitemap and the statically
+   * generated /jobs/[slug] pages both listed the roles. This forces the files
+   * in. content/blogs is included for the same reason if a blog is ever added.
+   */
+  experimental: {
+    outputFileTracingIncludes: {
+      "/jobs": ["./content/vacancies/**/*"],
+    },
+  },
+
   images: {
     // next/image converts on the fly; AVIF first, WebP as the fallback.
     formats: ["image/avif", "image/webp"],
