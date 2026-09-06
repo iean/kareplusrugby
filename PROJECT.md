@@ -255,6 +255,52 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-06 — Applicant SEO: four real job listings + funnel fixes
+
+**Changed:** `content/vacancies/` (removed the all-areas post, added four),
+`lib/jobs.js`, `next.config.js`, `app/careers/page.js`,
+`layouts/careers/VacancyList.js`.
+
+Focus was applicant recruitment SEO (not client SEO), at Alif's direction.
+
+**Four vacancies replace the one "all areas" post.** Alif wanted the single
+catch-all split into real, specific listings — each one is its own free Google
+for Jobs entry. Grouped as he specified: Rugby+Coventry and
+Northampton+Leicestershire, care-home focused, day and night split into
+separate posts (night care is a distinct search), each noting home-care calls
+are available to top up hours. Written to be genuinely distinct — pairwise text
+overlap tops out at 59%, well under the 80% doorway line. Pay omitted from front
+matter so every surface shows the one verified rate from config/site.json.
+
+**Two real bugs fixed, both surfaced by the split:**
+- `buildJobPostingSchema` truncated the JobPosting `identifier` to the slug's
+  first 24 chars. All four slugs share the prefix "care-home-care-assistant-",
+  so all four got the SAME identifier — which Google can dedupe into one
+  listing. Now uses the whole unique slug.
+- **`/jobs` showed "No vacancies" in production** — a pre-existing bug. It is a
+  dynamic route (reads searchParams for the no-JS filter) so it reads
+  content/vacancies/*.md at request time, but Vercel never bundled those files
+  into the function (a runtime readdirSync is invisible to the file tracer). The
+  static /jobs/[slug] pages, the sitemap and /careers all read at build time, so
+  they worked — masking it. Fixed with experimental.outputFileTracingIncludes.
+
+**Two funnel improvements:**
+- The four area pages (/jobs/care-jobs-*) are now linked directly from /careers,
+  not only two hops away via /jobs.
+- Careers vacancy cards now show the pay rate (from lib/pay.js) instead of
+  "discussed on application", matching the job pages they link to.
+
+Verified live: all four job pages 200 with valid JobPosting JSON-LD (unique
+identifiers, two jobLocations each, salary, dates); /jobs lists 4 and the
+location filter works at runtime; sitemap has 4; /careers shows 4 with pay.
+
+**Kept the Google Forms apply flow** (Alif's choice) — so directApply stays
+false. Outstanding for Alif: fix Form 2's Google sign-in requirement (Settings
+> Responses: turn off "Limit to 1 response" and any org restriction), then the
+warning can come off /careers/apply. And the off-site channels that actually
+drive applicant volume for a small agency — Indeed, Facebook groups, a claimed
+Google Business Profile — which no website change can do.
+
 ### 2026-09-06 — Rate-limited the contact form
 
 **Changed:** [app/api/messages/route.js](app/api/messages/route.js).
