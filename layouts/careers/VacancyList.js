@@ -1,5 +1,6 @@
 import { Container } from "@components/ui/Section";
 import { MapPin, Clock, CalendarDays, Banknote } from "lucide-react";
+import { PAY } from "@lib/pay";
 
 /**
  * Current vacancies, from content/vacancies/*.md (see lib/vacancies.js).
@@ -55,8 +56,12 @@ const VacancyList = ({ vacancies }) => {
               <Meta icon={Clock}>
                 {[v.type, v.hours].filter(Boolean).join(" · ")}
               </Meta>
-              {/* Only rendered when a real figure was supplied. */}
-              <Meta icon={Banknote}>{v.pay}</Meta>
+              {/* A role-specific figure if the markdown set one; otherwise the
+                  standard published rate, so the card matches the job page
+                  rather than saying "discussed on application" next to a page
+                  that states £14.24. Set `pay:` in the front matter for any
+                  role paid differently (e.g. nursing). */}
+              <Meta icon={Banknote}>{v.pay || PAY.short}</Meta>
               <Meta icon={CalendarDays}>
                 {v.closing
                   ? `Closes ${new Date(v.closing).toLocaleDateString("en-GB", {
@@ -76,8 +81,8 @@ const VacancyList = ({ vacancies }) => {
 
             {!v.pay && (
               <p className="mt-4 text-base leading-relaxed text-textMuted">
-                Pay for this role is discussed on application, along with
-                holiday, pension and mileage.
+                Travel time is paid, plus mileage and a workplace pension. Some
+                nursing and specialist shifts carry a different rate.
               </p>
             )}
 
