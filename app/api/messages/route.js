@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import config from "@config/config.json";
 import { sendToBusiness, isMailConfigured, transportName } from "@lib/mailer";
+import { rateLimit } from "@lib/rateLimit";
 
 /**
  * Contact form endpoint (config.params.contact_form_action).
@@ -46,6 +47,24 @@ export async function POST(req) {
   // so the bot gets no signal that it was caught.
   if (get("website")) {
     return NextResponse.redirect(new URL("/thank-you", req.url), 303);
+  }
+
+  // Same rate limit as every other form endpoint. The honeypot catches the
+  // dumb bots; this caps a determined one and stops an accidental double-submit
+  // from firing two emails. Checked after the honeypot so a caught bot does not
+  // spend a real visitor's allowance from a shared IP.
+  const limit = rateLimit(req);
+  if (!limit.allowed) {
+    return new NextResponse(
+      "Too many messages from this connection. Please try again shortly, or call us.",
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(limit.retryAfter),
+          "Cache-Control": "no-store",
+        },
+      },
+    );
   }
 
   // Server-side validation, independent of the client - client checks are a
