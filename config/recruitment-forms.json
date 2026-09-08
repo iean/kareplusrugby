@@ -10,7 +10,7 @@
       "minutes": 5,
       "summary": "Your name, email, where you live, how long you have worked in care, whether you drive, and your DBS status. This is the one that reaches us — once it is in, we can contact you.",
       "requiresGoogleAccount": false,
-      "verified": "2026-08-24: opens publicly on a signed-out phone browser, no sign-in. Name confirmed by Alif as 'Pre-Employment form'.",
+      "verified": "2026-08-24: the viewform OPENS signed-out. BUT 2026-09-08: submitting is a different matter - a POST to its /formResponse returns HTTP 401 even with a valid fbzx token, cookies and referer, which means anonymous SUBMISSION is refused. Almost certainly 'Collect email addresses' is set to 'Verified' (forces a Google login to submit) rather than 'Responder input'. So signed-out people can read the form but likely cannot complete it, and a custom on-site form cannot post into it until email collection is changed to 'Responder input'. Same single setting unblocks Form 2.",
       "essential": true
     },
     {
