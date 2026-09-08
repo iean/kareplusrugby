@@ -21,7 +21,7 @@
       "minutes": null,
       "summary": "The rest of your application details.",
       "requiresGoogleAccount": true,
-      "verified": "2026-08-24: RE-TESTED after Alif set it to Responder input. STILL redirects to Google sign-in on a signed-out phone browser. Something else is still forcing sign-in - most likely 'Restrict to users in <organisation>' under Settings > Responses, or 'Limit to 1 response'. Both require a Google account regardless of the email-collection setting. Set requiresGoogleAccount to false once a signed-out browser can open it, and the warning disappears from the page.",
+      "verified": "2026-09-08: RE-TESTED after Alif said he removed the sign-in requirement. STILL LOCKED - the viewform returns HTTP 401 Unauthorized to a signed-out request, while form 1's viewform returns 200. So the change did not take. Remaining likely causes, in order: (1) 'Collect email addresses' is set to 'Verified' rather than 'Responder input' - Verified requires a Google login; (2) 'Limit to 1 response' is still on (Settings > Responses); (3) the form is restricted to an organisation. Keep requiresGoogleAccount true until a signed-out browser can open it; set it false and the warning disappears from the page. Earlier 2026-08-24 re-test also found it locked.",
       "essential": false
     }
   ]
