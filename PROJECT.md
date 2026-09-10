@@ -255,6 +255,30 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-10 — One on-site application form replaces the two Google Forms
+
+**New:** `layouts/forms/OnSiteApplication.js`, `config/application-form.json`.
+**Changed:** `app/careers/apply/page.js`. **Retired:** `config/recruitment-forms.json` (unused).
+
+Applying was two Google Forms + an "email us when done" step, and Form 2 forced
+a Google sign-in. Alif changed Form 1's "Collect email addresses" to Responder
+input and added a phone question, which made its /formResponse accept signed-out
+POSTs (verified HTTP 200). So /careers/apply is now a single on-site form —
+name, phone, email, area, experience, right to work, driving, DBS — that posts
+straight into that Google Form. Applicants never see Google or a sign-in;
+responses still land in the office's existing Google sheet. No Vercel, no SMTP.
+
+Submit is a no-cors fetch (Google sends no CORS headers), so validation is fully
+client-side and the required fields mirror the Google form's; a honeypot guards
+spam; gender is optional; the previously-missing phone number is now captured.
+Entry-ID mapping is isolated in config/application-form.json with a note that
+renaming/reordering the Google questions can change the IDs.
+
+Form 2 is still sign-in-locked but no longer used — this one form replaces both.
+
+**Two test rows** ("TEST PLEASE DELETE") were posted into the Google responses
+while proving the pipe — Alif to delete them.
+
 ### 2026-09-06 — All vacancies marked zero-hours; nurse pay set to interview-agreed
 
 **Changed:** all five vacancy files (type field), `app/jobs/[slug]/page.js`,

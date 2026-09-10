@@ -1,4 +1,5 @@
 {
+  "_superseded": "2026-09-10: NO LONGER USED. /careers/apply now shows a single on-site form (layouts/forms/OnSiteApplication.js) driven by config/application-form.json, which posts into the screening Google Form directly. This two-form flow and its warning are retired. Kept only as a record; nothing imports this file.",
   "_comment": "The Google Forms an applicant completes, in order. This is an interim route while the built-in application system waits on a database and SMTP credentials. Keeping the links here rather than hardcoded in the page means Alif can change a form URL without touching code. Verified against the live forms on 24 August 2026 - see `verified` on each.",
   "replyTo": "kp.rugby@kareplus.co.uk",
   "forms": [
