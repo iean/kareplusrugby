@@ -1,0 +1,28 @@
+{
+  "_comment": "Drives the on-site application form (layouts/forms/OnSiteApplication.js). The form lives on our own site — no Google sign-in for the applicant, no Vercel, no SMTP — and submits straight into the 'Pre-employment/ screening questions' Google Form, so responses land in the Google sheet Kare Plus already reads. The `action` is that form's /formResponse endpoint; each `fields.*` value is the Google entry ID for that question. Verified 2026-09-10: a signed-out POST to this endpoint returns HTTP 200 (the form's 'Collect email addresses' was changed to Responder input). IF SUBMISSIONS EVER STOP ARRIVING, it is almost always because the Google Form's questions were renamed/reordered and the entry IDs below changed — re-read the form and update them here. Do not add a question to the on-site form that has no matching Google entry ID; it would be silently dropped.",
+  "action": "https://docs.google.com/forms/d/e/1FAIpQLSc-RK5zs_GaqFvxxrkczKLrdxIIs5dfa7cU19BIFPuAMGAfZA/formResponse",
+  "collectsEmail": true,
+  "fields": {
+    "name": "entry.791091479",
+    "phone": "entry.291375937",
+    "area": "entry.148882485",
+    "experience": "entry.866576811",
+    "rightToWork": "entry.962083622",
+    "drive": "entry.376211834",
+    "car": "entry.626171590",
+    "dbs": "entry.1287458545",
+    "dbsUpdate": "entry.883344636",
+    "gender": "entry.892638267"
+  },
+  "options": {
+    "yesNo": ["Yes", "No"],
+    "dbsUpdate": ["Yes", "No", "N/A"],
+    "gender": ["Male", "Female", "Prefer not to say"],
+    "experience": [
+      "No experience yet — happy to train",
+      "Less than 1 year",
+      "1 to 3 years",
+      "More than 3 years"
+    ]
+  }
+}
