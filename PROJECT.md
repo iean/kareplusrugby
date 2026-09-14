@@ -255,6 +255,35 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-14 — Next.js 15 + React 19 upgrade (clears the RCE advisories)
+
+**Changed:** `package.json`/`pnpm-lock.yaml` (next 14.2.35→15.5.25, react 18→19,
+eslint 8.29→8.57.1, eslint-config-next →15), `next.config.js`, and the dynamic
+routes `app/jobs/[slug]`, `app/blogs/[single]`, `app/blogs/page/[slug]`,
+`app/jobs/page.js`, plus `app/careers/page.js`.
+
+Done as the planned careful upgrade. Clears both critical Next.js RCE advisories
+(patched only in 15.5.24) — the audit now shows **zero criticals and zero Next
+advisories**, down from 3 criticals / ~13 Next advisories.
+
+Breaking changes handled: async `params`/`searchParams` (awaited in all dynamic
+routes; /jobs and the job page made async); `outputFileTracingIncludes` moved
+out of `experimental`; React 19; eslint upgraded so the new plugin's rules load.
+The now-working linter caught two pre-existing plain `<a>` internal links on the
+careers page (old broken linter never ran the rule) → converted to `<Link>`, and
+that page's stale "two Google Forms" copy was refreshed to the single on-site
+form.
+
+Verified in production on Next 15: all 27 static routes 200; async-params job
+pages 200 with valid JobPosting schema; /jobs lists all 5 (file-tracing still
+works after the config move); ?location filter works; no "No vacancies"
+regression; /admin 401, APIs guarded, CSP + HSTS present. Build exit 0, lint
+clean, no runtime errors locally.
+
+Remaining audit items are all build-time dev tooling (minimatch, brace-expansion
+etc.), not runtime-exposed. CSP is still Report-Only pending a browser-console
+check before enforcing.
+
 ### 2026-09-14 — Full-site review + security/SEO quick wins
 
 **Reviewed the whole live site** (routes, links, security, SEO, code quality):
