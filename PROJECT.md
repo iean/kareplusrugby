@@ -255,6 +255,41 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-14 — Full-site review + security/SEO quick wins
+
+**Reviewed the whole live site** (routes, links, security, SEO, code quality):
+27 static + 9 job pages all 200; 45 internal links all 200 with zero dead `#`
+links; all external links resolve; security headers all present; sensitive files
+all 404; one H1/canonical/description/og:image per page; structured data valid.
+The site is in good shape.
+
+**Changed:** deleted `layouts/components/ui/BannerCarousel.js`, removed `swiper`
+(package.json, lockfile, dead SCSS in styles/components.scss); trimmed titles in
+`app/jobs/page.js` and `app/paying-for-care/page.js`; added a Report-Only CSP in
+`next.config.js`.
+
+- **swiper (critical, prototype pollution) — removed, not upgraded.** The only
+  importer, BannerCarousel, was dead code from the retired /domiciliary and
+  /staffing sections. Deleting it clears the advisory with zero risk.
+- **Two over-long titles** (/jobs 73, /paying-for-care 82) trimmed to ~58 chars.
+- **CSP added Report-Only** (stage 1 of 2): blocks nothing yet; covers
+  self-hosted fonts, the Google Maps iframe and the docs.google form POST. Flip
+  the header key from `Content-Security-Policy-Report-Only` to
+  `Content-Security-Policy` once the browser console shows no violations.
+
+**Outstanding — the top security item, deliberately deferred:** two critical
+Next.js RCE advisories, patched only in **Next 15.5.24**. The Windows-hosted RCE
+does not apply on Vercel (Linux); the Image-Optimization RCE is real surface
+(the /_next/image optimizer is live) and Vercel likely mitigates it, but the
+framework fix is a **Next 14 → 15 major upgrade** with breaking changes
+(caching, async request APIs). To be done as its own tested task on a preview
+build — NOT rushed onto production. This is the next planned piece of work.
+
+Also still open (Vercel-side, needs Alif/their friend): ADMIN_USER/ADMIN_PASSWORD
+and EMAIL_USER/EMAIL_PASS (contact & enquiry forms still email via Vercel; job
+applications now bypass this via Google Forms). And ico_registration is still a
+[TODO] in config.
+
 ### 2026-09-10 — One on-site application form replaces the two Google Forms
 
 **New:** `layouts/forms/OnSiteApplication.js`, `config/application-form.json`.
