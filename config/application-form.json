@@ -2,6 +2,8 @@
   "_comment": "Drives the on-site application form (layouts/forms/OnSiteApplication.js). The form lives on our own site — no Google sign-in for the applicant, no Vercel, no SMTP — and submits straight into the 'Pre-employment/ screening questions' Google Form, so responses land in the Google sheet Kare Plus already reads. The `action` is that form's /formResponse endpoint; each `fields.*` value is the Google entry ID for that question. Verified 2026-09-10: a signed-out POST to this endpoint returns HTTP 200 (the form's 'Collect email addresses' was changed to Responder input). IF SUBMISSIONS EVER STOP ARRIVING, it is almost always because the Google Form's questions were renamed/reordered and the entry IDs below changed — re-read the form and update them here. Do not add a question to the on-site form that has no matching Google entry ID; it would be silently dropped.",
   "action": "https://docs.google.com/forms/d/e/1FAIpQLSc-RK5zs_GaqFvxxrkczKLrdxIIs5dfa7cU19BIFPuAMGAfZA/formResponse",
   "collectsEmail": true,
+  "_fullFormNote": "fullApplicationUrl is the STAGE-2 form — the full CQC application (Google Form, no sign-in) that candidates complete after a phone screen or at interview. It is linked discreetly from /careers/apply for invited candidates to self-serve. If Alif shortens the link (Send > link > Shorten URL) or rebuilds the form, update this one value.",
+  "fullApplicationUrl": "https://docs.google.com/forms/d/e/1FAIpQLScIo4tfatW-QdpsqLzPkBqOf2IYJO8-FsTt7gniQlezuw63SQ/viewform",
   "fields": {
     "name": "entry.791091479",
     "phone": "entry.291375937",

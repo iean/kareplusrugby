@@ -1,8 +1,9 @@
 import PageHeader from "@components/ui/PageHeader";
 import Section, { Container } from "@components/ui/Section";
 import site from "@config/site.json";
+import applicationForm from "@config/application-form.json";
 import OnSiteApplication from "@layouts/forms/OnSiteApplication";
-import { Phone, Clock, ShieldCheck } from "lucide-react";
+import { Phone, Clock, ShieldCheck, FileText } from "lucide-react";
 
 export const metadata = {
   title: "Apply for a Care Job",
@@ -47,6 +48,27 @@ const ApplyPage = () => {
               call you back — the rest we go through together.
             </p>
             <OnSiteApplication />
+
+            {/* Stage-2 self-serve link. Deliberately quiet and below the quick
+                form: the short form stays the main "Apply", but a candidate we
+                have already spoken to (or who is sitting down at interview) can
+                go straight to the full CQC application. URL lives in
+                config/application-form.json (fullApplicationUrl). */}
+            {applicationForm.fullApplicationUrl && (
+              <p className="mt-8 border-t border-border pt-6 text-base leading-relaxed text-textMuted">
+                <FileText aria-hidden="true" className="mr-2 inline-block h-5 w-5 align-text-bottom text-primary-600" />
+                Already spoken to us, or here for your interview?{" "}
+                <a
+                  href={applicationForm.fullApplicationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-primary-700 underline underline-offset-4"
+                >
+                  Complete your full application form
+                </a>
+                {" "}(opens in a new tab).
+              </p>
+            )}
           </div>
 
           {/* What happens next */}
