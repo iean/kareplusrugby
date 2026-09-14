@@ -8,7 +8,10 @@ import { AREAS } from "@lib/areas";
 import { MapPin, Clock, ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Care Jobs in Coventry, Rugby, Leicester and Northampton",
+  // Kept under ~42 chars so the full title with the "| Kare Plus Rugby" suffix
+  // stays inside Google's ~60-char display limit. All four areas are covered in
+  // the description and on their own /jobs/care-jobs-* pages.
+  title: "Care Jobs in Rugby, Coventry & Leicester",
   description:
     "Current care assistant, support worker and nurse vacancies with Kare Plus Rugby across Coventry, Rugby, Leicester and Northampton. Apply online in about ten minutes.",
   alternates: { canonical: "/jobs" },

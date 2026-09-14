@@ -7,7 +7,9 @@ import { FUNDING, SOURCES, CHECKED_ON, REVIEW_BY, TAX_YEAR } from "@lib/funding"
 import { Wallet, Home, HandCoins, Stethoscope, HeartHandshake, ExternalLink } from "lucide-react";
 
 export const metadata = {
-  title: "Paying for Care at Home — What the Council Pays and What You Pay",
+  // Trimmed so title + "| Kare Plus Rugby" suffix stays under Google's ~60-char
+  // limit; the detail lives in the description below.
+  title: "Paying for Care at Home: Costs & Funding",
   description:
     "How care at home is paid for in England: the free needs assessment, the savings thresholds, what the council covers, Attendance Allowance and NHS Continuing Healthcare. Plain English, with the current figures.",
   alternates: { canonical: "/paying-for-care" },

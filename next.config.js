@@ -2,6 +2,39 @@
  * @type {import('next').NextConfig}
  */
 
+/**
+ * Content Security Policy, shipped Report-Only first (stage 1 of 2).
+ *
+ * Report-Only means the browser reports violations to the console but blocks
+ * NOTHING — so this cannot break the live site. Once we've confirmed the key
+ * pages (home, /contact map, /careers/apply form, a page with the carousel)
+ * throw no CSP warnings in the browser console, switch the header key below
+ * from "Content-Security-Policy-Report-Only" to "Content-Security-Policy" to
+ * enforce it.
+ *
+ * What each source is for on this site:
+ *  - script/style 'unsafe-inline': Next's inline hydration scripts, our JSON-LD
+ *    blocks, and inline style attributes. (A nonce-based policy is the stronger
+ *    version to adopt during the Next 15 upgrade.)
+ *  - img data:/https: next/image, blur placeholders, and any remote image.
+ *  - font 'self': fonts are self-hosted by next/font, no external font host.
+ *  - connect/form docs.google.com: the on-site application form posts there.
+ *  - frame google.com: the embedded Google map on /contact.
+ */
+const CSP = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https:",
+  "font-src 'self'",
+  "connect-src 'self' https://docs.google.com",
+  "frame-src https://www.google.com",
+  "form-action 'self' https://docs.google.com",
+].join("; ");
+
 const nextConfig = {
   reactStrictMode: true,
 
@@ -140,6 +173,8 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          // Report-Only for now — see the CSP note above. Blocks nothing yet.
+          { key: "Content-Security-Policy-Report-Only", value: CSP },
         ],
       },
     ];
