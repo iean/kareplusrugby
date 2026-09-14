@@ -8,7 +8,8 @@ const { blog_folder } = config.settings;
 // blog pagination
 const BlogPagination = async ({ params }) => {
   //
-  const currentPage = parseInt((params && params.slug) || 1);
+  const rp = await params; // Next 15: params is async
+  const currentPage = parseInt((rp && rp.slug) || 1);
   const { pagination } = config.settings;
   const posts = await getSinglePage(`content/${blog_folder}`).sort(
     (post1, post2) =>
@@ -48,7 +49,8 @@ export default BlogPagination;
  * shared the generic site title.
  */
 export async function generateMetadata({ params }) {
-  const currentPage = parseInt((params && params.slug) || 1);
+  const rp = await params; // Next 15: params is async
+  const currentPage = parseInt((rp && rp.slug) || 1);
   return {
     title: `Blog — page ${currentPage}`,
     description: `Page ${currentPage} of news and advice from Kare Plus Rugby on home care, supported living and care home staffing.`,

@@ -26,12 +26,13 @@ export const metadata = {
  * JavaScript still reaches every job page, which is the requirement for Google
  * for Jobs.
  */
-const JobsIndex = ({ searchParams }) => {
+const JobsIndex = async ({ searchParams }) => {
+  const sp = await searchParams; // Next 15: searchParams is async
   const all = getLiveJobs();
   const active =
-    typeof searchParams?.location === "string" &&
-    LOCATIONS.some((l) => l.id === searchParams.location)
-      ? searchParams.location
+    typeof sp?.location === "string" &&
+    LOCATIONS.some((l) => l.id === sp.location)
+      ? sp.location
       : null;
 
   const jobs = active ? all.filter((j) => j.locations.includes(active)) : all;

@@ -52,10 +52,9 @@ const nextConfig = {
    * generated /jobs/[slug] pages both listed the roles. This forces the files
    * in. content/blogs is included for the same reason if a blog is ever added.
    */
-  experimental: {
-    outputFileTracingIncludes: {
-      "/jobs": ["./content/vacancies/**/*"],
-    },
+  // Next 15 moved this out of `experimental` to a top-level key.
+  outputFileTracingIncludes: {
+    "/jobs": ["./content/vacancies/**/*"],
   },
 
   images: {

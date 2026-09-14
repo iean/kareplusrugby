@@ -28,7 +28,8 @@ export async function generateStaticParams() {
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }) {
-  const job = getJobBySlug(params.slug);
+  const { slug } = await params; // Next 15: params is async
+  const job = getJobBySlug(slug);
   if (!job) return {};
   const where = job.locations.map(locationLabel).join(", ");
   return {
@@ -58,8 +59,9 @@ export async function generateMetadata({ params }) {
  * validThrough, so this returns a real 404 rather than a page advertising a
  * job that has closed.
  */
-const JobPage = ({ params }) => {
-  const job = getJobBySlug(params.slug);
+const JobPage = async ({ params }) => {
+  const { slug } = await params; // Next 15: params is async
+  const job = getJobBySlug(slug);
   if (!job) notFound();
 
   // One render. Used for the page and for the structured data.

@@ -6,7 +6,7 @@ const { blog_folder } = config.settings;
 
 // post single layout
 const Article = async ({ params }) => {
-  const { single } = params;
+  const { single } = await params; // Next 15: params is async
   const posts = await getSinglePage(`content/${blog_folder}`);
   const post = posts.filter((p) => p.slug == single);
   const { frontmatter, content } = post[0];
@@ -20,7 +20,7 @@ const Article = async ({ params }) => {
  * layout's - so every post shared the generic site title and description.
  */
 export async function generateMetadata({ params }) {
-  const { single } = params;
+  const { single } = await params; // Next 15: params is async
   const posts = await getSinglePage(`content/${blog_folder}`);
   const post = posts.find((p) => p.slug === single);
 
