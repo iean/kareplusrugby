@@ -255,6 +255,20 @@ _To be filled in with Alif. Current placeholders — confirm before relying on t
 
 Newest first. Every session adds an entry.
 
+### 2026-09-15 — CSP promoted to enforcing
+
+**Changed:** `next.config.js`. Flipped the Content-Security-Policy from
+Report-Only to enforcing after auditing every external resource the rendered
+pages reference. Only two off-site resources are CSP-governed — the Google Maps
+iframe (frame-src, broadened to include maps.google.com) and the application
+form POST to docs.google.com (connect-src); all else is <a> navigation or
+self-hosted. Verified live: header present as `Content-Security-Policy` (not
+report-only), all pages 200, /admin 401. Roll back = switch the header key back
+to `Content-Security-Policy-Report-Only`.
+
+Note: verified by static HTML audit, not a browser console (no headless browser
+available here). Alif to eyeball the /contact map and an apply-form submission.
+
 ### 2026-09-14 — Next.js 15 + React 19 upgrade (clears the RCE advisories)
 
 **Changed:** `package.json`/`pnpm-lock.yaml` (next 14.2.35→15.5.25, react 18→19,
