@@ -3,14 +3,15 @@
  */
 
 /**
- * Content Security Policy, shipped Report-Only first (stage 1 of 2).
+ * Content Security Policy — now ENFORCING (2026-09-15).
  *
- * Report-Only means the browser reports violations to the console but blocks
- * NOTHING — so this cannot break the live site. Once we've confirmed the key
- * pages (home, /contact map, /careers/apply form, a page with the carousel)
- * throw no CSP warnings in the browser console, switch the header key below
- * from "Content-Security-Policy-Report-Only" to "Content-Security-Policy" to
- * enforce it.
+ * Was shipped Report-Only first; promoted to enforcing after auditing every
+ * external resource the rendered pages reference. The only CSP-governed
+ * off-site resources are the Google Maps iframe (frame-src) and the
+ * application-form POST to docs.google.com (connect-src); everything else is
+ * plain <a> navigation (not restricted by CSP) or self-hosted. To roll back in
+ * a hurry, change the header key below back to
+ * "Content-Security-Policy-Report-Only".
  *
  * What each source is for on this site:
  *  - script/style 'unsafe-inline': Next's inline hydration scripts, our JSON-LD
@@ -31,7 +32,7 @@ const CSP = [
   "img-src 'self' data: https:",
   "font-src 'self'",
   "connect-src 'self' https://docs.google.com",
-  "frame-src https://www.google.com",
+  "frame-src https://www.google.com https://maps.google.com",
   "form-action 'self' https://docs.google.com",
 ].join("; ");
 
@@ -172,8 +173,9 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          // Report-Only for now — see the CSP note above. Blocks nothing yet.
-          { key: "Content-Security-Policy-Report-Only", value: CSP },
+          // Enforcing — see the CSP note above. Revert this key to
+          // "Content-Security-Policy-Report-Only" to disable enforcement fast.
+          { key: "Content-Security-Policy", value: CSP },
         ],
       },
     ];
